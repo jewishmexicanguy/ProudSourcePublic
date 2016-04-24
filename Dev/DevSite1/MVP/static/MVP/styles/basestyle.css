@@ -1,0 +1,7 @@
+body {
+    background: white url("images/proudsourcelogo.jpg") no-repeat center top;
+}
+
+body p {
+    color: green;
+}

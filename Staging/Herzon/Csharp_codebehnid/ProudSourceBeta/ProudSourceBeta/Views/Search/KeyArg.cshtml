@@ -1,0 +1,155 @@
+﻿@model ProudSourceBeta.Models.SearchKeyArgViewModel
+
+@{
+    ViewBag.Title = "Search Results";
+}
+
+<h2 class="template-header">Search results</h2>
+<hr />
+<div>
+    
+    <div id="project-results-container" class="container">
+
+        @if (Model.Project_Results.Count < 1)
+        {
+            <h4 class="template-header">No Project results were found using your search term.</h4>
+        }
+        @if(Model.Project_Results.Count > 0)
+        {
+            <h3 class="template-header">Projects</h3>
+
+            <div>
+
+                @for(int i = 0; i < Model.Project_Results.Count; i++)
+                {
+                    System.Data.DataRow row = Model.Project_Results[i];
+
+                    <h4 class="profile-words"><a href="@string.Format("/Project/Details/{0}", row["Project_ID"].ToString())">@row["Name"].ToString()</a></h4>
+
+                    <h6 class="profile-words"><a href="@string.Format("/Entrepreneur/Details/{0}", row["Entrepreneur_ID"].ToString())">Owned by @row["Entrepreneur_Name"].ToString()</a></h6>
+
+                    <p class="profile-words">Investment Goal : @string.Format("$ {0}", row["Investment_Goal"].ToString())</p>
+
+                    <p class="profile-words">@row["Description"].ToString()</p>
+
+                    if (Model.Project_Images_Results.Exists(e => (int)e["Project_ID"] == (int)row["Project_ID"]))
+                    {
+                        <div class="row profile-image-row">
+
+                            @{
+                                List<System.Data.DataRow> current_project_images = Model.Project_Images_Results.Where(e => (int)e["Project_ID"] == (int)row["Project_ID"]).ToList();
+                            }
+
+                            @for (int k = 0; k < 1; k++)
+                            {
+                                //if (k == current_project_images.Count)
+                                //{
+                                //    break;
+                                //}
+
+                                if (current_project_images[k] == null)
+                                {
+                                    break;
+                                }
+
+                                string base64 = Convert.ToBase64String((byte[])current_project_images[k]["Binary_Image"]);
+                                string imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                                <div class="col-lg-4">
+                                    <img src="@imgSrc" class="img-thumbnail profile-image" />
+                                </div>
+                            }
+
+                        </div>
+
+                    }
+
+                }
+                
+
+            </div>
+        }
+
+    </div>
+
+    <hr />
+
+    <div id="entrepreneur-results-container" class="container">
+
+        @if(Model.Entrepreneur_Results.Count < 1)
+        {
+            <h4 class="template-header">No Entrepreneur results were found using your search criteria</h4>
+        }
+        @if(Model.Entrepreneur_Results.Count > 0)
+        {
+            <h3 class="template-header">Entrepreneurs</h3>
+
+            <div class="row">
+                
+                @for (int i = 0; i < Model.Entrepreneur_Results.Count; i++)
+                {
+                    System.Data.DataRow row = Model.Entrepreneur_Results[i];
+
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="@string.Format("/Entrepreneur/Details/{0}", row["Entrepreneur_ID"].ToString())">@row["Name"].ToString()</a></h4>
+                    </div>
+                    {
+                        string base64 = Convert.ToBase64String((byte[])row["Binary_Image"]);
+                        string imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+
+
+                        <div class="col-lg-3">
+                            <img src="@imgSrc" class="img-thumbnail profile-image" />
+                        </div>
+                    }
+                }
+
+            </div>
+        }
+
+    </div>
+
+    <hr />
+
+    <div id="investor-results-container" class="container">
+
+        @if(Model.Investor_Results.Count < 1)
+        {
+            <h4 class="template-header">No Investor results were found using your search criteria</h4>
+        }
+        @if(Model.Investor_Results.Count > 0)
+        {
+            <h3 class="template-header">Investors</h3>
+
+            <div class="row">
+
+                @for(int i = 0; i < Model.Investor_Results.Count; i++)
+                {
+                    System.Data.DataRow row = Model.Investor_Results[i];
+
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="@string.Format("/Investor/Details/{0}", row["Investor_ID"].ToString())">@row["Name"].ToString()</a></h4>
+                    </div>
+
+                    {
+                        string base64 = Convert.ToBase64String((byte[])row["Binary_Image"]);
+                        string imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+
+
+                        <div class="col-lg-3">
+                            <img src="@imgSrc" class="img-thumbnail profile-image" />
+                        </div>
+                    }
+                }
+
+            </div>
+        }
+
+    </div>
+    
+</div>
+
+<hr />
+
+<p>
+    <a href="/User/Index">Home</a>
+</p>

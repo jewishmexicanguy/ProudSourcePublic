@@ -1,0 +1,9 @@
+table Email_Messages column Reference_ID, column Reference_Type
+
+	Reference_ID, will serve as an Identity row that will be the primary key of some record on some other table.
+		In truth this column can be used as a reference to point back to what caused this message to be generated.
+
+	Reference_Type, will serve as a way of knowing what table the Reference_ID refers to.
+	
+	Used together we can represent all messages that are proudsource system generated on one table and it will not matter on which 
+	table the originating reason for the message resides on.

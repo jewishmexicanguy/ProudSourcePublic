@@ -1,0 +1,111 @@
+﻿@model ProudSourceBeta.Models.InvestorIndexViewModel
+
+<link href="~/Content/User/User.css" rel="stylesheet" type="text/css" />
+
+<div id="investContainer">
+
+    <div class="container">
+
+        <div class="data-container">
+
+            <div style="float: left;">
+                @{ var imgSrc = "/Images/emptyProfile2.jpg";
+            if (Model.Profile_Picture != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Profile_Picture);
+                imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+            }
+                }
+                <img class="circular profile-image" src="@imgSrc" />
+            </div>
+
+            <div class="account-title" style="">
+                <b>Investor Profile</b>
+            </div>
+
+            <div style="clear: left"> </div>
+
+            <div class="data-title">
+                <b>Name:</b>
+            </div>
+            <div class="data">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+
+            <div class="data-title">
+                <b>Is Investor Verified</b>
+            </div>
+            <div class="data">
+                @Model.Verified
+            </div>
+            <br />
+            <div class="data-title">
+                <b>Investor Account Balance</b>
+            </div>
+            <div class="data">
+                @Model.Balance_USD
+            </div>
+            <br />
+            <div class="data-title">
+                <b>Deposit Money</b>
+            </div>
+            <div class="data">
+                <a class="btn btn-default" href="@string.Format("/FinancialAccount/Index/{0}", Model.Financial_Account_ID)">Go >></a>
+            </div>
+            <br />
+            <div class="data-title">
+                <b>Edit profile</b>
+            </div>
+            <div class="data">
+                <a class="btn btn-default" href="@string.Format("/Investor/Edit/{0}", Model.Investor_ID )">Go >></a>
+            </div>
+            <br />
+        </div>
+        <br />
+    @if (Model.PROCS_Collection.Count > 0)
+    {
+        <div class="data-container center" style="">
+            <h2>My PROCs</h2>
+            <table class="table table-striped" style="text-align: left; font-size: 150%">
+                <tr>
+                    <th class="col-sm-1">#</th>
+
+                    <th class="col-sm-1">Investment</th>
+
+                    <th class="col-sm-1">% Profit</th>
+
+                    <th class="col-sm-1">Active</th>
+                </tr>
+
+                @foreach (System.Data.DataRow i in Model.PROCS_Collection)
+                {
+                    <tr>
+
+                        <td class="col-sm-1"><a href="@string.Format("/PROC/Details/{0}", i["Proc_ID"].ToString())">@i["Proc_ID"]</a></td>
+
+                        <td class="col-sm-1">@i["Investment_Ammount"].ToString()</td>
+
+                        <td class="col-sm-1">@i["Revenue_Percentage"].ToString()</td>
+
+                        <td class="col-sm-1">@i["Active"].ToString()</td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+        <br />
+                        @if (Model.PROCS_Collection.Count <= 0)
+                        {
+                            <div class="data-container center">
+                                <div class="fill-center-text" style="margin: auto">
+                                    <b>You have no PROCs, search for some projects.</b>
+                                </div>
+                            </div>
+                        }
+
+        </div>
+
+    </div>
+
+</div>

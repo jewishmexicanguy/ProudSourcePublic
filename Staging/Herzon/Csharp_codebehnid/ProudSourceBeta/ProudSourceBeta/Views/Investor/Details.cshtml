@@ -1,0 +1,139 @@
+﻿@model ProudSourceBeta.Models.InvestorIndexViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="template-header">Investor Details</h2>
+
+<hr />
+
+<div class="container">
+
+    <dl class="dl-horizontal">
+
+        <dt class="profile-words">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="profile-words">Investor Verified</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verified)
+        </dd>
+
+        <dt class="profile-words">Investor Image</dt>
+
+        <dd>
+            <div class="profile-image">
+
+                @{ var imgSrc = "/Images/emptyProfile.png";
+                    if (Model.Profile_Picture != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Profile_Picture);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+                }
+
+                <img id="profile-image" src="@imgSrc" />
+
+            </div>
+        </dd>
+
+    </dl>
+
+    @if(Model.PROCS_Collection.Count > 0)
+    {
+        <div>
+            <table class="table-hover table-responsive">
+
+                <tr>
+
+                    <th class="col-sm-4">PROC #</th>
+
+                    <th class="col-sm-4">Investment Amount</th>
+
+                    <th class="col-sm-4">Active</th>
+
+                </tr>
+
+                @foreach(System.Data.DataRow i in Model.PROCS_Collection)
+                {
+                    <tr>
+
+                        <td class="col-sm-4"><a href="@string.Format("/PROC/Details/{0}", i["Proc_ID"].ToString())" >@string.Format("PROC {0}", i["Proc_ID"].ToString())</a></td>
+
+                        <td class="col-sm-4 alert-info">@string.Format("$ {0}", i["Investment_Ammount"].ToString())</td>
+
+                        @{ 
+                            string alert = null;
+                            string active = null;
+                            if(!(bool)i["Active"])
+                            {
+                                alert = "alert-info";
+                                active = "No";
+                            }
+                            else
+                            {
+                                alert = "alert-danger";
+                                active = "Yes";
+                            }
+                        }
+
+                        <td class="col-sm-4 @alert">@active</td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+    
+    @if(Model.PROCS_Collection.Count < 1)
+    {
+        <div>
+            <p class="template-words">There seem to be no PROCs for this investor</p>
+        </div>
+    }
+
+</div>
+<hr />
+
+@if (Model.Investor_ID != Model.Viewer_ID)
+{
+    if (IsPost)
+    {
+        <div class="container">
+            <p class="template-words">Your message has been posted</p>
+        </div>
+    }
+
+    if (!IsPost && Model.User_Id > 0)
+    {
+        <div class="container">
+            <div class="form">
+                <form id="message-investor" method="post">
+                    <div class="col-md-10">
+
+                        <textarea form="message-investor" name="Investor_Message" class="input-group-lg"></textarea>
+
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <input type="submit" value="message" class="btn btn-default" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    }
+}
+<p>
+    <a href="/Search/Index">Search the ProudSource community</a>
+</p>

@@ -1,0 +1,104 @@
+CREATE TABLE User_EmailMessage_XREF(
+	User_Email_XREF_ID SERIAL NOT NULL,
+	User_ID INTEGER NOT NULL,
+	EmailMessage_ID INTEGER NOT NULL,
+	Creation_Time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	CONSTRAINT User_Email_XREF_ID_PKEY PRIMARY KEY (User_Email_XREF_ID),
+	CONSTRAINT User_ID_FKEY FOREIGN KEY (User_ID)
+		REFERENCES user_master (user_master_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT EmailMessage_ID_FKEY FOREIGN KEY (EmailMessage_ID) 
+		REFERENCES EmailMessage (email_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+	OIDS=FALSE
+);
+ALTER TABLE User_EmailMessage_XREF
+	OWNER TO "PSMaintStaging";
+COMMENT ON TABLE User_EmailMessage_XREF 
+	IS 'table to model relations between Users and emails, the only things that should go here are when new new users are welcomed, when new users request to reset thier password and when users delete thier accounts.';
+	
+CREATE TABLE Investor_EmailMessage_XREF(
+	Investor_Email_XREF_ID SERIAL NOT NULL,
+	Investor_ID INTEGER NOT NULL,
+	EmailMessage_ID INTEGER NOT NULL,
+	Creation_Time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	CONSTRAINT Investor_Email_XREF_ID_PKEY PRIMARY KEY (Investor_Email_XREF_ID),
+	CONSTRAINT Investor_ID_FKEY FOREIGN KEY (Investor_ID)
+		REFERENCES investor_master (investor_master_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT EmailMessage_ID_FKEY FOREIGN KEY (EmailMessage_ID) 
+		REFERENCES EmailMessage (email_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+	OIDS=FALSE
+);
+ALTER TABLE Investor_EmailMessage_XREF
+	OWNER TO "PSMaintStaging";
+COMMENT ON TABLE Investor_EmailMessage_XREF 
+	IS 'This table will server to model relations between investors and Email message.';
+	
+CREATE TABLE Entrepreneur_EmailMessage_XREF(
+	Entrepreneur_Email_XREF_ID SERIAL NOT NULL,
+	Entrepreneur_ID INTEGER NOT NULL,
+	EmailMessage_ID INTEGER NOT NULL,
+	Creation_Time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	CONSTRAINT Entrepreneur_Email_XREF_ID_PKEY PRIMARY KEY (Entrepreneur_Email_XREF_ID),
+	CONSTRAINT Entrepreneur_ID_FKEY FOREIGN KEY (Entrepreneur_ID)
+		REFERENCES entrepreneur_master (entrepreneur_master_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT EmailMessage_ID_FKEY FOREIGN KEY (EmailMessage_ID) 
+		REFERENCES EmailMessage (email_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+	OIDS=FALSE
+);
+ALTER TABLE Entrepreneur_EmailMessage_XREF
+	OWNER TO "PSMaintStaging";
+COMMENT ON TABLE Entrepreneur_EmailMessage_XREF 
+	IS 'This table will server to model relations between entreprneurs and Email messages.';
+	
+CREATE TABLE Project_EmailMessage_XREF(
+	Project_Email_XREF_ID SERIAL NOT NULL,
+	Project_ID INTEGER NOT NULL,
+	EmailMessage_ID INTEGER NOT NULL,
+	Creation_Time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	CONSTRAINT Project_Email_XREF_ID_PKEY PRIMARY KEY (Project_Email_XREF_ID),
+	CONSTRAINT Project_ID_PKEY FOREIGN KEY (Project_ID)
+		REFERENCES project_master (project_master_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT EmailMessage_ID_FKEY FOREIGN KEY (EmailMessage_ID) 
+		REFERENCES EmailMessage (email_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION 
+)
+WITH (
+	OIDS=FALSE
+);
+ALTER TABLE Project_EmailMessage_XREF
+	OWNER TO "PSMaintStaging";
+COMMENT ON TABLE Project_EmailMessage_XREF 
+	IS 'This table will server to model relations between Projects and Email messages.';
+	
+CREATE TABLE PROC_EmailMessage_XREF(
+	PROC_Email_XREF_ID SERIAL NOT NULL,
+	PROC_ID INTEGER NOT NULL,
+	EmailMessage_ID INTEGER NOT NULL,
+	Creation_Time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+	CONSTRAINT PROC_Email_XREF_ID_PKEY PRIMARY KEY (PROC_Email_XREF_ID),
+	CONSTRAINT PROC_ID_PKEY FOREIGN KEY (PROC_ID)
+		REFERENCES proc_master (proc_master_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT EmailMessage_ID_FKEY FOREIGN KEY (EmailMessage_ID) 
+		REFERENCES EmailMessage (email_id) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+	OIDS=FALSE
+);
+ALTER TABLE PROC_EmailMessage_XREF
+	OWNER TO "PSMaintStaging";
+COMMENT ON TABLE PROC_EmailMessage_XREF 
+	IS 'This table will serve to model relations between PROCS and messages sent out on behalf of PROCS.';

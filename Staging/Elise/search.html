@@ -1,0 +1,194 @@
+<head><link rel="stylesheet" type="text/css" href="search.css"> </head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">ProudSource</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Home/About">About</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+<li><a href="/Home/browse">Browse Projects</a></li>
+                    <div id="search-bar-keyarg" class="navbar-form navbar-left">
+    <div class="form-group">
+        <input class="form-control" placeholder="Search" id="in-search-arg" type="text">
+    </div>
+    <button type="submit" class="btn btn-default" id="btn_search_arg" onclick="window.location.replace('/Search/KeyArg/' + document.getElementById('in-search-arg').value);">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </button>
+</div>
+
+                </ul>
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"><input name="__RequestVerificationToken" value="TVhlVExQazUorOGlfj7xsXAAcX5GRYeLKlAbHv9ZaLkSRhb7M308TATGJ0oqqBVmJvts_iE0jTU6VfBcztqlH7tBureTh9s3AO6E4VTAKsFFZnqdPzxUISqy-pxyVjwSt0IWc0j_VMF9EYb_lA0rhA2" type="hidden">    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/User" title="User Index">Hello, Adrynochrome!</a>
+        </li>
+<li><a href="something">(entrepeneur)</a></li><!--perhaps on clicking the value within parenthesis [userName(entrepeneur or investor)], the user has the option to switch from entrepeneur to investor-->
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        
+
+
+<h2>Search results</h2>
+<hr>
+<div>
+    
+    <div id="project-results-container" class="container">
+
+                    <h3 class="subtitle">Projects</h3>
+            <div>
+
+                    <h4 class="project-title"><a href="/Project/Details/2">Test Projects</a></h4>
+
+<img class="project-img" src="">
+
+
+                    <h6 class="owner"><a href="/Entrepreneur/Details/3">Owned by company king</a></h6>
+                    <p class="goal">Investment Goal : $ 546600.9900</p>
+                    <p class="description">A project made for testing purposes, i guess</p>
+                       
+
+
+
+                                
+
+
+                        </div>
+                    <h4 class="project-title"><a href="/Project/Details/6">jcjjvhjybiku</a></h4>
+	<img class="project-img" src="" alt="project-image">
+
+                    <h6 class="owner"><a href="/Entrepreneur/Details/2">Owned by some name</a></h6>
+                    <p class="goal">Investment Goal : $ 9346.0000</p>
+                    <p class="description">thing</p>
+
+
+
+                    <h4 class="project-title"><a href="/Project/Details/7">website</a></h4>
+	<img class="project-img" src="" alt="project-image">
+
+                    <h6 class="owner"><a href="/Entrepreneur/Details/11">Owned by proud source</a></h6>
+                    <p class="goal">Investment Goal : $ 200.0000</p>
+                    <p class="description">website</p>
+
+
+
+                    <h4 class="project-title"><a href="/Project/Details/8">project one</a></h4>
+	<img class="project-img" src="" alt="project-image">
+
+                    <h6 class="owner"><a href="/Entrepreneur/Details/12">Owned by Adrynochrome</a></h6>
+                    <p class="goal">Investment Goal : $ 500.0000</p>
+                    <p class="description">lots of words here and other words and stuff</p>
+                   
+
+
+                        </div>
+                
+
+            </div>
+
+    </div>
+
+    <hr>
+
+    <div id="entrepreneur-results-container" class="container">
+
+                    <h3 class="subtitle">Entrepreneurs</h3>
+            <div class="row">
+                
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Entrepreneur/Details/7">Joe</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Entrepreneur/Details/3">company king</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Entrepreneur/Details/12">Adrynochrome</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+
+            </div>
+
+    </div>
+
+    <hr>
+
+    <div id="investor-results-container" class="container">
+
+                    <h3 class="subtitle">Investors</h3>
+            <div class="row">
+
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Investor/Details/6">Investor Master direlector</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Investor/Details/5">MOTHER investor</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Investor/Details/8">testcase 123</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+                    <div class="col-lg-3">
+                        <h4 class="profile-words"><a href="/Investor/Details/20">Investor One</a></h4>
+                    </div>
+                        <div class="col-lg-3">
+                            <img src="" class="img-thumbnail profile-image">
+                        </div>
+
+            </div>
+
+    </div>
+    
+</div>
+
+<hr>
+
+<p class = "bottom-home">
+    <a href="/User/Index">Home</a>
+</p>
+<a href="#top" target="_self" class="anchor">Return to Top</a>
+        <hr>
+
+
+        <footer>
+            <p>© 2016 - ProudSource All rights reserved</p>
+        </footer>
+    </div>
+
+    <script src="/bundles/jquery?v=LCTUWYjF9I-Sw3l0P8Zn6_b6478OuizeBkjnoe30Tcc1"></script>
+
+    <script src="/bundles/bootstrap?v=9a0xCgIJUUuICgd8OXNeFEY1MeHAZk_6hURSTO__1ac1"></script>
+
+    
+
+
+<div style="background-image: url(&quot;resource://jid1-dqs9bdqga04hbw-at-jetpack/data/content_script/voice.png&quot;);" state="voice" title="Click to Show Translation" class="placeholder-icon"><canvas style="display: none;" height="36" width="36" class="loading-circle" id="text-to-speech-loader"></canvas></div></body>

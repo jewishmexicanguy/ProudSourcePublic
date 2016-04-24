@@ -1,0 +1,56 @@
+﻿@model ProudSourceBeta.Models.UserIndexViewModel
+
+<link href="~/Content/User/User.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/User/_ProfilePage.css" rel="stylesheet" type="text/css" />
+
+<div id="profileContainer">
+    <div class="container">
+
+        <div class="data-container">
+
+            <div style="float: left;">
+                @{ var imgSrc = "/Images/emptyProfile2.jpg";
+                    if (Model.User_Image != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.User_Image);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+                }
+                <img class="circular profile-image" src="@imgSrc" />
+            </div>
+
+            <div class="account-title" style=""> 
+                <b>User Profile</b>
+            </div>
+
+            <div style="clear: left"> </div>
+
+            <div>
+                <div class="data-title">
+                    <b>Name:</b>
+                </div>
+
+                <div class="data">
+                    @Html.DisplayFor(model => model.Entrepreneur_Name)
+                </div>
+
+                <br/>
+
+                <div class="data-title">
+                    <b>Email:</b>
+                </div>
+                <div class="data">
+                    @Html.DisplayFor(model => model.User_Email)
+                </div>
+                <br />
+                <div class="data-title">
+                    <b>Edit Profile</b>
+                </div>
+                <div class="data">
+                    <a class="btn btn-default" href="/User/Edit/">Go >></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

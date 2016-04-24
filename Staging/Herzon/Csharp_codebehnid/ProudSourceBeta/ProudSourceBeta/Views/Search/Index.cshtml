@@ -1,0 +1,120 @@
+﻿@model ProudSourceBeta.Models.SearchIndexViewModel
+
+<link href="~/Content/Search/Search.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="search-bar-holder">
+        <input type="text" placeholder="Search for a project!" class="form-control search-bar" id="usr">
+</div>
+
+<script>
+
+    document.getElementById('usr').onkeypress = function (e) {
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == '13') {
+            // Enter pressed
+            window.location.replace('/Search/KeyArg/' + document.getElementById('usr').value);
+            return false;
+        }
+    }
+</script>
+
+
+
+<div id="tile-container">
+    
+    @if(Model.Project_Trending_Results.Count < 1)
+    {
+        <h4 class="template-header">Wow no trending projects were found on our community, where did the community go? try using the search bar.</h4>
+    }
+    @if (Model.Project_Trending_Results.Count > 0)
+    {
+        <div>
+
+            @for (int i = 0; i < Model.Project_Trending_Results.Count; i+= 3)
+            {
+                <div class="row" style="">
+
+                @for (int j = 0; j < 3; j++)
+                {
+                    if ( (Model.Project_Trending_Results.Count-1) < (i+j) )
+                    {
+                        break;
+                    }
+
+
+                    System.Data.DataRow row = Model.Project_Trending_Results[i + j];
+                    List<System.Data.DataRow> current_project_images = Model.Project_Images_Result.Where(e => (int)e["Project_ID"] == (int)row["Project_ID"]).ToList();
+                    string imgSrc = "";
+                    if (current_project_images.Count > 0)
+                    {
+                        string base64 = Convert.ToBase64String((byte[])current_project_images[0]["Binary_Image"]);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+
+                    float offset = j * 33.33f;
+                    int overlayId = (i * 10) + j;
+                    string overlayStrId = "O" + overlayId.ToString();
+                    string overlayStuffStrId = "OS" + overlayId.ToString();
+                    string imageStrId = "I" + overlayId.ToString();
+
+                    //Image
+                        <div onclick="location.href='/Project/Details/@row["Project_ID"]';" id="@imageStrId" class="col-sm-4 tile fill">
+                            <img src="@imgSrc"/>
+                        </div>
+
+                        //Overaly
+                        <div id="@overlayStrId" class="overlay col-sm-4 tile fill" style="left: @offset%;">
+
+                        </div>
+
+                        <div id="@overlayStuffStrId" class="overlay-stuff col-sm-4 tile" style="left: @offset%; text-align: left;">
+                            <div style="clear: left; margin-top: 10px"></div> 
+                            <div><b><h3>@row["Name"]</h3></b></div>
+                            <div>@row["Description"]</div>
+                        </div>
+
+
+
+                        <script>
+                            $('#@imageStrId').hover(function () {
+                                // in
+                                $('#@overlayStrId').animate({ marginTop: "150px", height: "150px" }, 200);
+                                $('#@overlayStuffStrId').animate({ marginTop: "150px", height: "150px" }, 200);
+                            }, function () {
+                                // out
+                                $('#@overlayStrId').animate({ marginTop: "300px", height: "0px" }, 200);
+                                $('#@overlayStuffStrId').animate({ marginTop: "300px", height: "0px" }, 200);
+                            }
+                            );
+
+                        </script>
+                }
+
+                </div>
+
+            }
+
+        </div>
+    }
+
+</div>
+
+<hr />
+
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="/Home/Index/">Welcome page</a>
+        </li>
+        
+        <li class="list-group-item">
+            <a href="/User/Index">User Home page</a>
+        </li>
+    </ul>
+    
+</div>

@@ -1,0 +1,80 @@
+﻿body {
+    width: 100%;
+}
+
+#overall-container {
+    width: 100%;
+}
+
+#tile-container {
+    width: 100%;
+}
+
+#search-bar-holder {
+    margin: auto;
+    text-align: center;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+
+    height: 150px;
+}
+
+.search-bar {
+    height: 50px;
+    max-width: 50%;
+
+    font-size: 125%;
+
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tile {
+    height: 300px;
+    cursor: pointer;
+}
+
+.overlay {
+    position: absolute;
+    background-color: black;
+    opacity: 0.8;
+    height: 0px;
+    margin-top: 300px;
+    pointer-events:none;
+}
+
+.overlay-stuff {
+    color: white;
+    position: absolute;
+    pointer-events:none;
+    margin-top: 300px;
+    height: 0px;
+    text-align: left;
+    align-items: stretch;
+}
+
+.inside-overlay {
+    opacity: 1;
+}
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.fill img {
+    /*flex-shrink:0;
+    min-width:100%;
+    min-height:100%*/
+    width: auto;
+    height : auto;
+    max-height: 150%;
+    max-width: 150%;
+    min-height: 100%;
+}
+
+

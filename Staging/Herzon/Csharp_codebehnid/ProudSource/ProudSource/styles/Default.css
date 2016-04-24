@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+}
+
+body {
+	background-image: url('../images/ProudSourcelogo.jpg');
+	background-position: center 100px;
+	background-repeat: no-repeat;
+	background-attatchment: fixed scroll;
+}
+
+#footer {
+	position: relative;
+	top: 900px;
+}
+
+.li-navbar-item {
+	background-color: #75D1FF;
+	border-style: solid;
+    border-width: 1px;
+}
+
+.intro-container-div {
+	position: relative;
+	top: 775px;
+}
+
+.media-container-div {
+	position: relative;
+	top: 825px;
+	margin-left: 65px;
+}
+
+.media-container-div li {
+	list-style-type: none;
+}

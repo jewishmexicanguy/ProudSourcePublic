@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+ <head>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bootstrap.min.js"></script>
+<script src="carousel.js"></script>
+
+<link rel="stylesheet" type="text/css" href="welcomePage.css">
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">ProudSource</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Home/About">About</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+<li><a href="/Home/browse">Browse Projects</a></li>
+                    <div id="search-bar-keyarg" class="navbar-form navbar-left">
+    <div class="form-group">
+        <input class="form-control" placeholder="Search" id="in-search-arg" type="text">
+    </div>
+    <button type="submit" class="btn btn-default" id="btn_search_arg" onclick="window.location.replace('/Search/KeyArg/' + document.getElementById('in-search-arg').value);">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </button>
+</div>
+
+                </ul>
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"><input name="__RequestVerificationToken" value="9ioFoau92oQzMbNTiaS79Qu-7Hkqvg2JpEwqGGU3EGy2Sa5e9FS-lZGMhGeaNd59IohXlihamjUKB_6X92K-EsVVO9-xFgoZy5pejphqg9PmMor9hFMuYyq8MYWWRNRkk3hf3HJMEv1pau9TlYFe7Q2" type="hidden">    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/User" title="User Index">Hello, kamikazekalico@gmail.com!</a>
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        
+
+<link href="/Content/Home/Index.css" rel="stylesheet" type="text/css">
+<div>
+    <div></div>
+    <div class="jumbotron">
+        <h1 class="template-header">Misson</h1>
+        <p class="lead">ProudSource.us is a platform used to connect investors and entrepreneurs with small businesses and startups. Essentially, it's crowdfunding with a financial return.</p>
+        <p><a href="http://cyberconcepts.technology" class="btn btn-primary btn-lg" target="_new">Powered By CyberConcepts [ ] »</a></p>
+
+
+<div class= "slideshow">
+
+
+<div id="myCarousel" class="Carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="http://placehold.it/900x500" alt="">
+      <div class="carousel-caption">
+        slide 1
+      </div>
+    </div>
+<div class="item">
+      <img src="http://placehold.it/900x500" alt="">
+      <div class="carousel-caption">
+        slide 2
+      </div>
+    </div>
+<div class="item">
+      <img src="http://placehold.it/900x500" alt="">
+      <div class="carousel-caption">
+        slide 3
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="icon-next"></span>
+  </a>
+</div>
+
+
+
+</div>
+
+    </div>
+
+
+</div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="template-header">Become a Member</h2>
+            <p class="template-words">
+                Register with us and see what Projects the community is working on.
+            </p>
+            <p><a class="btn btn-default" href="/Account/Register/">Registration »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="template-header">Login</h2>
+            <p class="template-words">Already have an account, then login.</p>
+            <p><a class="btn btn-default" href="/Account/Login">Portal »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="template-header">Float around</h2>
+            <p class="template-words">If you just want to see what projects the community is working on and who the community is you can peruse through what the community has to offer.</p>
+            <p><a class="btn btn-default" href="/Search/">Peruse »</a></p>
+        </div>
+    </div>
+</div>
+
+        <hr>
+        <footer>
+            <p>© 2016 - ProudSource All rights reserved</p>
+        </footer>
+    </div>
+
+    <script src="/bundles/jquery?v=LCTUWYjF9I-Sw3l0P8Zn6_b6478OuizeBkjnoe30Tcc1"></script>
+
+    <script src="/bundles/bootstrap?v=9a0xCgIJUUuICgd8OXNeFEY1MeHAZk_6hURSTO__1ac1"></script>
+<script type="javascript"> $('.carousel').carousel() </script>
+
+<script type="javascript">// Activate Carousel
+$("#myCarousel").carousel();
+
+// Enable Carousel Indicators
+$(".item").click(function(){
+    $("#myCarousel").carousel(1);
+});
+
+// Enable Carousel Controls
+$(".left").click(function(){
+    $("#myCarousel").carousel("prev");
+});
+</script>
+    
+
+
+<div style="background-image: url(&quot;resource://jid1-dqs9bdqga04hbw-at-jetpack/data/content_script/voice.png&quot;); display: none;" state="voice" title="Click to Show Translation" class="placeholder-icon"><canvas style="display: none;" height="36" width="36" class="loading-circle" id="text-to-speech-loader"></canvas></div>
+
+
+</body></html>

@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    Harry S. Truman way,<br />
+    Hertzlya, IS <br />
+    <abbr title="Phone">P:</abbr>
+    555.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@proudsource.us">Support@proudsource.us</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@proudsource.us">Marketing@proudsource.us</a>
+</address>
+
+<h3>@ViewBag.MessageBoxlbl</h3>
+<form method="post">
+    <textarea name="message" ></textarea>
+    <br />
+    <input type="submit" value="Deliver" />
+</form>

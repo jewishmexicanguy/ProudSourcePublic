@@ -1,0 +1,14 @@
+﻿body {
+
+}
+
+.center {
+    margin: auto;
+}
+
+.view-title {
+    margin: auto;
+    width: 60%;
+    position: relative;
+    top: 75px;
+}

@@ -1,0 +1,139 @@
+﻿@model ProudSourceBeta.Models.InvestorIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="template-header">Investor Index</h2>
+
+<div class="container">
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Profile_Picture)
+        </dt>
+
+        <dd>
+
+            <div class="profile-image">
+                @{ var imgSrc = "/Images/emptyProfile.png";
+                    if (Model.Profile_Picture != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Profile_Picture);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+                }
+                <img id="profile-image" src="@imgSrc" />
+
+            </div>
+
+        </dd>
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Verified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verified)
+        </dd>
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Profile_Public)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profile_Public)
+        </dd>
+
+    </dl>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Investor_ID }) |
+        <a href="/User/Index/">Back to List</a>
+    </p>
+
+    <hr />
+
+    <div class="container">
+        <p>Financial Account link</p>
+        <a href="@string.Format("/FinancialAccount/Index/{0}", Model.Financial_Account_ID)">Account Details</a>
+    </div>
+
+    <div class="container">
+        <a href="/Search/Index/">Search trending projects</a>
+    </div>
+
+    <h2 class="template-header">PROC agreements</h2>
+
+    <p class="template-words">
+        In order to create PROCs search for Projects, find one you like and initiate a PROC agrement on that Profile.
+    </p>
+
+    @if(Model.PROCS_Collection.Count > 0)
+    {
+        <table id="PROC-results" class="table-hover table-responsive">
+
+            <tr>
+
+                <th class="col-sm-4">PROC #</th>
+
+                <th class="col-sm-4">Amount Invested</th>
+
+                <th class="col-sm-4">Revenue %</th>
+
+                <th class="col-sm-4">Active</th>
+
+            </tr>
+
+            @foreach(System.Data.DataRow item in Model.PROCS_Collection)
+            {
+                <tr>
+
+                    <td class="col-sm-4">
+                        <a href="@string.Format("/PROC/Details/{0}", item["Proc_ID"].ToString())">@string.Format("PROC {0}", item["Proc_ID"].ToString())</a>
+                    </td>
+
+                    <td class="alert-info">
+                        @item["Investment_Ammount"].ToString()
+                    </td>
+
+                    <td class="col-sm-4">
+                        @item["Revenue_Percentage"].ToString()
+                    </td>
+
+                    <td class="col-sm-4 alert-info">
+                        @{ var isActive = "";
+                            if(!(bool)item["Active"])
+                            {
+                                isActive = "No";
+                            }
+                            else
+                            {
+                                isActive = "Yes";
+                            }
+                        }
+                        @isActive
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    }
+
+    @if(Model.PROCS_Collection.Count < 1)
+    {
+        <p class="template-words">You have no PROC agreements tied to your account.</p>
+    }
+
+</div>
+

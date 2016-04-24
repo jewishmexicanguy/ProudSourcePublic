@@ -1,0 +1,82 @@
+﻿@model ProudSourceBeta.Models.EntrepreneurIndexViewModel
+
+<h2>Entrepreneur Details</h2>
+
+<hr />
+
+<div class="container">
+    <dl class="dl-horizontal">
+
+        <dt class="profile-words">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="profile-words">
+            @Html.DisplayNameFor(model => model.Verified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verified)
+        </dd>
+
+        <dt class="profile-words">Entrepreneur Image</dt>
+
+        <dd>
+            <div class="profile-image">
+
+                @{ var imgSrc = "/Images/emptyProfile.png";
+                    if (Model.Profile_Picture != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Profile_Picture);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+                }
+
+                <img id="profile-image" src="@imgSrc" />
+
+            </div>
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+@if(Model.Entrepreneur_ID != Model.Viewer_ID)
+{
+    if(IsPost)
+    {
+        <div class="container">
+            <p class="template-words">Your message has been posted</p>
+        </div>
+    }
+
+    if (!IsPost && Model.User_Id > 0)
+    {
+        <div class="container">
+            <div class="form">
+                <form id="message-entrepreneur" method="post">
+                    <div class="col-md-10">
+
+                        <textarea form="message-entrepreneur" name="Entrepreneur_Message" class="input-group-lg"></textarea>
+
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-10">
+
+                        <input type="submit" value="message" class="btn btn-default" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        }
+    }
+<p>
+    <a href="/Search/Index">Search the ProudSource community</a>
+</p>

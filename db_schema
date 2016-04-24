@@ -1,0 +1,305 @@
+
+CREATE TABLE "Proudsource schema"."PROC_entrepreneur_xref"
+(
+  "PROC_entrepreneur_xref_id" integer NOT NULL,
+  "PROC_master_id" integer NOT NULL,
+  entrepreneur_master_id integer NOT NULL,
+  successful bit(2) NOT NULL,
+  expiration bit(2) NOT NULL,
+  total_invested integer NOT NULL,
+  total_returned integer NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone NOT NULL,
+  mod_user_id timestamp(6) with time zone NOT NULL,
+  CONSTRAINT "PROC_entrepreneur_xref_id_pk" PRIMARY KEY ("PROC_entrepreneur_xref_id"),
+  CONSTRAINT "PROC_master_id_fk" FOREIGN KEY ("PROC_master_id")
+      REFERENCES "Proudsource schema"."PROC_master" ("PROC_master_id") MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT entrepreneur_master_id_fk FOREIGN KEY (entrepreneur_master_id)
+      REFERENCES "Proudsource schema".entrepreneur_master (entrepreneur_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema"."PROC_entrepreneur_xref"
+  OWNER TO "PSMaintStaging";
+
+
+CREATE TABLE "Proudsource schema"."PROC_investor_entrepreneur_xref"
+(
+  "PROC_investor_entrepreneur_xref_id" integer NOT NULL,
+  "PROC_master_id" integer NOT NULL,
+  investor_master_id integer NOT NULL,
+  entrepreneur_master_id integer NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone NOT NULL,
+  mod_user_id integer NOT NULL,
+  CONSTRAINT "PROC_investor_entrepreneur_xref_id_pk" PRIMARY KEY ("PROC_investor_entrepreneur_xref_id"),
+  CONSTRAINT "PROC_master_id_fk" FOREIGN KEY ("PROC_master_id")
+      REFERENCES "Proudsource schema"."PROC_master" ("PROC_master_id") MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT entrepreneur_master_id_fk FOREIGN KEY (entrepreneur_master_id)
+      REFERENCES "Proudsource schema".entrepreneur_master (entrepreneur_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT investor_master_id_fk FOREIGN KEY (investor_master_id)
+      REFERENCES "Proudsource schema".investor_master (investor_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema"."PROC_investor_entrepreneur_xref"
+  OWNER TO "PSMaintStaging";
+
+
+
+CREATE TABLE "Proudsource schema"."PROC_investor_xref"
+(
+  "PROC_investor_xref_id" integer NOT NULL,
+  "PROC_master_id" integer NOT NULL,
+  investor_master_id integer NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone NOT NULL,
+  mod_user_id integer NOT NULL,
+  CONSTRAINT "PROC_investor_xref_id_pk" PRIMARY KEY ("PROC_investor_xref_id"),
+  CONSTRAINT "PROC_master_id_fk" FOREIGN KEY ("PROC_master_id")
+      REFERENCES "Proudsource schema"."PROC_master" ("PROC_master_id") MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT investor_master_id_fk FOREIGN KEY (investor_master_id)
+      REFERENCES "Proudsource schema".investor_master (investor_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema"."PROC_investor_xref"
+  OWNER TO "PSMaintStaging";
+
+
+
+CREATE TABLE "Proudsource schema"."PROC_master"
+(
+  "PROC_master_id" integer NOT NULL,
+  user_master_id integer NOT NULL,
+  "PROC_begin_date" timestamp(6) with time zone NOT NULL,
+  "PROC_end_date" timestamp(6) with time zone NOT NULL,
+  profit_percentage numeric(6,4) NOT NULL,
+  payment_interval_lkup_id bit(3),
+  "PROC_description" text NOT NULL, -- right now i've enabled infinite text for people to describe their project. i need to ask if we're going to limit this
+  org_master_id integer NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone NOT NULL,
+  mod_user_id timestamp(6) with time zone NOT NULL,
+  project_plan bytea NOT NULL,
+  other_document bytea,
+  other_document2 bytea,
+  other_document3 bytea,
+  CONSTRAINT "PROC_master_id_pk" PRIMARY KEY ("PROC_master_id"),
+  CONSTRAINT org_master_id_fk FOREIGN KEY (org_master_id)
+      REFERENCES "Proudsource schema".org_master (org_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT payment_interval_lkup_id_fk FOREIGN KEY (payment_interval_lkup_id)
+      REFERENCES "Proudsource schema".payment_interval_lkup (payment_interval_lkup_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_master_id_fk FOREIGN KEY (user_master_id)
+      REFERENCES "Proudsource schema".user_master (user_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema"."PROC_master"
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema"."PROC_master"
+  IS 'this table is for the PROC characteristics. begin/ end time, payment interval, etc';
+COMMENT ON COLUMN "Proudsource schema"."PROC_master"."PROC_description" IS 'right now i''ve enabled infinite text for people to describe their project. i need to ask if we''re going to limit this';
+
+
+
+
+CREATE TABLE "Proudsource schema".entrepreneur_master
+(
+  entrepreneur_master_id integer NOT NULL,
+  user_master_id integer NOT NULL,
+  resume bytea NOT NULL,
+  other_document bytea,
+  other_document2 bytea,
+  other_document3 bytea,
+  CONSTRAINT entrepreneur_master_id_pk PRIMARY KEY (entrepreneur_master_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".entrepreneur_master
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".entrepreneur_master
+  IS 'this is a table for entrepreneur characteristics';
+
+
+
+CREATE TABLE "Proudsource schema".investor_master
+(
+  investor_master_id integer NOT NULL, -- investor pk
+  social_media_profile_id integer, -- links to social media data table
+  bitcoin_wallet_id integer, -- links to bitcoin wallet master
+  bank_account_id integer, -- links to bank_account_master table
+  org_master_id integer, -- links to org_master_table. optional.
+  success_percentage_total numeric(4,2), -- % of projects successfully completed on our site
+  success_percent_quarter numeric(4,2), -- success % of projects from this quarter
+  total_return integer, -- amount of money this person has earned through investment, in total
+  total_percentage_return integer, -- amount earned / amount invested
+  total_invested integer, -- total amount of money invested
+  resume bytea,
+  other_document bytea,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone NOT NULL,
+  mod_user_id timestamp(6) with time zone NOT NULL,
+  CONSTRAINT investor_master_id_pk PRIMARY KEY (investor_master_id),
+  CONSTRAINT org_master_id_fk FOREIGN KEY (org_master_id)
+      REFERENCES "Proudsource schema".org_master (org_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".investor_master
+  OWNER TO "PSMaintStaging";
+COMMENT ON COLUMN "Proudsource schema".investor_master.investor_master_id IS 'investor pk';
+COMMENT ON COLUMN "Proudsource schema".investor_master.social_media_profile_id IS 'links to social media data table';
+COMMENT ON COLUMN "Proudsource schema".investor_master.bitcoin_wallet_id IS 'links to bitcoin wallet master';
+COMMENT ON COLUMN "Proudsource schema".investor_master.bank_account_id IS 'links to bank_account_master table';
+COMMENT ON COLUMN "Proudsource schema".investor_master.org_master_id IS 'links to org_master_table. optional.';
+COMMENT ON COLUMN "Proudsource schema".investor_master.success_percentage_total IS '% of projects successfully completed on our site';
+COMMENT ON COLUMN "Proudsource schema".investor_master.success_percent_quarter IS 'success % of projects from this quarter';
+COMMENT ON COLUMN "Proudsource schema".investor_master.total_return IS 'amount of money this person has earned through investment, in total ';
+COMMENT ON COLUMN "Proudsource schema".investor_master.total_percentage_return IS 'amount earned / amount invested';
+COMMENT ON COLUMN "Proudsource schema".investor_master.total_invested IS 'total amount of money invested';
+
+
+
+
+CREATE TABLE "Proudsource schema".org_master
+(
+  org_master_id integer NOT NULL,
+  org_name character varying(30) NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  user_master_id integer NOT NULL,
+  mod_date_time timestamp(6) with time zone DEFAULT NULL::timestamp with time zone,
+  org_type_lkup_id integer NOT NULL,
+  mod_user_id integer NOT NULL,
+  CONSTRAINT org_master_id_pk PRIMARY KEY (org_master_id),
+  CONSTRAINT org_type_lkup_id_fk FOREIGN KEY (org_type_lkup_id)
+      REFERENCES "Proudsource schema"."AAA_org_type_lkup" (org_type_lkup_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_master_id_fk FOREIGN KEY (user_master_id)
+      REFERENCES "Proudsource schema".user_master (user_master_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".org_master
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".org_master
+  IS 'this table is for organizations. people can create and join organizations publically to establish employment and such. it shows everyone else "we''re a team"';
+
+-- Index: "Proudsource schema".fki_org_type_lkup_id_fk
+
+-- DROP INDEX "Proudsource schema".fki_org_type_lkup_id_fk;
+
+CREATE INDEX fki_org_type_lkup_id_fk
+  ON "Proudsource schema".org_master
+  USING btree
+  (org_type_lkup_id);
+
+
+
+
+CREATE TABLE "Proudsource schema".payment_interval_lkup
+(
+  payment_interval_lkup_id bit(3) NOT NULL,
+  payment_interval character varying(10) NOT NULL,
+  CONSTRAINT payment_interval_lkup_id_pk PRIMARY KEY (payment_interval_lkup_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".payment_interval_lkup
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".payment_interval_lkup
+  IS 'this table is for payment intervals. it only has 3 rows-- year, month, day.';
+
+
+
+CREATE TABLE "Proudsource schema".user_master
+(
+  user_master_id integer NOT NULL,
+  login_pswd character varying(32) NOT NULL, -- Remeber to make this field encrypted in the database
+  user_login character varying(32) NOT NULL,
+  failed_login_attempts integer NOT NULL DEFAULT 0,
+  last_login_datetime timestamp(6) with time zone DEFAULT NULL::timestamp with time zone,
+  last_failed_login timestamp(6) with time zone DEFAULT NULL::timestamp with time zone,
+  "first name" character varying(20) NOT NULL,
+  "last name" character varying(20) NOT NULL,
+  email character(60) NOT NULL,
+  create_date_time timestamp(6) with time zone NOT NULL,
+  mod_date_time timestamp(6) with time zone DEFAULT NULL::timestamp with time zone,
+  user_type_lkup_id bit(3) NOT NULL,
+  user_role_id integer NOT NULL, -- user_role_id_fk
+  mod_user_id integer NOT NULL,
+  CONSTRAINT user_master_id_pk PRIMARY KEY (user_master_id),
+  CONSTRAINT user_role_id_fk FOREIGN KEY (user_role_id)
+      REFERENCES "Proudsource schema".user_role (user_role_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_type_lkup_id_fk FOREIGN KEY (user_type_lkup_id)
+      REFERENCES "Proudsource schema".user_type_lkup (user_type_lkup_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".user_master
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".user_master
+  IS 'this is the main table for all users. as soon as someone creates a profile, their basic info is saved here. ';
+COMMENT ON COLUMN "Proudsource schema".user_master.login_pswd IS 'Remeber to make this field encrypted in the database';
+COMMENT ON COLUMN "Proudsource schema".user_master.user_role_id IS 'user_role_id_fk';
+
+
+
+
+CREATE TABLE "Proudsource schema".user_role
+(
+  user_role_id integer NOT NULL, -- this is the ID for each type of user_role. there are 4 types-- neither, investor, entrepreneur, both
+  user_role_description character varying(20) NOT NULL, -- the name of the user_role
+  CONSTRAINT user_role_id_pk PRIMARY KEY (user_role_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".user_role
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".user_role
+  IS 'index of user roles (investor, entrepreneur, both, neither)';
+COMMENT ON COLUMN "Proudsource schema".user_role.user_role_id IS 'this is the ID for each type of user_role. there are 4 types-- neither, investor, entrepreneur, both';
+COMMENT ON COLUMN "Proudsource schema".user_role.user_role_description IS 'the name of the user_role';
+
+
+
+
+CREATE TABLE "Proudsource schema".user_type_lkup
+(
+  user_type_lkup_id bit(3) NOT NULL,
+  user_type_description character varying(20) NOT NULL,
+  CONSTRAINT user_type_lkup_id_pk PRIMARY KEY (user_type_lkup_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "Proudsource schema".user_type_lkup
+  OWNER TO "PSMaintStaging";
+COMMENT ON TABLE "Proudsource schema".user_type_lkup
+  IS 'this table is for user levels. some users might be resetting passwords, having different permissions, etc.';
+
+

@@ -1,0 +1,42 @@
+
+CREATE OR REPLACE FUNCTION create_user () 
+RETURNS integer AS $new_user_master_id$
+
+DECLARE new_user_master_id integer;
+DECLARE new_user_login character varying(255);
+DECLARE new_password character varying(255);
+DECLARE new_email character varying(255);
+DECLARE new_emailverified boolean;
+DECLARE new_last_failed_login timestamp with time zone DEFAULT NULL;
+DECLARE new_mod_user_master_id integer;
+
+
+BEGIN
+ new_user_login:= 'rahul55';
+ new_password:= 'pa$$word';
+ new_email:= 'rahul@proudsource.us';
+ new_emailverified:= True;
+ new_mod_user_master_id:= 1;
+ 
+    INSERT INTO user_master(
+	user_login,
+	password,
+	email,
+	emailverified,
+	mod_user_master_id
+    )
+values (
+  new_user_login,
+  new_password,
+  new_email,
+  new_emailverified,
+  new_mod_user_master_id);
+
+select MAX(user_master_id) into new_user_master_id
+from user_master;
+
+RETURN new_user_master_id;
+
+
+END;
+$new_user_master_id$ LANGUAGE plpgsql;

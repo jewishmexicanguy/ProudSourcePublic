@@ -1,0 +1,45 @@
+﻿@model ProudSourceBeta.Models.ProjectDeleteImageViewModel
+
+@{
+    ViewBag.Title = "Remove Image";
+}
+
+<h2 class="template-header">Confirm Image Removal</h2>
+
+@using (Html.BeginForm("RemoveImage", "Project", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Image to be removed</label>
+            <div class="col-md-10">
+                @{ var base64 = Convert.ToBase64String(Model.Profile_Image);
+                    var imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                }
+                <img class="project-image" src="@imgSrc" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Check the checkbox and press the remove button to confirm removal.</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="confirm_CheckBox" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Remove" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+                    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Project_ID })
+</div>

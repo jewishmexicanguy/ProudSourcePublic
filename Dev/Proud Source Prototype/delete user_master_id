@@ -1,0 +1,20 @@
+CREATE OR REPLACE FUNCTION delete_user_master_id () 
+RETURNS integer AS $new_user_master_id$
+
+DECLARE new_user_master_id integer;
+
+
+
+BEGIN
+ new_user_master_id:= 9;
+
+ 
+
+   DELETE FROM user_master where user_master_id = new_user_master_id;
+   
+
+RETURN new_user_master_id;
+
+
+END;
+$new_user_master_id$ LANGUAGE plpgsql;

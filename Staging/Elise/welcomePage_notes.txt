@@ -1,0 +1,3 @@
+class slideshow refers to a div which will contain a javascript slideshow - top 5 projects (images with links to project description on click), slideshow will pause on mouseover, and have arrows to go to next image
+
+class goal refers to a floating div (within) on top of class slideshow which will load the % to goal of corresponding project and display it to the user...

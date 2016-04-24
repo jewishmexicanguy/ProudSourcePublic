@@ -1,0 +1,16 @@
+﻿body {
+}
+
+.template-header {
+    position: relative;
+    top: 75px;
+    left: 300px;
+}
+
+.form-horizontal {
+    position: relative;
+    top: 150px;
+    left: 300px;
+}
+
+

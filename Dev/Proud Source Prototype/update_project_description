@@ -1,0 +1,25 @@
+CREATE OR REPLACE FUNCTION update_project_description (project_description character varying, present_project_master_id integer) 
+RETURNS integer AS $new_project_master_id$
+
+DECLARE new_project_description character varying;
+
+
+BEGIN
+ new_project_description:= project_description;
+ 
+    UPDATE project_master SET
+    
+    (
+	project_description
+    )
+= (
+  new_project_description)
+
+where project_master_id = present_project_master_id;
+
+
+RETURN present_project_master_id;
+
+
+END;
+$new_project_master_id$ LANGUAGE plpgsql;

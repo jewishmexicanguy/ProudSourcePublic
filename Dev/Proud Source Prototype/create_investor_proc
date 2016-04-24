@@ -1,0 +1,64 @@
+
+CREATE OR REPLACE FUNCTION create_investor_proc () 
+RETURNS integer AS $new_PROC_investor_xref_id$
+
+DECLARE new_PROC_investor_xref_id integer;
+DECLARE new_PROC_master_id integer;
+DECLARE new_PROC_begin_date timestamp with time zone; 
+DECLARE new_PROC_end_date timestamp with time zone; 
+DECLARE new_profit_percentage numeric(4,2);
+DECLARE new_payment_interval_id bit(4);
+DECLARE new_create_date_time timestamp with time zone;
+DECLARE new_mod_user_master_id integer;
+DECLARE new_investor_master_id integer;
+DECLARE new_expiration boolean;
+DECLARE new_successful boolean;
+BEGIN
+ new_PROC_begin_date:='08/08/2016';
+ new_PROC_end_date:='12/26/2016';
+ new_profit_percentage:=8.00;
+ new_payment_interval_id:=1100;
+ new_create_date_time:= now();
+ new_mod_user_master_id:=17;
+ new_investor_master_id:= 6;
+ new_expiration := FALSE;
+ new_successful := FALSE;
+    INSERT INTO PROC_master (
+  user_master_id,
+  proc_begin_date,
+  proc_end_date,
+  profit_percentage,
+  payment_interval_id,
+  mod_user_master_id,
+  successful,
+  expired)
+values (
+  new_mod_user_master_id,
+  new_proc_begin_date,
+  new_proc_end_date,
+  new_profit_percentage,
+  new_payment_interval_id,
+  new_mod_user_master_id,
+  new_successful,
+  new_expiration);
+
+select MAX(PROC_master_id) into new_PROC_master_id
+from PROC_master;
+
+INSERT INTO PROC_investor_xref (
+PROC_master_id,
+investor_master_id,
+mod_user_master_id)
+values
+(new_PROC_master_id,
+new_investor_master_id,
+new_mod_user_master_id);
+
+select MAX(PROC_investor_xref_id) into new_PROC_investor_xref_id
+from PROC_investor_xref;
+
+RETURN new_PROC_investor_xref_id;
+
+
+END;
+$new_PROC_investor_xref_id$ LANGUAGE plpgsql;

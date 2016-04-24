@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION delete_project (present_project_master_id integer) 
+RETURNS integer AS $present_project_master_id$
+
+declare deleting_proc_master_id integer;
+
+BEGIN
+
+delete from proc_investor_xref where proc_master_id in 
+  (select proc_master_id from proc_master where project_master_id = present_project_master_id);
+delete from proc_master where project_master_id = present_project_master_id;
+delete from project_master where project_master_id = present_project_master_id;
+
+
+RETURN present_project_master_id;
+
+
+END;
+$present_project_master_id$ LANGUAGE plpgsql;

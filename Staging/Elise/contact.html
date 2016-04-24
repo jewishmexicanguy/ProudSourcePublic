@@ -1,0 +1,80 @@
+<head><link rel="stylesheet" type="text/css" href="contact.css"> </head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">ProudSource</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Home/About">About</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+                    <div id="search-bar-keyarg" class="navbar-form navbar-left">
+    <div class="form-group">
+        <input class="form-control" placeholder="Search" id="in-search-arg" type="text">
+    </div>
+    <button type="submit" class="btn btn-default" id="btn_search_arg" onclick="window.location.replace('/Search/KeyArg/' + document.getElementById('in-search-arg').value);">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </button>
+</div>
+
+                </ul>
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"><input name="__RequestVerificationToken" value="Z_4zbZrEQzG0W0XFTsT8K1d7bOnBGXgp5TtJ91R_XZeKhKI32Snn2k1wOB8wHKIpb_6kXaj-lizH7SIkQFE-7PJZQAIGZ7wnpD3kzm1dpdevkI3UOaDFjO0lCC_LJevDlLNG6BG236R6JV9kgcAZ5Q2" type="hidden">    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/User" title="User Index">Hello, kamikazekalico@gmail.com!</a>
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        
+
+<div class="container">
+    <div class= "titles">
+        <h2>Contact info</h2>
+        <h3><i>Methods of Contact</i></h3>
+    </div>
+<div>
+        <address>
+  <img class= "letter" src="letter.jpg"><br>
+  <p><b>Snail Mail:</b></p>
+            345 Lincoln Ave<br>
+            Palo Alto, CA 94301<br>
+          <br>
+  <img src="phone.png" class="phone"alt="phone_icon"><abbr title="Phone"><b>Voice Machine:</b></abbr>
+            +1 952.380.6998
+        </address>
+			<img class= "email" src="email.jpg"><br>
+        <address><h4>Cybernetic Transmissions</h4>
+  
+            <strong>Support:</strong>   <a href="mailto:Support@proudsource.us">Support@proudsource.us</a><br>
+            <strong>Business Verification:</strong> <a href="mailto:Verification@proudsource.us">Verification@proudsource.us</a>
+        </address>
+    </div>
+</div>
+
+        <hr>
+        <footer>
+            <p>© 2016 - ProudSource All rights reserved</p>
+        </footer>
+    </div>
+
+    <script src="/bundles/jquery?v=LCTUWYjF9I-Sw3l0P8Zn6_b6478OuizeBkjnoe30Tcc1"></script>
+
+    <script src="/bundles/bootstrap?v=9a0xCgIJUUuICgd8OXNeFEY1MeHAZk_6hURSTO__1ac1"></script>
+
+    
+
+
+<div style="background-image: url(&quot;resource://jid1-dqs9bdqga04hbw-at-jetpack/data/content_script/voice.png&quot;); display: none;" state="voice" title="Click to Show Translation" class="placeholder-icon"><canvas style="display: none;" height="36" width="36" class="loading-circle" id="text-to-speech-loader"></canvas></div></body>

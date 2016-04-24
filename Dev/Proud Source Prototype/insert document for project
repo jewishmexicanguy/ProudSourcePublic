@@ -1,0 +1,40 @@
+CREATE OR REPLACE FUNCTION insert_project_document (document_file bytea, create_user_master_id integer, project_master_id integer) 
+RETURNS integer AS $new_document_master_id$
+
+DECLARE new_document bytea;
+DECLARE new_create_date_time timestamp with time zone;
+DECLARE new_create_user_master_id integer;
+DECLARE new_document_master_id integer;
+DECLARE new_project_master_id integer;
+BEGIN
+ new_document:= document_file;
+ new_create_date_time:=now();
+ new_create_user_master_id:= create_user_master_id;
+ new_project_master_id:= project_master_id;
+    INSERT INTO document_master (
+  document_file,
+  create_date_time,
+  create_user_master_id)
+values (
+ new_document,
+ new_create_date_time,
+ new_create_user_master_id);
+
+SELECT CURRVAL(pg_get_serial_sequence('document_master','document_master_id')) into new_document_master_id;
+
+INSERT INTO project_document_xref (
+project_master_id,
+document_master_id,
+create_user_master_id,
+create_date_time)
+values
+(new_project_master_id,
+new_document_master_id,
+new_create_user_master_id,
+new_create_date_time);
+
+
+RETURN new_document_master_id;
+
+END;
+$new_document_master_id$ LANGUAGE plpgsql;

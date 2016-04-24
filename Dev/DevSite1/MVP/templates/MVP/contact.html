@@ -1,0 +1,43 @@
+{% block content %}
+<!DOCTYPE html>
+<html>
+ <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+            <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+            {% load staticfiles %}
+            <link rel="stylesheet" type="text/css" href="{% static 'MVP/styles/style.css' %}">
+    </head>
+<nav class="navbar navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Proudsource</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Page 1</a></li>
+        <li><a href="#">Page 2</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<h1>Contact Us</h1>
+
+<div class = "center">
+<form class = "tempText" action='#' method="post">
+    Your name<br>
+    <input type="text" name="cf_name"></input><br>
+    Your e-mail<br>
+    <input type="text" name="cf_email"></input><br>
+    Message<br>
+    <textarea name="cf_message"></textarea><br>
+    <input type="submit" value="Send">
+    <input type="reset" value="Clear">
+</form>
+</div>
+
+</html>
+{% endblock %}

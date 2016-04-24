@@ -1,0 +1,119 @@
+<!--In other words, this will be the page users see when they log in, their most recent project Project/Index/8 for me...this is also what other user's will see as their project, minus the ability to edit. Notice this is not the full HTML, just parts that I edited.-->
+
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">ProudSource</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Home/About">About</a></li>
+                    <li><a href="/Home/Contact">Contact</a></li>
+                    <div id="search-bar-keyarg" class="navbar-form navbar-left">
+    <div class="form-group">
+        <input class="form-control" placeholder="Search" id="in-search-arg" type="text">
+    </div>
+    <button type="submit" class="btn btn-default" id="btn_search_arg" onclick="window.location.replace('/Search/KeyArg/' + document.getElementById('in-search-arg').value);">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </button>
+</div>
+
+                </ul>
+                <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"><input name="__RequestVerificationToken" value="f4iKkItkoDCkm0MUrK63BZTrWl4lJVXsabfKDZgwEelPPhCdAsAtHNSna3X0c5EyOKfwfwCb4oNoCuzVUiE3W0fNObOwDOqfzN6qxNzm5p9BZTKPBJpZdWLT8tGWuVI_CzldeB-xNwZdwKGu3J9DpQ2" type="hidden">    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="/User" title="User Index">Hello kamikazekalico@gmail.com</a>
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        
+
+
+<h1>ProjectName</h1>
+
+<div class="container">
+    
+    <hr>
+    <dl class="dl-horizontal">
+
+        <dt class="user_info">
+  <a href="/User"> 
+<img src="/images/profile_pic" alt="No picture available">
+</a>
+  <b>Name:</b>UserName<br>
+  <b>Age:</b>UserName<br>
+  <i>insert biographical summary here...</i><a href="/user">...more</a>
+  
+        </dt>
+
+        <dd class="visible">
+  <b>project one</b>
+        </dd><br>
+
+        
+
+        <dd>
+            lots of words here and other words and stuff
+        </dd>
+<br>
+<br>
+
+        
+
+        <dd><b>Project Investment Goal:</b>
+            500.00<br>
+  % to goal: 
+        </dd>
+
+        <dt>
+            Project is public
+        </dt>
+
+        <dd>
+            <input checked="checked" class="check-box" disabled="disabled" type="checkbox">
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="/Project/Edit/8">Edit</a> |
+    <a href="/Project/Details/8">Profile Preview</a> |
+    <a href="/Entrepreneur/Index/12">Back to Entrepreneur Index</a>
+</p>
+
+<hr>
+
+<div class="container">
+
+
+        <p>You have no PROC agrements tied to this project.</p>
+
+</div>
+
+        <hr>
+        <footer>
+            <p>© 2016 - ProudSource All rights reserved</p>
+        </footer>
+    </div>
+
+    <script src="/bundles/jquery?v=LCTUWYjF9I-Sw3l0P8Zn6_b6478OuizeBkjnoe30Tcc1"></script>
+
+    <script src="/bundles/bootstrap?v=9a0xCgIJUUuICgd8OXNeFEY1MeHAZk_6hURSTO__1ac1"></script>
+
+    
+
+
+<div style="background-image: url(&quot;resource://jid1-dqs9bdqga04hbw-at-jetpack/data/content_script/voice.png&quot;); display: none;" state="voice" title="Click to Show Translation" class="placeholder-icon"><canvas style="display: none;" height="36" width="36" class="loading-circle" id="text-to-speech-loader"></canvas></div></body>

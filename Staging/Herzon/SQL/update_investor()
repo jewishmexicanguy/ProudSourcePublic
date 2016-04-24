@@ -1,0 +1,65 @@
+CREATE OR REPLACE FUNCTION update_investor(
+    ATinvestor_master_id INTEGER,
+    ATinvestor_profile_name CHARACTER VARYING,
+	ATinvestor_public BOOLEAN,
+	ATinvestor_image BYTEA)
+RETURNS VOID AS
+$BODY$
+
+-- Declare variable to hold user_master_id
+DECLARE user_id INTEGER;
+
+BEGIN
+	-- Get our user_master_id
+	user_id:= (
+		SELECT IM.user_master_id 
+		FROM investor_master IM 
+		WHERE IM.investor_master_id = ATinvestor_master_id
+	);
+ 
+    -- select to see if there are any images that are tied to this entrepreneur account into a tempt table
+	CREATE TEMPORARY TABLE temp_image_ids AS
+	SELECT ImgM.image_master_id
+	FROM image_master ImgM
+	JOIN investor_image_xref IIXREF 
+		ON IIXREF.image_master_id = ImgM.image_master_id
+	WHERE IIXREF.investor_master_id = ATinvestor_master_id;
+	
+	-- if then statements that update our record peice by peice
+	-- CASE Statement to for entrepreneur_profile_name
+	IF OCTET_LENGTH(ATinvestor_profile_name) > 1
+		THEN 
+			UPDATE investor_master
+			SET investor_profile_name = ATinvestor_profile_name
+			WHERE investor_master_id = ATinvestor_master_id;
+	END IF;
+	-- CASE Stement for entrepreneur_public
+	IF ATinvestor_public IS NOT NULL
+		THEN 
+			UPDATE investor_master
+			SET investor_public = ATinvestor_public
+			WHERE investor_master_id = ATinvestor_master_id;
+	END IF;
+	-- CASE Statement for entrepreneur_image
+	IF OCTET_LENGTH(ATinvestor_image) > 1 
+		THEN
+			IF (SELECT COUNT(*) FROM temp_image_ids) > 0
+				THEN -- This will fire where images exist for the entreperneur
+					UPDATE image_master
+					SET image_file = ATinvestor_image
+					WHERE image_master_id = (
+						SELECT image_master_id 
+						FROM temp_image_ids 
+						ORDER BY image_master_id ASC LIMIT 1
+						);
+				ELSE -- this will fire where images do not exist for the entrepreneur
+					INSERT INTO image_master (user_master_id, image_file) 
+					VALUES (user_id, ATinvestor_image);
+					INSERT INTO investor_image_xref (investor_master_id, image_master_id, create_date_time)
+					VALUES (ATinvestor_master_id, (SELECT CURRVAL(pg_get_serial_sequence('image_master','image_master_id'))), now());
+			END IF;
+	END IF;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;

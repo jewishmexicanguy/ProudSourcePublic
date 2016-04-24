@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ProudSource</h1>
+    <p class="lead"></p>
+    <p><a href="http://cyberconcepts.technology" class="btn btn-primary btn-lg">Powered by CyberConcepts [ ]</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Register</h2>
+        <p>
+            Create a user account with us.
+        </p>
+        <p><a class="btn btn-default" href="/Account/Register">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Login</h2>
+        <p>Already a user, access your existing account </p>
+        <p><a class="btn btn-default" href="/Account/Login">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Explore</h2>
+        <p>Want to peruse and see what exiting entreprenurial projects our community is working on? Click below to learn more</p>
+        <p><a class="btn btn-default" href="/Entrepreneur/Project">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+@*
+You are you using @Request.Browser.Browser, and that is ok!
+
+@{var amounts = new List<Decimal> { 100, 90, -8, 45, -900.6m };
+     }
+
+<ul class="list-group">
+        @foreach(decimal amount in amounts)
+        {
+            <li class="list-group-item">
+                @formatAmount(amount)
+                <text>some monies!</text>
+            </li>
+        }
+</ul>
+
+    @helper formatAmount(decimal amount)
+    {
+        var color = "green";
+        if (amount < 0)
+    {
+        color = "red";
+    }
+    <span style="color:@color">@String.Format("{0:c}", amount)</span>
+*@

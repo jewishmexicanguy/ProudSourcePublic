@@ -1,0 +1,40 @@
+table Email_Messages column Reference_ID, column Reference_Type
+
+	Reference_ID, will serve as an Identity row that will be the primary key of some record on some other table.
+		In truth this column can be used as a reference to point back to what caused this message to be generated.
+
+	Reference_Type, will serve as a way of knowing what table the Reference_ID refers to.
+	
+	Used together we can represent all messages that are proudsource system generated on one table and it will not matter on which 
+	table the originating reason for the message resides on.
+	
+	Profile Reference types
+	1	|	User level messages, 
+	2	|	Financial level messages,
+	3	|	Investor level messages,
+	4	|	Entreprneur level messages,
+	5	|	Project level messages,
+	6	|	PROC, messages about PROCs,
+	7	|	Marketing,
+	8	|	Client services/Customer support,
+	9	|	Job openings,
+	
+	Category Types
+	1	|	Incoming Bank Transfer
+	2	|	Incoming Bitcoin Transfer
+	3	|	Incoming Paypal Transfer
+	4	|	Outgoing Bank Transfer
+	5	|	Outgoing Bitcoin Transfer
+	6	|	Outgoing Paypal Transfer
+	7	|	PROC Investment
+	8	|	PROC Payout
+	9	|	PROC Reversal
+	10	|	Account Correction
+	11	|	Investment Fee
+	12	|	Payout Fee
+	
+	Transaction Type
+	1	|	Account Deposit
+	2	|	Account Withdrawl
+	3	|	Deposit Reversal
+	4	|	Withdrawl Reversal

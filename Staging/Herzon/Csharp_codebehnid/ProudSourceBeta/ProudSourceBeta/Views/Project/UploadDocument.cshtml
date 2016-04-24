@@ -1,0 +1,39 @@
+﻿@model ProudSourceBeta.Models.ProjectUploadDocumentViewModel
+
+@{
+    ViewBag.Title = "UploadDocument";
+}
+
+<h2 class="template-header">UploadDocument</h2>
+
+
+@using (Html.BeginForm("UploadDocument", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Choose a document to upload</label>
+            <div class="col-md-10">
+                <input id="upload_project_document" type="file" name="upload_Document" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Project_ID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

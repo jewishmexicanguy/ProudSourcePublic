@@ -1,0 +1,46 @@
+﻿@model ProudSourceBeta.Models.ProjectDeleteDocumentViewModel
+
+@{
+    ViewBag.Title = "RemoveDocument";
+}
+
+<h2 class="template-header">Remove Document</h2>
+
+
+@using (Html.BeginForm("RemoveDocument", "Project", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Document to be removed</label>
+            <div class="col-md-10">
+                <span class="glyphicon glyphicon-file">@Model.File_Name</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Check the checkbox and press the remove button to confirm removal.</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="confirm_CheckBox" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Project_ID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

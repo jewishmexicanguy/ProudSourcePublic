@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPaypalAPI", "ZPaypalAPI\ZPaypalAPI.csproj", "{95F46031-1D4B-4004-A67F-2EB09494A370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "TestApplication\TestApplication.csproj", "{BC1DEEBE-9A66-4591-88C6-B0763D2D209D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95F46031-1D4B-4004-A67F-2EB09494A370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F46031-1D4B-4004-A67F-2EB09494A370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F46031-1D4B-4004-A67F-2EB09494A370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F46031-1D4B-4004-A67F-2EB09494A370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1DEEBE-9A66-4591-88C6-B0763D2D209D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1DEEBE-9A66-4591-88C6-B0763D2D209D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1DEEBE-9A66-4591-88C6-B0763D2D209D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1DEEBE-9A66-4591-88C6-B0763D2D209D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

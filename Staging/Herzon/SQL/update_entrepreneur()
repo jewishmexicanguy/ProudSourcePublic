@@ -1,0 +1,65 @@
+CREATE OR REPLACE FUNCTION update_entrepreneur(
+    ATentrepreneur_master_id INTEGER,
+    ATentrepreneur_profile_name CHARACTER VARYING,
+	ATentrepreneur_public BOOLEAN,
+	ATentrepreneur_image BYTEA)
+RETURNS VOID AS
+$BODY$
+
+-- Declare variable to hold user_master_id
+DECLARE user_id INTEGER;
+
+BEGIN
+	-- Get our user_master_id
+	user_id:= (
+		SELECT EM.user_master_id 
+		FROM entrepreneur_master EM 
+		WHERE EM.entrepreneur_master_id = ATentrepreneur_master_id
+	);
+ 
+    -- select to see if there are any images that are tied to this entrepreneur account into a tempt table
+	CREATE TEMPORARY TABLE temp_image_ids AS
+	SELECT IM.image_master_id
+	FROM image_master IM
+	JOIN entrepreneur_image_xref EIXREF 
+		ON EIXREF.image_master_id = IM.image_master_id
+	WHERE EIXREF.entrepreneur_master_id = ATentrepreneur_master_id;
+	
+	-- if then statements that update our record peice by peice
+	-- CASE Statement to for entrepreneur_profile_name
+	IF OCTET_LENGTH(ATentrepreneur_profile_name) > 1
+		THEN 
+			UPDATE entrepreneur_master
+			SET entrepreneur_profile_name = ATentrepreneur_profile_name
+			WHERE entrepreneur_master_id = ATentrepreneur_master_id;
+	END IF;
+	-- CASE Stement for entrepreneur_public
+	IF ATentrepreneur_public IS NOT NULL
+		THEN 
+			UPDATE entrepreneur_master
+			SET entrepreneur_public = ATentrepreneur_public
+			WHERE entrepreneur_master_id = ATentrepreneur_master_id;
+	END IF;
+	-- CASE Statement for entrepreneur_image
+	IF OCTET_LENGTH(ATentrepreneur_image) > 1 
+		THEN
+			IF (SELECT COUNT(*) FROM temp_image_ids) > 0
+				THEN -- This will fire where images exist for the entreperneur
+					UPDATE image_master
+					SET image_file = ATentrepreneur_image
+					WHERE image_master_id = (
+						SELECT image_master_id 
+						FROM temp_image_ids 
+						ORDER BY image_master_id ASC LIMIT 1
+						);
+				ELSE -- this will fire where images do not exist for the entrepreneur
+					INSERT INTO image_master (user_master_id, image_file) 
+					VALUES (user_id, ATentrepreneur_image);
+					INSERT INTO entrepreneur_image_xref (entrepreneur_master_id, image_master_id, create_date_time)
+					VALUES (ATentrepreneur_master_id, (SELECT CURRVAL(pg_get_serial_sequence('image_master','image_master_id'))), now());
+			END IF;
+	END IF;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Accounts</h3>
+
+<ul>
+    {% for i in 10 %}
+    <li class="Account" {{ invesetor_name }} </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url "investor-account-new" %}">add a new investor account</a>
+{% endblock %}

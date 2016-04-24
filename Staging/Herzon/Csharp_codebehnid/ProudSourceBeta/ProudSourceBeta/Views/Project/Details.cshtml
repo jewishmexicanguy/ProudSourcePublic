@@ -1,0 +1,250 @@
+﻿@model ProudSourceBeta.Models.ProjectIndexViewModel
+
+<link href="~/Content/Project/Details.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Project Profile";
+}
+
+<div class="project-title">@Html.DisplayFor(model => model.Name)</div>
+
+</br></br>
+
+@{
+    string imgSrc2 = "";
+
+    if (Model.Profile_Images.Count > 0)
+    {
+        string base642 = Convert.ToBase64String(Model.Profile_Images.ElementAt(0));
+        imgSrc2 = string.Format("data:image/gif;base64,{0}", base642);
+    }
+
+    decimal ratio = Model.Project_Account_Balnce_USD / Model.Investment_Goal;
+    decimal percent = Math.Round(ratio * 100);
+}
+
+<div class="project-data-holder">
+    <div class="project-image-holder">
+
+        @for (int i = 0; i < Model.Profile_Images_IDs.Count(); i++)
+        {
+            string base64 = Convert.ToBase64String(Model.Profile_Images.ElementAt(i));
+            string imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+            <img class="project-image" src="@imgSrc" alt="" />
+        }
+
+        @* PROGRESS BAR *@
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40"
+                 aria-valuemin="0" aria-valuemax="100" style="width:@percent%">
+                <div class="percent-text">
+                    @percent%
+                </div>
+            </div>
+        </div>
+
+        <div class="funded">
+            $@Model.Project_Account_Balnce_USD.ToString("0.00")
+        </div>
+
+        <div>
+            <div class="project-under" style="clear: left;">
+               @* @Model.Description*@
+                This is a test slogan, where I'm putting test text!
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<a class="slideshow-next-btn" style="position:absolute;top:30%;left:0" onclick="plusDivs(-1)">❮</a>
+<a class="slideshow-next-btn" style="position:absolute;top:30%;right:0" onclick="plusDivs(1)">❯</a>
+
+
+<div style="clear: left"> </div>
+
+
+
+    <div class="container" style="text-align: center">
+        <h4>Project Images</h4>
+        @if (Model.Valid)
+        {
+            <p><a href="@string.Format("/Project/UploadImage/{0}", Model.Project_ID)">Add image to project profile</a></p>
+        }
+        @if (Model.Profile_Images_IDs.Count() > 0)
+        {
+            {
+                int rows = Model.Profile_Images_IDs.Count() / 4;
+                if ((Model.Profile_Images_IDs.Count() % 4) > 0)
+                {
+                    rows++;
+                }
+                int image_index = 0;
+
+                @*So these two for loops will get our images and construct an appropriate number of divs to hold images for this project, whic is done by the first loop and the sencond loop
+                    will actually get the images in question and isply them onto our page.*@
+        for (int i = 0; i < rows; i++)
+        {
+            <div class="row">
+                @*This loop's stop condition will be determined by a variable that will hold the index position of where the loops have advanced on our image collection.*@
+                @for (int k = 0; image_index < Model.Profile_Images.Count(); k++)
+                {
+                    if ((k % 4) == 0 && k != 0)
+                    {
+                        break;
+                    }
+                    { // This block of code here will convert the byte array into a base64 string that will be converted by the client's browser into an image to be viwed by the user.
+                      // It also gets the id of the image in question making it easier to sport a removal button.
+                        string base64 = Convert.ToBase64String(Model.Profile_Images.ElementAt(image_index));
+                        string imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                        int image_id = Model.Profile_Images_IDs.ElementAt(image_index);
+                        <div class="col-lg-3">
+                            @*<img class="project-image img-thumbnail" src="@imgSrc" />*@
+                            @if (Model.Valid)
+                            {
+                                <a href="@string.Format("/Project/RemoveImage/{0}", image_id)">Remove</a>
+                            }
+                        </div>
+                    }
+                    image_index++;
+                }
+            </div>
+                }
+            }
+        }
+        @if (Model.Profile_Images_IDs.Count() < 1)
+        {
+            if (Model.Valid)
+            {
+                <p class="template-words">No images where found related to this account perhaps you should add some</p>
+            }
+            else
+            {
+                <p class="template-words"> No images were found related to this account.</p>
+            }
+        }
+    </div>
+
+    <hr />
+
+    <div class="container">
+        <h4>Project Documents</h4>
+        @if (Model.Valid)
+        {
+            <p><a href="@string.Format("/Project/UploadDocument/{0}", Model.display_Project_ID)">Add a document to project profile</a></p>
+        }
+        @if (Model.Document_IDs.Count() > 0)
+        {
+            {// We need to instantiate two loops that will set how many row divs we will need and one that will place 6 fioe links with file glyphs from bootstrap
+                int rows = Model.Profile_Images_IDs.Count() / 6;
+                if ((Model.Profile_Images_IDs.Count() % 6) > 0)
+                {
+                    rows++;
+                }
+                int document_index = 0;
+                for (int i = 0; i < rows; i++)
+                {
+                    <div class="row">
+                        @for (int k = 0; document_index < Model.Document_IDs.Count(); k++)
+                        {
+                            if ((k % 6) == 0 && k != 0)
+                            {
+                                break;
+                            }
+                            <div class="col-lg-2">
+                                <span class="glyphicon glyphicon-file"></span>
+                                <a href="@string.Format("/Document/Download/{0}", Model.Document_IDs.ElementAt(document_index))">@Model.Document_FileNames.ElementAt(document_index)</a>
+                                @if (Model.Valid)
+                                {
+                                    <a href="@string.Format("/Project/RemoveDocument/{0}", Model.Document_IDs.ElementAt(document_index))">Remove File</a>
+                                }
+                            </div>
+                            document_index++;
+                        }
+                    </div>
+                }
+            }
+        }
+        @if (Model.Document_IDs.Count() < 1)
+        {
+            if (Model.Valid)
+            {
+                <p class="template-header">No documents where found related to this account, perhaps you would like to add some.</p>
+            }
+            else
+            {
+                <p class="template-header">No documents were found related to this account.</p>
+            }
+        }
+    </div>
+    @if (Model.Valid)
+    {
+        <p>
+            @Html.ActionLink("Back to Project account", "Index", new { id = Model.Project_ID })
+        </p>
+    }
+    @if (Model.IsRegisteredViewer)
+    {
+        <div class="container">
+
+            <p>
+                <a class="btn btn-default" href="@string.Format("/Project/CreatePROC/{0}", Model.display_Project_ID)">Create a PROC Agreement</a>
+            </p>
+
+        </div>
+
+        <br />
+        <div class="container">
+
+            @if (IsPost)
+            {
+                <h4 class="template-header">Your message has been sent</h4>
+            }
+
+            @if (!IsPost)
+            {
+
+                <h4 class="template-header">Message the owner of this project</h4>
+
+                <div class="form">
+                    <form id="message-project-owner" method="post">
+                        <div class="col-md-10">
+
+                            <textarea form="message-project-owner" name="Project_Message" class="input-group-lg"></textarea>
+
+                        </div>
+
+                        <div class="col-md-offset-2 col-md-10">
+
+                            <input type="submit" value="message" class="btn btn-default" />
+
+                        </div>
+                    </form>
+
+                </div>
+
+            }
+
+
+        </div>
+    }
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("project-image");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+</script>

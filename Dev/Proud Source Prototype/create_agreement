@@ -1,0 +1,44 @@
+
+CREATE OR REPLACE FUNCTION create_agreement () 
+RETURNS integer AS $new_proc_investor_entrepreneur_xref_id$
+
+DECLARE new_PROC_investor_entrepreneur_xref_id integer;
+DECLARE new_PROC_master_id integer;
+DECLARE new_investor_master_id integer;
+DECLARE new_entrepreneur_master_id integer;
+DECLARE new_create_date_time timestamp with time zone;
+DECLARE new_mod_date_time timestamp with time zone;
+DECLARE new_mod_user_master_id integer;
+
+BEGIN
+ new_PROC_master_id:= 19;
+ new_investor_master_id:=6 ;
+ new_entrepreneur_master_id:=11;
+ new_create_date_time:= now();
+ new_mod_date_time:=now();
+ new_mod_user_master_id:=17;
+ 
+    INSERT INTO proc_investor_entrepreneur_xref (
+  proc_master_id,
+  investor_master_id,
+  entrepreneur_master_id,
+  create_date_time,
+  mod_date_time,
+  mod_user_master_id)
+values (
+  new_proc_master_id,
+  new_investor_master_id,
+  new_entrepreneur_master_id,
+  new_create_date_time,
+  new_mod_date_time,
+  new_mod_user_master_id);
+
+select MAX(proc_investor_entrepreneur_xref_id) into new_proc_investor_entrepreneur_xref_id
+from proc_investor_entrepreneur_xref;
+
+
+RETURN new_proc_investor_entrepreneur_xref_id;
+
+
+END;
+$new_proc_investor_entrepreneur_xref_id$ LANGUAGE plpgsql;
