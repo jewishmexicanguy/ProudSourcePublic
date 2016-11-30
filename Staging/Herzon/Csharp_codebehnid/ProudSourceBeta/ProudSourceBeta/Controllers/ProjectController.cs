@@ -274,7 +274,7 @@ namespace ProudSourceBeta.Controllers
                 System.Diagnostics.Debug.WriteLine(e.Message);
                 return View();
             }
-            return Redirect(string.Format("/Project/Details/{0}", cred.Project_ID));
+            return Redirect(string.Format("/Project/Index/{0}", cred.Project_ID));
         }
 
         // GET: Project/RemoveImage/5
@@ -412,8 +412,10 @@ namespace ProudSourceBeta.Controllers
         [HttpGet]
         public ActionResult CreatePROC(int id)
         {
+            /// Change: Made a change here to instantiate a projectCreatePROCViewModel that accepts the investor account of the person logged in.
             ProjectAuth cred = check_clientRelation(id);
-            Models.ProjectCreatePROCViewModel createPROC = new Models.ProjectCreatePROCViewModel();
+            /// Change:  Used an overloaded version of this object that accepts the investor's account ID to load.
+            Models.ProjectCreatePROCViewModel createPROC = new Models.ProjectCreatePROCViewModel(cred.Investor_ID);
             return View(createPROC);
         }
 
@@ -429,13 +431,24 @@ namespace ProudSourceBeta.Controllers
             createPROC.Performance_Begin_DateTime = newPROC.Performance_Begin_DateTime;
             createPROC.Performance_End_DateTime = newPROC.Performance_End_DateTime;
             createPROC.Revenue_Percentage = newPROC.Revenue_Percentage;
-            createPROC.Investment_Amount = newPROC.Investment_Amount;
+            if (newPROC.Investment_Amount > createPROC.Financial_Account_Balance)
+            {
+                ModelState.AddModelError("Not_Enough_Funds", string.Format("You lack sufficient funds: ${0} ", (newPROC.Investment_Amount - createPROC.Financial_Account_Balance)));
+                return View(createPROC);
+            }
+            else
+            {
+                createPROC.Investment_Amount = newPROC.Investment_Amount;
+            }
             int newPROC_id = 0;
             if (!cred.Valid) // this will fire if you are not the project owner.
+            {
                 newPROC_id = createPROC.create_PROC();
+            }
             else
+            {
                 return Redirect("/User/Index"); // TODO: do something else but this is good enough for now, if they are not authenticated this will kick the client all the way back to the home screen.
-            
+            }
             return Redirect(string.Format("/PROC/Details/{0}", newPROC_id));
         }
         // GET: Project/Delete/5

@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Results";
+}
+
+<link rel="stylesheet" href="~/Styles/Search/Results.css" />
+
+<div class="container">
+
+    <h2>Results</h2>
+
+    <div id="search-div">
+        <div class="form-group row">
+            <label class="control-label col-md-2">Search</label>
+            <div class="col-md-4">
+                <input id="in-search-arg" class="form-control text-box single-line" type="text" placeholder="Search for a project"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="results">
+
+    </div>
+
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        document.getElementById('in-search-arg').onkeypress = function (e) {
+            if (!e) e = window.event;
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == '13')
+            {
+                // Enter pressed
+                search_KeyArg(document.getElementById('in-search-arg').value);
+                return false;
+            }
+        }
+
+        function search_KeyArg(keyarg)
+        {
+            $.ajax(
+            {
+                url: '/Search/JsonSearch',
+                type: 'POST',
+                data:
+                {
+                    KeyArg: keyarg
+                },
+                dataType: 'json',
+                success: function (data)
+                {
+                    if (data.success) {
+                        document.getElementById('results').innerHTML = function ()
+                        {
+                            var counter = 0;
+                            var row_count = data.response.length / 3;
+                            if (data.response.length % 3 != 0)
+                            {
+                                row_count += 1;
+                            }
+                            var html_to_write = '';
+                            for (var i = 0; i < row_count; i++)
+                            {
+                                html_to_write += '<div class="row">';
+                                for (var j = 0; j < 3; j++) {
+                                    if (counter == data.response.length)
+                                    {
+                                        break;
+                                    }
+                                    if (data.response[counter].ProfileType_Id == '3')
+                                    {
+                                        html_to_write += '<div class="col-md-3"><a href="/Project/Details/'
+                                        html_to_write += data.response[counter].Id
+                                        html_to_write += '"><p>'
+                                        html_to_write += data.response[counter].Name
+                                        html_to_write += '</p></a>'
+                                        if (data.response[counter].Image_Id == null)
+                                        {
+                                            html_to_write += '<img class="profile-thumbnail" src="/Content/Images/sphereWireframe.png" />'
+                                        }
+                                        else
+                                        {
+                                            html_to_write += '<img class="profile-thumbnail" src="/IO/GetImage/' + data.response[counter].Image_Id + '" />'
+                                        }
+                                        html_to_write += '<p>'
+                                        html_to_write += data.response[counter].Summary
+                                        html_to_write += '</p><b>$ '
+                                        html_to_write += data.response[counter].Investment_Goal
+                                        html_to_write += '</b></div>';
+                                    }
+                                    counter++;
+                                }
+                                html_to_write += '</div>'
+                            }
+                            return html_to_write;
+                        }();
+                    }
+                    else
+                    {
+                        alert('Error : ' + data.code + ' Message :' + data.message);
+                    }
+                }
+            });
+        }
+
+        window.onload = search_KeyArg('');
+    </script>
+}
+

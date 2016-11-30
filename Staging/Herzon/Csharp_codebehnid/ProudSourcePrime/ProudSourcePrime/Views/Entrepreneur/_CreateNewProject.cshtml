@@ -1,0 +1,41 @@
+﻿@model ProudSourcePrime.Models.EntrepreneurIndexModel
+
+<div id="profile-editor">
+    <div id="form-div">
+        <form action="/Entrepreneur/Index" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.entrepreneurIndexData.EntrepreneurProfile["Entrepreneur_Id"])
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4">Enter a project name</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line"
+                           type="text"
+                           name="Project_Name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4">Enter a summary for this project</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line"
+                           type="text"
+                           name="Project_Description">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4">Enter an investment goal for this project</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line"
+                           type="number"
+                           name="Investment_Amount"
+                           step="any">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12 center">
+                    <input type="submit" value="Create New Project" class="flat-button blue btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

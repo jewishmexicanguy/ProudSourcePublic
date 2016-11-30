@@ -1,0 +1,191 @@
+﻿@model ProudSourcePrime.Models.FinancialAccountModel
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<link rel="stylesheet" href="~/Styles/Financial/Dashboard.css" />
+
+<div class="container">
+
+    <div id="beta-test-info">
+        <p>While this application is in beta use the following credit card numbers to initate Transactins with BrainTree</p>
+        <br />
+        <label>Simulate active card :</label><b> 4111-1111-1111-1111</b>
+        <br />
+        <label>Expiration date :</label><b> 4/20</b>
+    </div>
+
+    <h2>Financial Account Dashboard</h2>
+
+    <div class="financial-summary-detials">
+        @{ 
+            string[] financial_summary = Model.account.FinancialAccount.Values.ToArray();
+            // Account_Id
+            // DateTime_Created
+            // Frozen
+            // Balance
+        }
+        <ul class="list-group">
+            <li class="list-group-item">@string.Format("This Account's balance is : $ {0}", decimal.Round(decimal.Parse(financial_summary[3]), 2))</li>
+            <li class="list-group-item">@string.Format("This Account was opened on {0}", financial_summary[1])</li>
+            @if(financial_summary[2] == "True")
+            {
+                <li class="list-group-item">This Account has been frozen, please speak with one of our account managers.</li>
+            }
+        </ul>
+
+    </div>
+
+    <hr />
+
+    <div class="pending-transactions">
+        @if(Model.account.FinancialTransactions_Pending.Count > 0)
+        {
+            <p>Transactions that are pending</p>
+            <br />
+            <table class="table-responsive table-striped">
+                <thead>
+                    <tr class="row">
+                        <th class="col-md-4">Amount</th>
+                        <th class="col-md-4">Status</th>
+                        <th class="col-md-4">Time Requested</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.account.FinancialTransactions_Pending.Count; i++)
+                    {
+                        <tr class="row">
+                            <td class="col-md-4 list-group-item-info">@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.account.FinancialTransactions_Pending[i]["Amount"]), 2))</td>
+                            <td class="col-md-4">@Model.account.FinancialTransactions_Pending[i]["Transaction_State"]</td>
+                            <td class="col-md-4">@Model.account.FinancialTransactions_Pending[i]["DateTime_Created"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>There are no pending transactions for this Account.</p>
+        }
+    </div>
+
+    <hr />
+
+    <div class="processed-transactions">
+        @if(Model.account.FinancialTransactions_Processed.Count > 0)
+        {
+            <p>Transactions that have been processed</p>
+            <br />
+            <table class="table-responsive table-striped">
+                <thead>
+                    <tr class="row">
+                        <th class="col-md-3">Amount</th>
+                        <th class="col-md-3">Status</th>
+                        <th class="col-md-3">Time Requested</th>
+                        <th class="col-md-3">Time Processed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(int i = 0; i < Model.account.FinancialTransactions_Processed.Count; i++)
+                    {
+                        <tr class="row">
+                            <td class="col-md-3 list-group-item-success">@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.account.FinancialTransactions_Processed[i]["Amount"]), 2))</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Processed[i]["Transaction_State"]</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Processed[i]["DateTime_Created"]</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Processed[i]["DateTime_Processed"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table> 
+        }
+        else
+        {
+            <p>There are no transactions that have been processed for this Account.</p>
+        }
+    </div>
+
+    <hr />
+
+    <div class="failed-transactions">
+        @if(Model.account.FinancialTransactions_Failed.Count > 0)
+        {
+            <p>Transactions that have failed</p>
+            <br />
+            <table class="table-responsive table-striped">
+                <thead>
+                    <tr class="row">
+                        <th class="col-md-3">Amount</th>
+                        <th class="col-md-3">Status</th>
+                        <th class="col-md-3">Time Requested</th>
+                        <th class="col-md-3">Time Processed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(int i = 0; i< Model.account.FinancialTransactions_Failed.Count; i++)
+                    {
+                        <tr class="row">
+                            <td class="col-md-3 list-group-item-danger">@string.Format("$ {0}", Model.account.FinancialTransactions_Failed[i]["Amount"])</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Failed[i]["Transaction_State"]</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Failed[i]["DateTime_Created"]</td>
+                            <td class="col-md-3">@Model.account.FinancialTransactions_Failed[i]["DateTime_Processed"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>There are no failed transactions for this Account.</p>
+        }
+    </div>
+
+    <hr />
+
+    <div id="new-transaction">
+
+        <p>Submit a new deposit into your account.</p>
+
+        <div id="USD-transaction">
+            <div id="form-container" class="input-group">
+                <form id="checkout" method="post" class="form-horizontal" action="/Financial/Dashboard/@Model.account.FinancialAccount["Account_Id"]" enctype="multipart/form-data">
+
+                    <div id="payment-form"></div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="Account_Id" value="@Model.account.FinancialAccount["Account_Id"]" />
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="number" name="Amount" step="0.01"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @*<div id="BTC-transaction">
+            <div id="form-container" class="input-group">
+                <form id="checkout" method="post" class="form-horizontal">
+                    <div id="payment-form"></div>
+                    <input class="form-control" type="number" name="Amount" />
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>*@
+    </div>
+</div>
+@section Scripts {
+    <script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
+    <script type="text/javascript">
+        braintree.setup("@Model.account.Client_Braintree_Token",
+            "dropin", {
+                container: "payment-form",
+            }
+        );
+    </script>
+}
+

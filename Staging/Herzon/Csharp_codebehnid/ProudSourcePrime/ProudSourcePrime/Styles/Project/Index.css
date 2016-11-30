@@ -1,0 +1,31 @@
+.profile-thumbnail {
+  height: 150px;
+  width: 150px; }
+
+.project-details-title {
+  padding-left: 60px;
+  padding-top: 5px; }
+
+.no-bottom-margin {
+  margin-bottom: 0px; }
+
+.upload-tab {
+  height: 20px;
+  margin-bottom: 20px;
+  background-color: #d7edff;
+  text-align: center;
+  cursor: pointer; }
+
+.upload-div {
+  background-color: #e2f2ff; }
+
+#upload-documents-div {
+  display: none; }
+
+#upload-images-div {
+  display: none; }
+
+#Project-link-upload {
+    display: none;
+}
+/*# sourceMappingURL=Index.css.map */

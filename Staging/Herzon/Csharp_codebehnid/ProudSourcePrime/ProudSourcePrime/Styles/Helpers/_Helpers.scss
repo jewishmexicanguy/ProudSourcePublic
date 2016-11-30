@@ -1,0 +1,55 @@
+﻿body {
+}
+
+.center {
+    text-align: center;
+}
+
+.fill-center-text {
+  text-align: center;
+  width: 100%;
+  font-size: 300%; 
+}
+
+.container-full {
+    width: 100%;
+    padding: 0px;
+}
+
+.col-full {
+    padding: 0px;
+}
+
+/*Colors*/
+.green {
+    background-color: #2ecc71;
+}
+
+.yellow {
+    background-color: #f1c40f;
+}
+
+.blue {
+    background-color: #4894F2;
+}
+
+.indigo {
+    background-color: #d6def5;
+}
+
+.blue :hover {
+    background-color: #4894F2 !important;
+}
+
+/*Profile images*/
+.profile-thumbnail {
+    height : 200px;
+    width : 200px;
+    border-radius: 100px;
+}
+
+.profile-thumbnail-small {
+    width: 75px;
+    height: 75px;
+    border-radius: 42.5px;
+}

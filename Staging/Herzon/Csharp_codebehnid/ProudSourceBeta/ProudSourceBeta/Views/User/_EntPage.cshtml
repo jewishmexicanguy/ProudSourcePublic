@@ -1,0 +1,93 @@
+﻿@model ProudSourceBeta.Models.EntrepreneurIndexViewModel
+
+<link href="~/Shared/Shared.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/User/User.css" rel="stylesheet" type="text/css" />
+
+<script>
+    function createNewProject() {
+        window.location = "@string.Format("Entrepreneur/createProject/{0}", Model.Entrepreneur_ID)";
+    }
+</script>
+
+<div id="entContainer">
+
+    <div class="container">
+
+        <div class="data-container bordered-grey">
+
+            <div class="data-title">
+                <b>Name:</b>
+            </div>
+            <div class="data">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <br />
+
+            <button class="data flat-button flat-button-small green" onclick="window.location = '@string.Format("/Entrepreneur/Edit/{0}", Model.Entrepreneur_ID)'">
+                Edit Profile
+            </button>
+
+        </div>
+
+        <br />
+
+        @if (Model.Projects.Count == 0)
+        {
+            <div class="data-container bordered-grey center" style="">
+                <div class="fill-center-text" style="margin: auto">
+                    <b>You have no projects!</b>
+                </div>
+
+                <button onclick="createNewProject()" class="flat-button blue"> Create New Project!</button>
+            </div>
+        }
+        else
+        {
+            <div class="data-container bordered-grey center" style="">
+
+                <h2>My Projects</h2>
+                <table class="pure-table table-hover" style="text-align: left; font-size: 150%; width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Balance</th>
+                            <th>Goal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @* Insert data into table from projects array *@
+                        @foreach (System.Data.DataRow project in Model.Projects)
+                        {
+                            <tr onclick="", project["Project_ID"])'">
+                                <td>@project["Name"]</td>
+                                <td>@project["Project_Balance"]</td>
+                                <td>@project["Investement_Goal"]</td>
+                                <td style="float: right">
+                                    <button onclick="(function go() { window.location = '@string.Format("/Project/Details/{0}", project["Project_ID"])' })()" class="flat-button flat-button-small margin-10 green ent-project-btn" style="pointer-events: all;">
+                                        View
+                                    </button>
+                                    <button onclick="(function go() { window.location = '@string.Format("/Project/Index/{0}", project["Project_ID"])' })()" class="flat-button flat-button-small margin-10 green ent-project-btn" style="pointer-events: all;">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                <br />
+
+                <button onclick="createNewProject()" class="flat-button flat-button-small blue"> Create New Project!</button>
+
+            </div>
+
+            
+
+        }
+
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+﻿@model ProudSourcePrime.Models.PROCDetailsModel
+
+@if (Request.IsAuthenticated)
+{
+    <div class="form-group row">
+        <label class="control-label col-md-4">Revenue Percentage</label>
+        <div class="col-md-4">
+            <input class="form-control text-box single-line"
+                   id="Revenue_Percentage"
+                   name="Revenue_Percentage"
+                   type="number"
+                   step="any"
+                   value="@Model.proc.PROC["Revenue_Percentage"]" />
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-group row">
+        <label class="control-label col-md-4">Revenue Percentage</label>
+        <div class="col-md-4">
+            @Model.proc.PROC["Revenue_Percentage"]
+        </div>
+    </div>
+}
+
+
+
+
+

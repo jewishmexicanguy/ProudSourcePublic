@@ -1,0 +1,225 @@
+﻿@model ProudSourcePrime.Models.EntrepreneurDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Styles/Entrepreneur/Details.css" />
+
+<div id="entrepreneur-details-title">
+    <canvas id="canvas" width="800" height="600" style="background-color: #80bfff;"></canvas>
+    <div id="entrepreneur-name" class="title">
+        @Model.entrepreneur.EntrepreneurDetails["Name"]
+    </div>
+</div>
+
+<div class="container">
+    <h3>Entrepreneur Details</h3>
+
+    <div class="entrepreneur-details">
+        <ul class="list-group">
+            <li class="list-group-item">@Model.entrepreneur.EntrepreneurDetails["Name"]</li>
+            <li class="list-group-item">@{
+                    string a = "Entrepreneur is not verfied by ProudSource...";
+                    if(Model.entrepreneur.EntrepreneurDetails["Verified"].ToString() == "True")
+                    {
+                        a = "Entrepreneur is verfied by ProudSource...";
+                    }
+                }
+                <p>@a</p>
+            </li>
+            <li class="list-group-item">
+                @if(Model.entrepreneur.EntrepreneurDetails.ContainsKey("Base64Image"))
+                {
+                    <img class="profile-thumbnail" src="@Model.entrepreneur.EntrepreneurDetails["Base64Image"]" />
+                }
+                else
+                {
+                    <img class="profile-thumbnail" src="~/Content/Images/emptyProfile.png" />
+                }
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+
+    <div class="entrepreneur-documents">
+        <h3>Documents</h3>
+        <br />
+        @if(Model.entrepreneur.EntrepreneurDocuments.Count > 0)
+        {
+            for (int i = 0; i < Model.entrepreneur.EntrepreneurDocuments.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="@string.Format("/IO/Download/{0}", Model.entrepreneur.EntrepreneurDocuments[i]["Document_Id"])">@Model.entrepreneur.EntrepreneurDocuments[i]["File_Name"]</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>There are no documents for this entrepreneur...</p>
+        }
+    </div>
+
+    <hr />
+
+    <div class="entrepreneur-links">
+        @if (Model.entrepreneur.EntrepreneurLinks.Count > 0)
+            {
+                <h3>Entrepreneur Links</h3>
+                <br />
+            for (int i = 0; i < Model.entrepreneur.EntrepreneurLinks.Count; i++)
+            {
+                if (Model.entrepreneur.EntrepreneurLinks[i]["Link_Type"] == "YouTube" || Model.entrepreneur.EntrepreneurLinks[i]["Link_Type"] == "Vimeo")
+                {
+                    <iframe src="@Model.entrepreneur.EntrepreneurLinks[i]["Link"]" allowfullscreen></iframe>
+                }
+                else
+                {
+                    <a href="@Model.entrepreneur.EntrepreneurLinks[i]["Link"]">@Model.entrepreneur.EntrepreneurLinks[i]["FriendlyName"]</a>
+                }
+            }
+            <hr />
+        }
+        else
+        {
+            <p>No links, perhaps you can add some...</p>
+        }
+    </div>
+
+    <hr />
+
+    @*<div class="entrepreneur-embelishments">
+
+    </div>*@
+
+    <div class="entrepreneur-projects">
+        @if (Model.entrepreneur.EntrepreneurProjects.Count > 0)
+        {
+            <h3>Projects</h3>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Project Name</label>
+                </div>
+                <div class="col-md-4">
+                    <label>Summary</label>
+                </div>
+                <div class="col-md-4">
+                    <label>Project investment goal</label>
+                </div>
+            </div>
+            for(int i = 0; i < Model.entrepreneur.EntrepreneurProjects.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="@string.Format("/Project/Details/{0}", Model.entrepreneur.EntrepreneurProjects[i]["Project_Id"])"><p>@Model.entrepreneur.EntrepreneurProjects[i]["Name"]</p></a>
+                    </div>
+                    <div class="col-md-4">
+                        @if (Model.entrepreneur.EntrepreneurProjects[i]["Summary"].Length > 100)
+                        {
+                            <p>@Model.entrepreneur.EntrepreneurProjects[i]["Summary"].Substring(0, 100)</p>
+                        }
+                        else if (string.IsNullOrWhiteSpace(Model.entrepreneur.EntrepreneurProjects[i]["Summary"]))
+                        {
+                            <p>...</p>
+                        }
+                        else
+                        {
+                            <p>@Model.entrepreneur.EntrepreneurProjects[i]["Summary"]</p>
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.entrepreneur.EntrepreneurProjects[i]["Investment_Goal"]), 2))</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <b>This Entrepreneur has no projects...</b>
+        }
+    </div>
+
+    <hr />
+
+    <div class="entrepreneur-procs">
+        @if (Model.entrepreneur.EntrepreneurPROCS.Count > 0)
+        {
+            <h3>PROC contracts</h3>
+            <br />
+            <div class="row">
+                <div class="col-md-2"><label>Revenue % defered</label></div>
+                <div class="col-md-2"><label>Capital Invetment / Investment Goal</label></div>
+                <div class="col-md-2"><label>Project</label></div>
+                <div class="col-md-2"><label>Contract time span</label></div>
+                <div class="col-md-2"><label>Investor</label></div>
+                <div class="col-md-2"><label>Contract is active</label></div>
+            </div>
+            for(int i = 0; i < Model.entrepreneur.EntrepreneurPROCS.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="@string.Format("/PROC/Details/{0}", Model.entrepreneur.EntrepreneurPROCS[i]["PROC_Id"])">
+                            <b>@string.Format("% {0}", decimal.Round(decimal.Parse(Model.entrepreneur.EntrepreneurPROCS[i]["Revenue_Percentage"]), 3))</b>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@string.Format("/PROC/Details/{0}", Model.entrepreneur.EntrepreneurPROCS[i]["PROC_Id"])">
+                            <b>@string.Format("$ {0} / $ {1}", decimal.Round(decimal.Parse(Model.entrepreneur.EntrepreneurPROCS[i]["Investment_Amount"]), 2), decimal.Round(decimal.Parse(Model.entrepreneur.EntrepreneurPROCS[i]["Investment_Goal"]), 2))</b>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@string.Format("/Project/Details/{0}", Model.entrepreneur.EntrepreneurPROCS[i]["Project_Id"])">@Model.entrepreneur.EntrepreneurPROCS[i]["Project_Name"]</a>
+                    </div>
+                    <div class="col-md-2">
+                        <b>@string.Format("{0} - {1}", Model.entrepreneur.EntrepreneurPROCS[i]["DateTime_Enforcement_Begin"], Model.entrepreneur.EntrepreneurPROCS[i]["DateTime_Enforcement_End"])</b>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@string.Format("/Investor/Details/{0}", Model.entrepreneur.EntrepreneurPROCS[i]["Investor_Id"])"><p>@Model.entrepreneur.EntrepreneurPROCS[i]["Investor_Name"]</p></a>
+                    </div>
+                    <div class="col-md-2">
+                        @{
+                            string active = "No";
+                            if (Model.entrepreneur.EntrepreneurPROCS[i]["Active"] == "True")
+                            {
+                                active = "Yes";
+                            }
+                        }
+                        <b>@active</b>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <b>This Entrepreneur has no PROCs, they should try being more entrepreneurial...</b>
+        }
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/serendipia")
+
+@section Scripts {
+    <script type="text/javascript">
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var circles = [];
+
+        window.onload = function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight / 3;
+            document.getElementById('entrepreneur-name').style.top = canvas.height * .6 + 'px';
+            document.getElementById('entrepreneur-name').style.left = canvas.width * .41 + 'px';
+            for (var i = 0; i < (canvas.width / 10 + canvas.height / 10) ; i++) {
+                var c = new Circle(getRandomInteger(1, canvas.width), getRandomInteger(1, canvas.height), 2, getRandomDecimal(-.5, .5), getRandomDecimal(-.5, .5));
+                circles.push(c);
+            }
+
+            loop();
+        }
+
+    </script>
+}

@@ -1,0 +1,438 @@
+﻿@model ProudSourcePrime.Models.ProjectIndexModel
+
+<link rel="stylesheet" href="~/Styles/Project/Index.css" />
+
+<div class="title-container">
+    <div class="title">
+        @Model.projectModel.ProjectProfile["Name"]
+    </div>
+</div>
+
+<div class="container container-full">
+    <!--Financial account-->
+    <div id="project-account" class="col-sm-12 col-full center">
+        @if(Model.projectModel.ProjectAccount != null)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Balance</label>
+                    <a href="@string.Format("/Financial/Dashboard/{0}", Model.projectModel.ProjectAccount["Account_Id"])">
+                        <b>@string.Format("$ {0}", Model.projectModel.ProjectAccount["Balance"] )</b>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <label>Frozen</label>
+                    @{ 
+                        string frozen = "No";
+                        if(Model.projectModel.ProjectAccount["Frozen"] == "True")
+                        {
+                            frozen = "Yes";
+                        }
+                    }
+                    <b>@frozen</b>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Balance</label>
+                    <a href="@string.Format("/Financial/Dashboard/{0}", Model.projectModel.ProjectAccount_Int)"><b>$ 0.00</b></a>
+                </div>
+                <div class="col-md-4">
+                    <label>Frozen</label>
+                    <b>No, but there are no transactions in this account...</b>
+                </div>
+            </div>
+        }
+        @if(Model.projectModel.ProjectProfile["Profile_Public"] == "True")
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Go to your Project's public profile</label>
+                    <a href="@string.Format("/Project/Details/{0}", Model.projectModel.ProjectProfile["Project_Id"])">Your Project</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr />
+
+    <!--Documents-->
+    <div id="project-documents">
+        <div class="documents-div">
+            @if(Model.projectModel.ProjectDocuments.Count > 0)
+            {
+                int row_count = Model.projectModel.ProjectDocuments.Count / 4;
+                if(Model.projectModel.ProjectDocuments.Count % 4 != 0)
+                {
+                    row_count++;
+                }
+                for (int i = 0; i < row_count; i++)
+                {
+                    if(i % 4 == 0)
+                    {
+                        <div class="row">
+                            @for(int j = 0; j < 4; j++)
+                            {
+                                if(j >= Model.projectModel.ProjectDocuments.Count)
+                                {
+                                    break;
+                                }
+                                <div class="col-md-3 document-wrap">
+                                    <span class="document-remove glyphicon glyphicon-remove-sign" onclick="delete_Document(@Model.projectModel.ProjectDocuments[((i * 4) + j)]["Document_Id"])"></span>
+                                    <a href="@string.Format("/IO/Download/{0}", Model.projectModel.ProjectDocuments[((i * 4) + j)]["Document_Id"])">
+                                        <b>@Model.projectModel.ProjectDocuments[((i * 4) + j)]["File_Name"]</b>
+                                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                    </a>
+                                    <p>@Model.projectModel.ProjectDocuments[((i * 4) + j)]["Description"]</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <p>No documents found associated with this project, try adding some...</p>
+            }
+        </div>
+
+        <br />
+
+        <button id="upload-documents-toggle" class="btn btn-default">Upload project document</button>
+
+        <div id="upload-documents-div" class="upload-documents-div">
+            @{Html.RenderPartial("~/Views/IO/_UploadDocument.cshtml", new ProudSourcePrime.Models.DocumentFileModel()
+                {
+                    Profile_Id = int.Parse(Model.projectModel.ProjectProfile["Project_Id"]),
+                    IsProject = true
+                });
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <!--Links-->
+
+    <button id="Project-link-upload-toggle" class="btn btn-default">Add a Project link</button>
+
+    <div id="Project-link-upload">
+        @{Html.RenderPartial("~/Views/IO/_UploadLink.cshtml", new ProudSourcePrime.Models.LinkModel()
+            {
+                Profile_Id = int.Parse(Model.projectModel.ProjectProfile["Project_Id"]),
+                Is_Project = true
+            });
+        }
+    </div>
+
+    <div id="project-links">
+        <div class="current-links">
+            @if (Model.projectModel.ProjectLinks.Count > 0)
+            {
+                <b>Entrepreneur Links</b>
+                <br />
+                for (int i = 0; i < Model.projectModel.ProjectLinks.Count; i++)
+                {
+                    if (Model.projectModel.ProjectLinks[i]["Link_Type"] == "YouTube" || Model.projectModel.ProjectLinks[i]["Link_Type"] == "Vimeo")
+                    {
+                        <iframe src="@Model.projectModel.ProjectLinks[i]["Link"]" allowfullscreen></iframe>
+                        <span class="link-remove glyphicon glyphicon-remove-circle" onclick="delete_Link(@Model.projectModel.ProjectLinks[i]["Link_Id"], @Model.projectModel.ProjectProfile["Project_Id"], 3)"></span>
+                    }
+                    else
+                    {
+                        < a href = "@Model.projectModel.ProjectLinks[i]["Link"]" > @Model.projectModel.ProjectLinks[i]["FriendlyName"] </ a >
+                    }
+                }
+            }
+            else
+            {
+                <p>No links, you must be trying to be boring...</p>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <!--Images-->
+    <div id="project-images" class="col-sm-12 col-full center">
+        <div class="images-div">
+            @if(Model.projectModel.ProjectImages.Count > 0)
+            {
+                int row_count = Model.projectModel.ProjectImages.Count / 4;
+                if(Model.projectModel.ProjectImages.Count % 4 != 0)
+                {
+                    row_count++;
+                }
+                for(int i = 0; i < row_count; i++)
+                {
+                    <div class="row">
+                        @for(int j = 0; j < 4; j++)
+                        {
+                            if(j >= Model.projectModel.ProjectImages.Count)
+                            {
+                                break;
+                            }
+                            <div class="col-md-3 img-wrap">
+                                <span class="img-remove glyphicon glyphicon-remove-sign" onclick="delete_Image(@Model.projectModel.ProjectImages[((i * 4) + j)]["Image_Id"])"></span>
+                                <img class="profile-thumbnail" src="@Model.projectModel.ProjectImages[((i * 4) + j)]["Base64Image"]" />
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <p>There appear to be no images associated with this project, perhaps you should add some...</p>
+            }
+        </div>
+
+        <br />
+
+        <button id="upload-images-toggle" class="btn btn-default">Upload project images</button>
+
+        <div id="upload-images-div" class="upload-images-div">
+            @{Html.RenderPartial("~/Views/IO/_UploadImage.cshtml", new ProudSourcePrime.Models.ImageFileModel()
+                {
+                    Profile_Id = int.Parse(Model.projectModel.ProjectProfile["Project_Id"]),
+                    IsProject = true
+                });
+            }
+        </div>
+    </div>
+
+    <br />
+
+    <br />
+
+    <div id="project-PROCS" class="col-sm-12 col-full center">
+        @if (Model.projectModel.ProjectPROCs.Count < 1)
+        {
+            <div class="col-sm-12 center">
+
+                <div class="fill-center-text" style="margin: auto">
+                    <b>You have no PROC contracts for this project</b>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-12 center">
+                @for(int i = 0; i < Model.projectModel.ProjectPROCs.Count; i++)
+                {
+                    Dictionary<string, string> proc = Model.projectModel.ProjectPROCs[i];
+
+                    <div class="flat-row">
+                        <div class="col-md-2">
+                            <a href="@string.Format("/Investor/Details/{0}", Model.projectModel.ProjectPROCs[i]["Investor_Id"])">@Model.projectModel.ProjectPROCs[i]["Investor_Name"]</a>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Capital Investment</label>
+                            <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.projectModel.ProjectPROCs[i]["Investment_Amount"]), 2)) </p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Revenue return %</label>
+                            <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.projectModel.ProjectPROCs[i]["Revenue_Percentage"]), 3))</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Date Time Begin</label>
+                            <p>@Model.projectModel.ProjectPROCs[i]["DateTime_Enforcement_Begin"]</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Date Time End</label>
+                            <p>@Model.projectModel.ProjectPROCs[i]["DateTime_Enforcement_End"]</p>
+                        </div>
+
+                        <button onclick="(function go() { window.location = '@string.Format("/PROC/Details/{0}", Model.projectModel.ProjectPROCs[i]["PROC_Id"])' })()" class="flat-button indigo flatRow-btn" style="float: right;">
+                            Observe
+                        </button>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <br />
+
+    <br />
+    <!--Embelishments-->
+    <div id="project-embelishments">
+
+    </div>
+
+    <br />
+
+    <br />
+    <!--Project editor-->
+    <div id="project-editor" class="profile-editor">
+        <h2 class="text-center">Edit Project Details</h2>
+        <div id="form-div">
+            <form action="/Project/Index/@Model.projectModel.ProjectProfile["Project_Id"]" method="post" enctype="multipart/form-data">
+                @Html.ValidationSummary()
+                <div class="form-group row">
+                    <label class="control-label col-md-4">Change the name...</label>
+                    <div class="col-md-4">
+                        <input class="form-control text-box single-line"
+                            id="Project_Name"
+                            name="Project_Name"
+                            type="text"
+                            value="@Model.projectModel.ProjectProfile["Name"]" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-4">Write a summary...</label>
+                    <div class="col-md-4">
+                        <textarea class="form-control text-box" 
+                            id="Project_Summary"
+                            name="Project_Summary"
+                            type="text"
+                            placeholder="@Model.projectModel.ProjectProfile["Summary"]"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-4">Investment Goal...</label>
+                    <div class="col-md-4">
+                        <input class="form-control text-box single-line"
+                            id="Project_Investment_Goal"
+                            name="Project_Investment_Goal"
+                            type="number"
+                            step="any"
+                            value="@decimal.Round(decimal.Parse(Model.projectModel.ProjectProfile["Investment_Goal"]), 2)" /> 
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-4">Is project public?</label>
+                    <div class="col-md-4">
+                        @if (Model.projectModel.ProjectProfile["Profile_Public"] == "False")
+                        {
+                            <input class="form-control checkbox"
+                               id="Project_Public"
+                               name="Project_Public"
+                               type="checkbox" />
+                        }
+                        else
+                        {
+                            <input class="form-control checkbox"
+                                id="Project_Public"
+                                name="Project_Public"
+                                type="checkbox"
+                                checked="checked"/>
+                        }
+                    </div>
+                </div> 
+
+                <div class="form-group row">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $('#upload-documents-toggle').click(
+            function () {
+                $('#upload-documents-div').slideToggle('slow');
+            });
+
+        $('#upload-images-toggle').click(
+            function () {
+                $('#upload-images-div').slideToggle('slow');
+            })
+
+        $('#Project-link-upload-toggle').click(
+            function () {
+                $('#Project-link-upload').slideToggle('slow');
+            });
+
+        function delete_Document(document_id)
+        {
+            $.ajax(
+             {
+                url: '/IO/DeleteDocument',
+                type: 'POST',
+                data:
+                {
+                    Document_Id: document_id
+                },
+                dataType: 'json',
+                success: function(data)
+                {
+                    if(data.success)
+                    {
+                        window.location.reload(false);
+                    }
+                    else
+                    {
+                        alert('Error : ' + data.code + ' details :' + data.message);
+                    }
+                 }
+             });
+        }
+
+        function delete_Image(image_id)
+        {
+            $.ajax(
+            {
+                url: '/IO/DeleteImage',
+                type: 'POST',
+                data:
+                {
+                    Image_Id : image_id
+                },
+                dataType: 'json',
+                success: function(data)
+                {
+                    if(data.success)
+                    {
+                        window.location.reload(false);
+                    }
+                    else
+                    {
+                        alert('Error : ' + data.code + ' details :' + data.message);
+                    }
+                }
+            });
+        }
+
+        function delete_Link(link_id, profile_id, profileType_id)
+        {
+            $.ajax({
+                url : '/IO/DeleteLink/' + link_id,
+                type : 'POST',
+                data :
+                {
+                    Profile_Id : profile_id,
+                    Profile_Type_Id : profileType_id
+                },
+                dataType : 'json',
+                success : function(data)
+                {
+                    if(data.success)
+                    {
+                        window.location.reload(false);
+                    }
+                    else
+                    {
+                        alert('Error : ' + data.code + ' details :' + data.message);
+                    }
+                }
+            });
+        }
+    </script>
+
+}

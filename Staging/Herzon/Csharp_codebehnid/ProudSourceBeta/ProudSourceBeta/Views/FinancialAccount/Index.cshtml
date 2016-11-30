@@ -19,11 +19,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Account_Balance)
+            @Html.DisplayNameFor(model => model.Processed_Account_Balance_USD)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Account_Balance)
+            @Html.DisplayFor(model => model.Processed_Account_Balance_USD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Processed_Account_Balance_BTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Processed_Account_Balance_BTC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pending_Account_Balance_USD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pending_Account_Balance_USD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pending_Account_Balance_BTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pending_Account_Balance_BTC)
         </dd>
 
     </dl>
@@ -32,12 +56,12 @@
 
     <div>
 
-        @if (Model.Transactions != null)
+        @if (Model.Pending_Transactions != null)
         {
-            if (Model.Transactions.Count > 0)
+            if (Model.Pending_Transactions.Count > 0)
             {
                 <table id="transaction-results" class="table-hover table-responsive">
-                    <thead></thead>
+                    <thead>Pending Transactions</thead>
                     <tr>
 
                         <th class="col-sm-1">#</th>
@@ -46,13 +70,15 @@
 
                         <th class="col-sm-2">Date</th>
 
-                        <th class="col-sm-4">Description</th>
+                        <th class="col-sm-2">Description</th>
 
-                        <th class="col-sm-4">Currency</th>
+                        <th class="col-sm-2">Currency</th>
+
+                        <th class="col-sm-2">Status</th>
 
                     </tr>
 
-                    @foreach (System.Data.DataRow i in Model.Transactions)
+                    @foreach (System.Data.DataRow i in Model.Pending_Transactions)
                     {
                         <tr>
 
@@ -62,27 +88,81 @@
 
                             <td class="col-sm-2">@i["Date_of_Transaction"].ToString()</td>
 
-                            <td class="col-sm-4">@i["Description"].ToString()</td>
+                            <td class="col-sm-2">@i["Description"].ToString()</td>
 
-                            <td class="col-sm-4">@i["Currency"].ToString()</td>
+                            <td class="col-sm-2">@i["Currency"].ToString()</td>
+
+                            <td class="col-sm-2">@i["Transaction_State"].ToString()</td>
 
                         </tr>
                     }
                 </table>
             }
         }
-        @if(Model.Transactions == null)
+        @if(Model.Pending_Transactions.Count == 0)
         {
-            <p>This account seems to be new, show it some love by sending it some money</p>
+            <p>There are no pending transactions</p>
+        }
+
+    </div>
+    <hr />
+    <div>
+
+        @if (Model.Processed_Transactions != null)
+        {
+            if (Model.Processed_Transactions.Count > 0)
+            {
+                <table id="transaction-results" class="table-hover table-responsive">
+                    <thead>Processed Transactions</thead>
+                    <tr>
+
+                        <th class="col-sm-1">#</th>
+
+                        <th class="col-sm-1">Amount</th>
+
+                        <th class="col-sm-2">Date</th>
+
+                        <th class="col-sm-2">Description</th>
+
+                        <th class="col-sm-2">Currency</th>
+
+                        <th class="col-sm-2">Status</th>
+
+                    </tr>
+
+                    @foreach (System.Data.DataRow i in Model.Processed_Transactions)
+                    {
+                        <tr>
+
+                            <td class="col-sm-1">@i["Transaction_ID"].ToString()</td>
+
+                            <td class="col-sm-1">@i["Amount"].ToString()</td>
+
+                            <td class="col-sm-2">@i["Date_of_Transaction"].ToString()</td>
+
+                            <td class="col-sm-2">@i["Description"].ToString()</td>
+
+                            <td class="col-sm-2">@i["Currency"].ToString()</td>
+
+                            <td class="col-sm-2">@i["Transaction_State"].ToString()</td>
+
+                        </tr>
+                    }
+                </table>
+            }
+        }
+        @if (Model.Processed_Transactions.Count == 0)
+        {
+            <p>This accoutn appears to not have any processed transactions... transactions will appear here after they clear pending status.</p>
         }
 
     </div>
 
-    <br />
+    <hr />
 
     <div class="container">
         <div id="form-container" class="input-group">
-            <form id="checkout" method="post">
+            <form id="checkout" method="post" class="form-horizontal">
                 <div id="payment-form"></div>
                 <input class="form-control" type="number" name="Amount"/>
                 <input type="submit" value="Submit" />

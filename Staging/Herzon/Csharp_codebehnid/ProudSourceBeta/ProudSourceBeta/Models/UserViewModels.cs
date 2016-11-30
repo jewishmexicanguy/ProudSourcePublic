@@ -53,7 +53,7 @@ namespace ProudSourceBeta.Models
 
         public int PROC_Count { get; private set; }
 
-        public DataRowCollection  Investor_Pending_Transaction { get; private set; }
+        public DataRowCollection Investor_Pending_Transaction { get; private set; }
 
         public decimal Investor_Balance { get; private set; }
 
@@ -255,7 +255,7 @@ namespace ProudSourceBeta.Models
                 conn.Open();
                 adapter.Fill(set);
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }

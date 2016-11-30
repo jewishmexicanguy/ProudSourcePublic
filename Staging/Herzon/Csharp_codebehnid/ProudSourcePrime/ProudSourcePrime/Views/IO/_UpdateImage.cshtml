@@ -1,0 +1,40 @@
+﻿@model ProudSourcePrime.Models.ImageFileModel
+
+
+@using (Html.BeginForm("UpdateImage", "IO", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <hr />
+    <h4>Update an image</h4>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Image_Id)
+        </div>
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Profile_Id)
+        </div>
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.IsProject)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageData, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="update_Image" type="file" name="image_update" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProudSourcePrime", "ProudSourcePrime\ProudSourcePrime.csproj", "{6E13E110-EFA6-44C4-B9CF-9A452BC9B561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProudSourcePrime.Tests", "ProudSourcePrime.Tests\ProudSourcePrime.Tests.csproj", "{E67FBB43-B5E4-4A99-B6ED-58FF5599A418}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E13E110-EFA6-44C4-B9CF-9A452BC9B561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E13E110-EFA6-44C4-B9CF-9A452BC9B561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E13E110-EFA6-44C4-B9CF-9A452BC9B561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E13E110-EFA6-44C4-B9CF-9A452BC9B561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E67FBB43-B5E4-4A99-B6ED-58FF5599A418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67FBB43-B5E4-4A99-B6ED-58FF5599A418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67FBB43-B5E4-4A99-B6ED-58FF5599A418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67FBB43-B5E4-4A99-B6ED-58FF5599A418}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

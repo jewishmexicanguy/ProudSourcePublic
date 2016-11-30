@@ -1,0 +1,644 @@
+﻿@model ProudSourcePrime.Models.UserIndexModel
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="~/Styles/User/Index.css" />
+
+<div class="title-container">
+    <div class="title">
+        Dashboard
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="dashboard col-sm-12">
+
+        <div id="user-profile-details">
+            <div id="form-div" class="form-div">
+                <form action="/User/Index" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <h2> <b>User Details</b> </h2>
+                    </div>
+
+                    @Html.HiddenFor(m => m.userIndexData.UserProfile["Id"])
+                    @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Investor_Id"])
+                    @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Entrepreneur_Id"])
+                    @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Profile_Public"])
+                    @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Profile_Public"])
+
+                    <div class="form-group row">
+                        <label class="control-label col-md-4 col-sm-offset-1">Name </label>
+                        <div class="col-md-4">
+                            <input class="form-control text-box single-line"
+                                   id="userIndexData_UserProfile_Name_"
+                                   name="userIndexData.UserProfile[Name]"
+                                   type="text"
+                                   value="@Model.userIndexData.UserProfile["Name"]">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="control-label col-md-4 col-sm-offset-1">Phone Number</label>
+                        <div class="col-md-4">
+                            <input class="form-control text-box single-line"
+                                   id="userIndexData_UserProfile_PhoneNumber_"
+                                   name="userIndexData.UserProfile[PhoneNumber]"
+                                   type="text"
+                                   value="@Model.userIndexData.UserProfile["PhoneNumber"]">
+                        </div>
+                        @Html.ValidationMessage("invalid_phonenumber", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="control-label col-md-4 col-sm-offset-1">Email</label>
+                        <div class="col-md-4">
+                            @Model.userIndexData.UserProfile["UserName"]
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" value="Save Changes" class="btn btn-default" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="entrepreneur-details">
+
+            <div class="form-group title">
+                <h2> <b>Entrepreneur Details</b> </h2>
+            </div>
+
+            <div class="row">
+    @if (Model.userIndexData.EntrepreneurProfile.ContainsKey("Image_Id") && !string.IsNullOrEmpty(Model.userIndexData.EntrepreneurProfile["Image_Id"]))
+    {
+        <div class="img-wrap">
+            <span class="img-remove glyphicon glyphicon-remove-sign" onclick="$.ajax({
+                  url: '/IO/DeleteImage',
+                  type: 'POST',
+                  data:
+                  {
+                        Image_Id: @Model.userIndexData.EntrepreneurProfile["Image_Id"]
+                  },
+                  dataType: 'json',
+                  success : function(data)
+                  {
+                        if(data.success)
+                        {
+                            window.location.reload(false);
+                        }
+                        else
+                        {
+                            alert('Error : ' + data.code + ' details :' + data.message);
+                        }
+                   }
+               });"></span>
+            <img class="profile-thumbnail  col-sm-offset-1" src="@string.Format("/IO/GetImage/{0}", Model.userIndexData.EntrepreneurProfile["Image_Id"])" />
+        </div>
+    }
+    else
+    {
+        <img class="profile-thumbnail col-sm-offset-1" src="~/Content/Images/emptyProfile.png" />
+    }
+            </div>
+
+            @if (Model.userIndexData.EntrepreneurProfile["Verified"] == "False")
+            {
+                <div class="row">
+                    <label class="col-md-1 col-sm-offset-1">Verified</label>
+                    <div class="col-md-1">
+                        <input class="form-control checkbox" type="checkbox"
+                                disabled>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <label class="col-md-1 col-sm-offset-1">Verified</label>
+                    <div class="col-md-1">
+                        <input class="form-control checkbox" type="checkbox"
+                               >
+                    </div>
+                </div>
+            }
+
+            <br/>
+
+            @if (Model.userIndexData.EntrepreneurAccounts.Count > 0)
+            {
+                <div>
+                    <table class="table-responsive table-striped table-hover">
+                        <thead>Entrepreneur owned projects</thead>
+                        <tr class="row">
+                            <th class="col-lg-4">Project Name</th>
+                            <th class="col-lg-4">Balance</th>
+                            <th class="col-lg-4">Project Goal</th>
+                        </tr>
+                        @for (int i = 0; i < Model.userIndexData.EntrepreneurAccounts.Count; i++)
+                        {
+                            <tr class="row">
+                                <td class="col-lg-4"><a href="@string.Format("/Project/Index/{0}", Model.userIndexData.EntrepreneurAccounts[i]["Project_Id"])">@Model.userIndexData.EntrepreneurAccounts[i]["Name"]</a></td>
+                                <td class="col-lg-4">
+                                    @{
+                                        string balance = null;
+                                        if (Model.userIndexData.EntrepreneurAccounts[i]["Balance"] != null)
+                                        {
+                                            balance = string.Format("$ {0}", decimal.Round(decimal.Parse(Model.userIndexData.EntrepreneurAccounts[i]["Balance"]), 2));
+                                        }
+                                        else
+                                        {
+                                            balance = "$ 0.00";
+                                        }
+                                    }
+                                    <a href="@string.Format("/Financial/Dashboard/{0}", Model.userIndexData.EntrepreneurAccounts[i]["Id"])"><b>@balance</b></a>
+                                </td>
+                                <td class="col-lg-4">@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.userIndexData.EntrepreneurAccounts[i]["Investment_Goal"]), 2))</td>
+                            </tr>
+                          }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>you have no projects</p>
+            }
+
+            <br />
+            
+            @if (!Model.userIndexData.EntrepreneurProfile.ContainsKey("Image_Id") || string.IsNullOrEmpty(Model.userIndexData.EntrepreneurProfile["Image_Id"]))
+            {
+
+                <button id="Entrepreneur-image-toggle" class="btn btn-default">Update Entrepreneur Image</button>
+
+                <div id="Entrepreneur-image-update">
+                    @{Html.RenderPartial("~/Views/IO/_UploadImage.cshtml", new ProudSourcePrime.Models.ImageFileModel()
+                        {
+                            Profile_Id = int.Parse(Model.userIndexData.EntrepreneurProfile["Entrepreneur_Id"]),
+                            IsProject = false
+                        });
+                    }
+                </div>
+
+                <br />
+            }
+
+            <button id="Entrepreneur-document-upload-toggle" class="btn btn-default">Upload Entrepreneur document</button>
+
+            <div id="Entrepreneur-document-upload">
+                @{Html.RenderPartial("~/Views/IO/_UploadDocument.cshtml", new ProudSourcePrime.Models.DocumentFileModel()
+                    {
+                        Profile_Id = int.Parse(Model.userIndexData.EntrepreneurProfile["Entrepreneur_Id"]),
+                        IsProject = false
+                    });
+                }
+            </div>
+
+            <div class="col-sm-offset-1">
+                <label>Entrepreneur documents</label>
+                <div id="Entrepreneur-documents">
+                    @if (Model.userIndexData.EntrepreneurDocuments.Count > 0)
+                    {
+                        for (int i = 0; i < Model.userIndexData.EntrepreneurDocuments.Count; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-3 document-wrap">
+                                    <span class="document-remove glyphicon glyphicon-remove-sign" onclick="$.ajax(
+                                        {
+                                            url: '/IO/DeleteDocument',
+                                            type: 'POST',
+                                            data:
+                                            {
+                                                Document_Id: @Model.userIndexData.EntrepreneurDocuments[i]["Document_Id"]
+                                            },
+                                            dataType: 'json',
+                                            success: function(data)
+                                            {
+                                                if(data.success)
+                                                {
+                                                    window.location.reload(false);
+                                                }
+                                                else
+                                                {
+                                                    alert('Error : ' + data.code + ' details :' + data.message);
+                                                }
+                                            }
+                                        });"></span>
+                                    <a href="@string.Format("/IO/Download/{0}", Model.userIndexData.EntrepreneurDocuments[i]["Document_Id"])">@Model.userIndexData.EntrepreneurDocuments[i]["File_Name"].ToString()</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>You have no documents!</p>
+                    }
+                </div>
+            </div>
+
+            <hr />
+
+            <div> 
+                <p class="text-info">Do not try to make your profile un-public if you already have projects. It is not allowed</p>
+            </div>
+
+            <div class="col-sm-offset-1">
+                <div id="form-div" class="form-div">
+                    <form action="/User/Index" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["Id"])
+                        @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Investor_Id"])
+                        @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Entrepreneur_Id"])
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["Name"])
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["PhoneNumber"])
+                        @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Profile_Public"])
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Entrepreneur profile is public </label>
+                            <div class="col-md-4">
+                                @if (Model.userIndexData.EntrepreneurProfile["Profile_Public"] == "False")
+                                {
+                                    <input class="form-control checkbox"
+                                            id="userIndexData_EntrepreneurProfile_Profile_Public_"
+                                            name="userIndexData.EntrepreneurProfile[Profile_Public]"
+                                            type="checkbox">
+                                }
+                                else
+                                {
+                                    <input class="form-control checkbox"
+                                            id="userIndexData_EntrepreneurProfile_Profile_Public_"
+                                            name="userIndexData.EntrepreneurProfile[Profile_Public]"
+                                            type="checkbox"
+                                            checked>
+                                }
+                                
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                                <input type="submit" value="Save Changes" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @* 
+            --------
+            INVESTOR
+            --------
+        *@
+            
+        <div class="investor-details">
+
+            <div class="form-group title">
+                <h2> <b>Investor Details</b> </h2>
+            </div>
+
+            <div class="row">
+                @if (Model.userIndexData.InvestorProfile.ContainsKey("Image_Id") && !string.IsNullOrEmpty(Model.userIndexData.InvestorProfile["Image_Id"]))
+                {
+                    <div class="img-wrap">
+                        <span class="img-remove glyphicon glyphicon-remove-sign" onclick="$.ajax(
+                            {
+                                url: '/IO/DeleteImage',
+                                type: 'POST',
+                                data:
+                                {
+                                    Image_Id: @Model.userIndexData.InvestorProfile["Image_Id"]
+                                },
+                                dataType: 'json',
+                                success : function(data)
+                                {
+                                    if(data.success)
+                                    {
+                                        window.location.reload(false);
+                                    }
+                                    else
+                                    {
+                                        alert('Error : ' + data.code + ' details :' + data.message);
+                                    }
+                                 }
+                            });">
+                        </span>
+                        <img class="profile-thumbnail  col-sm-offset-1" src="@string.Format("/IO/GetImage/{0}", Model.userIndexData.InvestorProfile["Image_Id"])" />
+                    </div>
+                }
+                else
+                {
+                    <img class="profile-thumbnail col-sm-offset-1" src="~/Content/Images/emptyProfile.png" />
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Balance</label>
+                    @if (Model.userIndexData.InvestorAccount.ContainsKey("Balance"))
+                    {
+                        <a href="@string.Format("/Financial/Dashboard/{0}", Model.userIndexData.Investor_Financial_Account_Id)"><b>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.userIndexData.InvestorAccount["Balance"])))</b></a>
+                    }
+                    else
+                    {
+                        <a href="@string.Format("/Financial/Dashboard/{0}", Model.userIndexData.Investor_Financial_Account_Id)"><b>$ 0.00</b></a>
+                    }
+                    @if(Model.userIndexData.InvestorAccount.ContainsKey("Frozen"))
+                    {
+                        if(Model.userIndexData.InvestorAccount["Frozen"] == "True")
+                        {
+                            <p>Account is frozen, please reach out to a proudsource representative.</p>
+                        }
+                        else
+                        {
+                            <p>Account is active.</p>
+                        }
+                    }
+                 </div>
+            </div>
+
+            @if(!Model.userIndexData.InvestorProfile.ContainsKey("Image_Id") || string.IsNullOrEmpty(Model.userIndexData.InvestorProfile["Image_Id"]))
+            { 
+                <button id="Investor-image-update-toggle" class="btn btn-default">Update Investor Image</button>
+
+                <div id="Investor-image-update">
+                    @{Html.RenderPartial("~/Views/IO/_UploadImage.cshtml", new ProudSourcePrime.Models.ImageFileModel()
+                    {
+                        Profile_Id = int.Parse(Model.userIndexData.InvestorProfile["Investor_Id"]),
+                        IsProject = false
+                    });
+                    }
+                </div>
+
+                <br />
+            }
+
+            <button id="Investor-document-upload-toggle" class="btn btn-default">Upload Investor document</button>
+
+            <div id="Investor-document-upload">
+                @{Html.RenderPartial("~/Views/IO/_UploadDocument.cshtml", new ProudSourcePrime.Models.DocumentFileModel()
+                    {
+                        Profile_Id = int.Parse(Model.userIndexData.InvestorProfile["Investor_Id"]),
+                        IsProject = false
+                    });
+                }
+            </div>
+
+            <div class="col-sm-offset-1">
+                <label>Investor Documents</label>
+                <div id="Investor-documents">
+                    @if (Model.userIndexData.InvestorDocuments.Count > 0)
+                    {
+                        for (int i = 0; i < Model.userIndexData.InvestorDocuments.Count; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-3 document-wrap">
+                                    <span class="document-remove glyphicon glyphicon-remove-sign" onclick="$.ajax(
+                                        {
+                                            url: '/IO/DeleteDocument',
+                                            type: 'POST',
+                                            data:
+                                            {
+                                                Document_Id: @Model.userIndexData.InvestorDocuments[i]["Document_Id"]
+                                            },
+                                            dataType: 'json',
+                                            success: function(data)
+                                            {
+                                                if(data.success)
+                                                {
+                                                    window.location.reload(false);
+                                                }
+                                                else
+                                                {
+                                                    alert('Error : ' + data.code + ' details :' + data.message);
+                                                }
+                                            }
+                                        });"></span>
+                                    <a href="@string.Format("/IO/Download/{0}", Model.userIndexData.InvestorDocuments[i]["Document_Id"])">@Model.userIndexData.InvestorDocuments[i]["File_Name"].ToString()</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>You have no documents!</p>
+                    }
+                </div>
+            </div>
+
+            <hr />
+
+            <div>
+                <p class="text-info">Do not try to make your profile un-public if you already have projects. It is not allowed</p>
+            </div>
+
+            <div class="col-sm-offset-1">
+                <div id="form-div" class="form-div">
+                    <form action="/User/Index" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["Id"])
+                        @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Investor_Id"])
+                        @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Entrepreneur_Id"])
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["Name"])
+                        @Html.HiddenFor(m => m.userIndexData.UserProfile["PhoneNumber"])
+                        @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Profile_Public"])
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Investor profile is public </label>
+                            <div class="col-md-4">
+                                @if (Model.userIndexData.InvestorProfile["Profile_Public"] == "False")
+                                {
+                                    <input class="form-control checkbox"
+                                           id="userIndexData_InvestorProfile_Profile_Public_"
+                                           name="userIndexData.InvestorProfile[Profile_Public]"
+                                           type="checkbox">
+                                }
+                                else
+                                {
+                                    <input class="form-control checkbox"
+                                           id="userIndexData_InvestorProfile_Profile_Public_"
+                                           name="userIndexData.InvestorProfile[Profile_Public]"
+                                           type="checkbox"
+                                           checked>
+                                }
+
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                                <input type="submit" value="Save Changes" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <button id="Entrepreneur-link-upload-toggle" class="btn btn-default">Add an Entrepreneur link</button>
+
+    <div id="Entrepreneur-link-upload">
+        @{Html.RenderPartial("~/Views/IO/_UploadLink.cshtml", new ProudSourcePrime.Models.LinkModel()
+            {
+                Profile_Id = int.Parse(Model.userIndexData.EntrepreneurProfile["Entrepreneur_Id"]),
+                Is_Project = false,
+            });
+        }
+    </div>
+
+    <div id="entrepreneur-links">
+        <div class="current-links">
+            @if (Model.userIndexData.EntrepreneurLinks.Count > 0)
+            {
+                <hr />
+                <b>Entrepreneur Links</b>
+                <br />
+                for (int i = 0; i < Model.userIndexData.EntrepreneurLinks.Count; i++)
+                {
+                    if (Model.userIndexData.EntrepreneurLinks[i]["Link_Type"] == "YouTube" || Model.userIndexData.EntrepreneurLinks[i]["Link_Type"] == "Vimeo")
+                    {
+                        <iframe src="@Model.userIndexData.EntrepreneurLinks[i]["Link"]" allowfullscreen></iframe>
+                        <span class="link-remove glyphicon glyphicon-remove-circle" onclick="$.ajax({
+                            url : '@string.Format("/IO/DeleteLink/{0}", Model.userIndexData.EntrepreneurLinks[i]["Link_Id"])',
+                            type : 'POST',
+                            data : 
+                            { 
+                                Profile_Id : @Model.userIndexData.EntrepreneurProfile["Entrepreneur_Id"],
+                                Profile_Type_Id : 1
+                            },
+                           dataType : 'json',
+                           success : function(data) 
+                           {
+                               if(data.success) 
+                               {
+                                   window.location.reload(false);
+                               }
+                               else
+                               {
+                                   alert('Error : ' + data.code + ' details :' + data.message);
+                               }
+                           }
+                        });"></span>
+                    }
+                    else
+                    {
+                        <a href="@Model.userIndexData.EntrepreneurLinks[i]["Link"]">@Model.userIndexData.EntrepreneurLinks[i]["FriendlyName"]</a>
+                    }
+                }
+                <hr />
+            }
+            else
+            {
+                <p>No links, perhaps you can add some...</p>
+            }
+        </div>
+    </div>
+
+    <button id="Investor-link-upload-toggle" class="btn btn-default">Add an Investor link</button>
+
+    <div id="Investor-link-upload">
+        @{Html.RenderPartial("~/Views/IO/_UploadLink.cshtml", new ProudSourcePrime.Models.LinkModel()
+            {
+                Profile_Id = int.Parse(Model.userIndexData.InvestorProfile["Investor_Id"]),
+                Is_Project = false,
+            });
+        }
+    </div>
+
+    <div id="investor-links">
+        <div class="current-links">
+            @if (Model.userIndexData.InvestorLinks.Count > 0)
+            {
+                <hr />
+                <b>Investor Links</b>
+                <br />
+                for (int i = 0; i < Model.userIndexData.InvestorLinks.Count; i++)
+                {
+                    if(Model.userIndexData.InvestorLinks[i]["Link_Type"] == "YouTube" || Model.userIndexData.InvestorLinks[i]["Link_Type"] == "Vimeo")
+                    {
+                        <iframe src="@Model.userIndexData.InvestorLinks[i]["Link"]" allowfullscreen></iframe>
+                        <span class="link-remove glyphicon glyphicon-remove-circle" onclick="$.ajax({
+                            url : '@string.Format("/IO/DeleteLink/{0}", Model.userIndexData.InvestorLinks[i]["Link_Id"])',
+                            type : 'POST',
+                            data :
+                            {
+                                Profile_Id : @Model.userIndexData.InvestorProfile["Investor_Id"],
+                                Profile_Type_Id : 2
+                            },
+                           dataType : 'json',
+                           success : function(data)
+                           {
+                               if(data.success)
+                               {
+                                   window.location.reload(false);
+                               }
+                               else
+                               {
+                                   alert('Error : ' + data.code + ' details :' + data.message);
+                               }
+                           }
+                        });"></span>
+                    }
+                    else
+                    {
+                        <a href="@Model.userIndexData.InvestorLinks[i]["Link"]">@Model.userIndexData.InvestorLinks[i]["FriendlyName"]</a>
+                    }
+                }
+                <hr />
+            }
+            else
+            {
+                <p>No links, perhaps you can add some...</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#Entrepreneur-image-toggle').click(
+            function () {
+                $('#Entrepreneur-image-update').slideToggle('slow');
+            });
+
+        $('#Entrepreneur-document-upload-toggle').click(
+            function () {
+                $('#Entrepreneur-document-upload').slideToggle('slow');
+            });
+
+        $('#Investor-image-update-toggle').click(
+            function () {
+                $('#Investor-image-update').slideToggle('slow');
+            });
+
+        $('#Investor-document-upload-toggle').click(
+            function () {
+                $('#Investor-document-upload').slideToggle('slow');
+            });
+
+        $('#Entrepreneur-link-upload-toggle').click(
+            function () {
+                $('#Entrepreneur-link-upload').slideToggle('slow');
+            });
+
+        $('#Investor-link-upload-toggle').click(
+            function () {
+                $('#Investor-link-upload').slideToggle('slow');
+            });
+    </script>
+}

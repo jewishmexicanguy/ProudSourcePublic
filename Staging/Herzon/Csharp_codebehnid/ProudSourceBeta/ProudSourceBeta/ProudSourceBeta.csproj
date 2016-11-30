@@ -48,8 +48,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Braintree-2.55.0, Version=2.55.0.0, Culture=neutral, PublicKeyToken=31b586f34d3e96c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Braintree.2.55.0\lib\Braintree-2.55.0.dll</HintPath>
+    <Reference Include="Braintree-2.58.0, Version=2.58.0.0, Culture=neutral, PublicKeyToken=31b586f34d3e96c7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Braintree.2.58.0\lib\Braintree-2.58.0.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Hermes">
@@ -183,7 +183,6 @@
     <Compile Include="Controllers\FinancialAccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestorController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PROCController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -211,6 +210,7 @@
     <Compile Include="Models\PROCViewModels.cs" />
     <Compile Include="Models\ProjectViewModels.cs" />
     <Compile Include="Models\PSDataConnection.cs" />
+    <Compile Include="Models\PSFinancialDataConnection.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,14 +236,33 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Home\Index.css" />
-    <Content Include="Content\PROC\Details.css" />
+    <Content Include="Content\Home\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Investor\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\PROC\Create.css">
+      <DependentUpon>Create.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\PROC\Details.css">
+      <DependentUpon>Details.scss</DependentUpon>
+    </Content>
     <Content Include="Content\Project\CreatePROC.css" />
     <Content Include="Content\Project\Details.css" />
     <Content Include="Content\Search\Search.css" />
-    <Content Include="Content\Shared\Shared.css" />
-    <Content Include="Content\User\User.css" />
-    <Content Include="Content\User\_EntPage.css" />
+    <Content Include="Content\Shared\Shared.css">
+      <DependentUpon>Shared.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Entrepreneur\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\User\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\User\User.css">
+      <DependentUpon>User.scss</DependentUpon>
+    </Content>
     <Content Include="Content\User\_ProfilePage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -264,13 +283,25 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\emptyProfile2.jpg" />
+    <Content Include="Images\Logo-blue.png" />
     <Content Include="Images\Logo-white.png" />
+    <Content Include="Images\noPhoto.png" />
+    <Content Include="Images\shapes-bg.jpg" />
+    <Content Include="Images\skyline-blurred.jpg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Hermes-232edbf43f3e.p12" />
     <Content Include="fonts\Kankin.ttf" />
+    <Content Include="Content\Shared\Shared.scss" />
+    <Content Include="Content\Entrepreneur\index.scss" />
+    <Content Include="Content\Investor\index.scss" />
+    <Content Include="Content\User\User.scss" />
+    <Content Include="Content\User\index.scss" />
+    <Content Include="Content\Home\index.scss" />
+    <Content Include="Content\PROC\Create.scss" />
+    <Content Include="Content\PROC\Details.scss" />
     <None Include="Properties\PublishProfiles\herzon.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -356,6 +387,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Styles\Bundled.css">
+      <DependentUpon>Bundled.scss</DependentUpon>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -371,7 +405,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index-bak.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -384,15 +418,9 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Entrepreneur\Index.cshtml" />
+    <Content Include="Views\Entrepreneur\Index-bak.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\createEntrepreneur.cshtml" />
@@ -418,12 +446,17 @@
     <Content Include="Views\FinancialAccount\Index.cshtml" />
     <Content Include="Views\User\_InvestPage.cshtml" />
     <Content Include="Views\User\_ProfilePage.cshtml" />
-    <Content Include="Views\User\_TestPartial.cshtml" />
-    <Content Include="Views\Shared\_EntPage.cshtml" />
+    <Content Include="Views\User\_EntPage.cshtml" />
+    <Content Include="Views\Entrepreneur\Index.cshtml" />
+    <Content Include="Styles\Bundled.scss" />
+    <Content Include="Styles\Investor\_index.scss" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
+    <Folder Include="Views\Layout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,0 +1,78 @@
+﻿@import "../Base/_Variables.scss";
+
+$chat-height: 720px;
+
+#proc-editor {
+    padding : 25px;
+}
+
+#form-div {
+    border-style : solid; 
+    border-radius : 25px; 
+    border-color : lightgray; 
+    border-width : 1px;
+}
+
+.profile-thumbnail {
+    height : 200px;
+    width : 200px;
+    border-radius: 100px;
+}
+
+.title {
+    font-size: 200%;
+}
+
+#messageInput {
+  color: black;
+  width: 100%;
+  font-size: 130%;
+  max-width: 900px;
+  height: 50px;
+  margin-top: 0px; 
+}
+
+#chat-input-container {
+  margin: auto;
+  text-align: center;
+}
+
+.chat-messages {
+  height: $chat-height - 80;
+  margin-right: 0px;
+  margin-left: -30px;
+  padding-top: 15px;
+  font-size: 170%;
+  overflow-y: scroll; 
+
+}
+
+.chat-messages li {
+  list-style: none; 
+
+}
+
+.chat-username {
+  margin-right: 10px; 
+
+}
+
+.chat-form {
+  margin: auto; 
+
+}
+
+#right-bar {
+  height: $chat-height;
+  background-color: #91CCFC; 
+
+  margin-top: 0px;
+  margin-bottom: 20px;
+
+  border-radius: 20px;
+
+  -moz-box-shadow:    inset 0 0 10px #737373;
+  -webkit-box-shadow: inset 0 0 10px #737373;
+  box-shadow:         inset 0 0 10px #737373;
+
+}

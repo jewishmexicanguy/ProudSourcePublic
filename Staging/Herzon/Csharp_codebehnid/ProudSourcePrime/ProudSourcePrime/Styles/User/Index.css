@@ -1,0 +1,74 @@
+hr {
+    background: white;
+}
+
+.profile-thumbnail {
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+}
+
+.user-profile-details {
+    background-color: #d7edff;
+    font-size: 130%; 
+}
+
+.investor-details {
+    font-size: 130%;
+}
+
+.entrepreneur-details {
+    /*background-color: #d7edff;*/
+    font-size: 130%;
+    padding: 0px;
+    padding-top: 25px;
+    margin: 0px; 
+}
+
+.investor-details {
+    /*background-color: #befecf;*/
+    padding: 0px;
+    padding-top: 25px;
+    margin: 0px; 
+}
+
+.dashboard {
+    padding: 0px; 
+}
+
+.title {
+    margin-left: 25px;
+    margin-top: 25px; 
+}
+
+.form-div {
+    border-color : lightgray;
+    border-width : 1px;
+    border-bottom-style  : solid;
+    border-radius : 25px;
+}
+/*# sourceMappingURL=Index.css.map */
+
+#Entrepreneur-image-update {
+    display : none;
+}
+
+#Entrepreneur-document-upload {
+    display : none;
+}
+
+#Investor-image-update {
+    display : none;
+}
+
+#Investor-document-upload {
+    display : none;
+}
+
+#Entrepreneur-link-upload {
+    display : none;
+}
+
+#Investor-link-upload {
+    display : none;
+}

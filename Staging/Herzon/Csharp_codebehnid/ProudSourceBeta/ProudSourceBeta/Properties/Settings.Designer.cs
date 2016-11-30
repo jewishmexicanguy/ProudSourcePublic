@@ -26,9 +26,9 @@ namespace ProudSourceBeta.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=stagingt-sql.cabob60kfwoz.us-west-2.rds.amazonaws.com;Initial Catalog" +
-            "=ProudSourceDB;Persist Security Info=True;User ID=PSQLManager;Password=Inovation" +
-            "MeetsInvestment")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=proudsourcedb.cabob60kfwoz.us-west-2.rds.amazonaws.com;Initial Catalo" +
+            "g=ProudSourceDB;Persist Security Info=True;User ID=PSSqlDeveloper;Password=secur" +
+            "ityisselfdefeating")]
         public string Setting {
             get {
                 return ((string)(this["Setting"]));

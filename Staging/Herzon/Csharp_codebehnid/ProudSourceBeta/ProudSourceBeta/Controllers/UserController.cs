@@ -68,6 +68,18 @@ namespace ProudSourceBeta.Controllers
             return Redirect("/User/Index");
         }
 
+        public static int getEntID(string userID)
+        {
+            ProudSourceBeta.Models.UserIndexViewModel userAccount = new Models.UserIndexViewModel(userID);
+            return userAccount.Entrepreneur_ID;
+        }
+
+        public static int getInvestorID(string userID)
+        {
+            ProudSourceBeta.Models.UserIndexViewModel userAccount = new Models.UserIndexViewModel(userID);
+            return userAccount.Investor_ID;
+        }
+
         //// GET: User/createEntrepreneur
         //[HttpGet]
         //public ActionResult createEntrepreneur()

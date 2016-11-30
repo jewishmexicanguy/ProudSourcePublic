@@ -1,0 +1,12 @@
+﻿/*#BTC-transaction {
+    height : 0px;
+}*/
+
+#beta-test-info {
+    background-color : #80bfff;
+    color : white;
+    border-color : lightgray;
+    border-width : 1px;
+    border-radius : 25px;
+    text-align : center;
+}

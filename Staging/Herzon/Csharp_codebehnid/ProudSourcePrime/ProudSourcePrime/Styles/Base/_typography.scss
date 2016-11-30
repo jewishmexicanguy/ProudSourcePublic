@@ -1,0 +1,14 @@
+﻿@font-face {
+    font-family: 'OpenSans-regular'; /*a name to be used later*/
+    src: url('../../fonts/openSans/OpenSans-Regular.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'OpenSans-bold'; /*a name to be used later*/
+    src: url('../../fonts/openSans/OpenSans-Bold.ttf'); /*URL to font*/
+}
+
+
+body {
+  font-family: "OpenSans-regular", Helvetica, Arial, sans-serif;
+}

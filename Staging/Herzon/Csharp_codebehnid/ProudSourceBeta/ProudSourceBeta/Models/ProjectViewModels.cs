@@ -125,6 +125,10 @@ namespace ProudSourceBeta.Models
         /// </summary>
         public DataRowCollection PROC_Agrements { get; set; }
         /// <summary>
+        /// This accessor holds the image of the entrepreneur that owns this project.
+        /// </summary>
+        public byte[] Entrepreneur_Image { get; set; }
+        /// <summary>
         /// Expossed accessor for noting if the client viewing the profile is a logged in user or not.
         /// </summary>
         public bool IsRegisteredViewer { get; set; }
@@ -132,11 +136,17 @@ namespace ProudSourceBeta.Models
         /// Expossed accessor that stores a project ID that is being viewd by a non owner of the project account.
         /// </summary>
         public int display_Project_ID { get; set; }
-
+        /// <summary>
+        /// Accessor that holds the account balance for this project in USD
+        /// </summary>
         public decimal Project_Account_Balnce_USD { get; private set; }
-
+        /// <summary>
+        /// Accessor that holds the account balance for this project in BTC
+        /// </summary>
         public decimal Project_Account_Balance_BTC { get; private set; }
-
+        /// <summary>
+        /// Accessor that holds the Identity of this projects financial account.
+        /// </summary>
         public int Financial_Account_ID { get; private set; }
 
         /// <summary>
@@ -188,6 +198,7 @@ namespace ProudSourceBeta.Models
             //      [4] : Table with a singular value that is the USD Balance
             //      [5] : Table with a singular value that is the BTC Balance
             //      [6] : Table with a singular value which is the financial account of this thing 
+            //      [7] : Table with possibly a singular image of the entrepreneur owner
 
             Description = set.Tables[0].Rows[0]["Description"].ToString();
             Name = set.Tables[0].Rows[0]["Name"].ToString();
@@ -231,6 +242,14 @@ namespace ProudSourceBeta.Models
                 Project_Account_Balance_BTC = 0.0m;
             }
             Financial_Account_ID = (int)set.Tables[6].Rows[0]["Account_ID"];
+            if(set.Tables[7].Rows.Count > 0)
+            {
+                Entrepreneur_Image = (byte[])set.Tables[7].Rows[0]["Binary_Image"];
+            }
+            else
+            {
+                Entrepreneur_Image = null;
+            }
             return;
         }
         /// <summary>
@@ -708,9 +727,53 @@ namespace ProudSourceBeta.Models
         /// <summary>
         /// Class constructor
         /// </summary>
+
+        /// <summary>
+        /// This accessor will house the account balance that the investor has in our proudsource accounts.
+        /// </summary>
+        [Display(Name = "Money available")]
+        public decimal Financial_Account_Balance { get; private set; }
+
         public ProjectCreatePROCViewModel() : base()
         {
 
+        }
+
+        public ProjectCreatePROCViewModel(int investor_id) : base()
+        {
+            _get_Investor_Account_Balance(investor_id);
+        }
+
+        private void _get_Investor_Account_Balance(int investor_id)
+        {
+            string query = @"USE [ProudSourceAccounting]
+                             SELECT SUM(T.[Amount]) AS 'Balance'
+                             FROM Transactions T
+                             JOIN Accounts A ON T.[Account_ID] = A.[Account_ID]
+                             WHERE A.[Profile_Account_ID] = @Investor_ID
+                                AND A.[Profile_Type_ID] = 3
+                                AND T.[Transaction_State] = 'PROCESSED'
+                             ";
+            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+            adapter.SelectCommand.Parameters.AddWithValue("@Investor_ID", Investor_ID);
+            DataSet set = new DataSet();
+            try
+            {
+                conn.Open();
+                adapter.Fill(set);
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+            if (!set.Tables[0].Rows[0]["Balance"].Equals(DBNull.Value))
+            {
+                Financial_Account_Balance = (decimal)set.Tables[0].Rows[0]["Balance"];
+            }
         }
         /// <summary>
         /// Exposed method that creates the PROC between the Investor and this Project.

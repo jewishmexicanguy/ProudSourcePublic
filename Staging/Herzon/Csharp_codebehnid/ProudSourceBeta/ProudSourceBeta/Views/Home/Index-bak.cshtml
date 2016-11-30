@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Welcome to ProudSource";
+}
+<link href="~/Content/Home/Index.css" rel="stylesheet" type="text/css" />
+@*<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">*@
+
+<div id="bodyHolder">
+    <div></div>
+    @*<div class="jumbotron">
+        <h1 class="template-header">Misson</h1>
+        <p class="lead">ProudSource.us is a platform used to connect investors and entrepreneurs with small businesses and startups. Essentially, it's crowdfunding with a financial return.</p>
+        <p><a href="http://cyberconcepts.technology" class="btn btn-primary btn-lg" target="_new">Powerd By CyberConcepts [ ] &raquo;</a></p>
+    </div>*@
+
+    <div class="homeBoxHolder" id="homeBoxHolder">
+        <div class="homeBox" id="homeBox">
+            <div class="homePRText">
+                PROUDSOURCE
+            </div>
+        </div>
+        <div class="homeIntroText">
+            The new way to invest.
+        </div>
+        <div class="getStartedBtnHolder">
+            @*<button class="getStartedButton">Get Started!</button>*@
+        </div>
+        
+    </div>
+
+    <script language="javascript">
+        function autoResizeDiv()
+        {
+            document.getElementById('homeBoxHolder').style.height = window.innerHeight/4 + 'px';
+            document.getElementById('homeBox').style.marginTop = window.innerHeight/4 - 50 + 'px';
+        }
+        window.onresize = autoResizeDiv;
+        autoResizeDiv();
+    </script>
+
+
+    <div class="homeSeperator">
+        test
+    </div>
+    
+    <div class="bottomShit">
+        <div class="row">
+            <div class="col-md-4">
+                <h2 class="template-header">Become a Member</h2>
+                <p class="template-words">
+                    Register with us and see what Projects the community is working on.
+                </p>
+                <p><a class="btn btn-default" href="/Account/Register/">Registration &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2 class="template-header">Login</h2>
+                <p class="template-words">Already have an account, then login.</p>
+                <p><a class="btn btn-default" href="/Account/Login">Portal &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2 class="template-header">Explore</h2>
+                <p class="template-words">Discover what the community has to offer.</p>
+                <p><a class="btn btn-default" href="/Search/">Explore &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,393 +1,476 @@
-﻿@model ProudSourceBeta.Models.PROCInitializeViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Details";
 }
 
 <link href="~/Content/PROC/Details.css" rel="stylesheet" />
 
-<h2 class="template-header">PROC Terms</h2>
+<div class="title-container">
+    <div class="title">
+        PROC Details
+    </div>
+</div>
 
-@if (Model is ProudSourceBeta.Models.PROCFloaterViewModel)
-{
-    { ProudSourceBeta.Models.PROCFloaterViewModel floater_model = (ProudSourceBeta.Models.PROCFloaterViewModel)Model;
-        <div class="PROC-Details">
+<div id="PROC-details-container">
+
+        <div class="PROC-data">
+
+        <h2 class="template-header">PROC Terms</h2>
+
+        @if (Model is ProudSourceBeta.Models.PROCFloaterViewModel)
+        {
+            { ProudSourceBeta.Models.PROCFloaterViewModel floater_model = (ProudSourceBeta.Models.PROCFloaterViewModel)Model;
+                <div class="PROC-Details">
             
-            <hr />
-            <dl class="dl-horizontal">
+                    <hr />
+                    <dl class="dl-horizontal">
 
-                <dt class="profile-header">
-                    Contract terms Begin
-                </dt>
+                        <dt class="profile-header">
+                            Contract terms Begin
+                        </dt>
 
-                <dd class="profile-words">
-                    @Html.DisplayFor(i => floater_model.Performance_BeginDate)
-                </dd>
+                        <dd class="profile-words">
+                            @Html.DisplayFor(i => floater_model.Performance_BeginDate)
+                        </dd>
 
-                <dt class="profile-header">
-                    Contract terms End
-                </dt>
+                        <dt class="profile-header">
+                            Contract terms End
+                        </dt>
 
-                <dd class="profile-words">
-                    @Html.DisplayFor(i => floater_model.Performance_EndDate)
-                </dd>
+                        <dd class="profile-words">
+                            @Html.DisplayFor(i => floater_model.Performance_EndDate)
+                        </dd>
 
-                <dt class="profile-header">
-                    Amount Invested
-                </dt>
+                        <dt class="profile-header">
+                            Amount Invested
+                        </dt>
 
-                <dd class="profile-words">
-                    @Html.DisplayFor(i => floater_model.Investment_ammount)
-                </dd>
+                        <dd class="profile-words">
+                            @Html.DisplayFor(i => floater_model.Investment_ammount)
+                        </dd>
 
-                <dt class="profile-header">
-                    Revenue Percentage
-                </dt>
+                        <dt class="profile-header">
+                            Revenue Percentage
+                        </dt>
 
-                <dd class="profile-words">
-                    @Html.DisplayFor(i => floater_model.Revenue_Percentage)
-                </dd>
+                        <dd class="profile-words">
+                            @Html.DisplayFor(i => floater_model.Revenue_Percentage)
+                        </dd>
 
-                <dt class="profile-header">
-                    Investor
-                </dt>
+                        <dt class="profile-header">
+                            Investor
+                        </dt>
 
-                <dd class="profile-words">
-                    <a href="@string.Format("/Investor/Details/{0}", floater_model.Investor_ID)">@floater_model.Investor_Name</a>
-                </dd>
+                        <dd class="profile-words">
+                            <a href="@string.Format("/Investor/Details/{0}", floater_model.Investor_ID)">@floater_model.Investor_Name</a>
+                        </dd>
 
-                <dt class="profile-header">
-                    Entrepreneur
-                </dt>
+                        <dt class="profile-header">
+                            Entrepreneur
+                        </dt>
 
-                <dd class="profile-words">
-                    <a href="@string.Format("/Entrepreneur/Details/{0}", floater_model.Entrepreneur_ID)">@floater_model.Entrepreneur_Name</a>
-                </dd>
+                        <dd class="profile-words">
+                            <a href="@string.Format("/Entrepreneur/Details/{0}", floater_model.Entrepreneur_ID)">@floater_model.Entrepreneur_Name</a>
+                        </dd>
                     
-                <dt class="profile-header">
-                    Terms Mutually accepted
-                </dt>
+                        <dt class="profile-header">
+                            Terms Mutually accepted
+                        </dt>
 
-                <dd id="mutually-accepted" class="profile-words">
-                    @Html.DisplayFor(i => floater_model.Mutually_Accepted)
-                </dd>
+                        <dd id="mutually-accepted" class="profile-words">
+                            @Html.DisplayFor(i => floater_model.Mutually_Accepted)
+                        </dd>
 
-            </dl>
-        </div>
-    }
-}
+                    </dl>
+                </div>
+            }
+        }
 
-@if (Model is ProudSourceBeta.Models.PROCEntrepreneurViewModel)
-{
-    {
-        ProudSourceBeta.Models.PROCEntrepreneurViewModel entrepreneur_model = (ProudSourceBeta.Models.PROCEntrepreneurViewModel)Model;
-        <div class="container PROC-Details">
-            <dl class="dl-horizontal">
+        @if (Model is ProudSourceBeta.Models.PROCEntrepreneurViewModel)
+        {
+            {
+                ProudSourceBeta.Models.PROCEntrepreneurViewModel entrepreneur_model = (ProudSourceBeta.Models.PROCEntrepreneurViewModel)Model;
+                <div class="container PROC-Details">
+                    <dl class="dl-horizontal">
 
-                <dt class="profile-header">Project Name</dt>
+                        <dt class="profile-header">Project Name</dt>
 
-                <dd class="profile-words">@entrepreneur_model.Project_Name</dd>
+                        <dd class="profile-words">@entrepreneur_model.Project_Name</dd>
 
-                <dt class="profile-header">Entrepreneur</dt>
+                        <dt class="profile-header">Entrepreneur</dt>
 
-                <dd>
-                    <a href="@string.Format("/Entrepreneur/Details/{0}", entrepreneur_model.Entrepreneur_ID)">@entrepreneur_model.Entrepreneur_Name</a>
-                    @{ var imgSrc_entrepreneur = "/Images/emptyProfile.png";
-                        if (entrepreneur_model.Entrepreneur_Image != null)
-                        {
-                            var base64 = Convert.ToBase64String(entrepreneur_model.Entrepreneur_Image);
-                            imgSrc_entrepreneur = string.Format("data:image/gif;base64,{0}", base64);
+                        <dd>
+                            <a href="@string.Format("/Entrepreneur/Details/{0}", entrepreneur_model.Entrepreneur_ID)">@entrepreneur_model.Entrepreneur_Name</a>
+                            @{ var imgSrc_entrepreneur = "/Images/emptyProfile.png";
+                                if (entrepreneur_model.Entrepreneur_Image != null)
+                                {
+                                    var base64 = Convert.ToBase64String(entrepreneur_model.Entrepreneur_Image);
+                                    imgSrc_entrepreneur = string.Format("data:image/gif;base64,{0}", base64);
+                                }
+                            }
+
+                            <img id="profile-image" class="profile-image" src="@imgSrc_entrepreneur" />
+                        </dd>
+
+                        <dt class="profile-header">Investor</dt>
+
+                        <dd>
+                            <a href="@string.Format("/Investor/Details/{0}", entrepreneur_model.Investor_ID)">@entrepreneur_model.Investor_Name</a>
+                            @{ var imgSrc_investor = "/Images/emptyProfile.png";
+                                if (entrepreneur_model.Investor_Image != null)
+                                {
+                                    var base64 = Convert.ToBase64String(entrepreneur_model.Investor_Image);
+                                    imgSrc_investor = string.Format("data:image/gif;base64,{0}", base64);
+                                }
+                            }
+
+                            <img id="profile-image" class="profile-image" src="@imgSrc_investor" />
+                        </dd>
+
+                        <dt class="profile-header">Contract begins on date</dt>
+
+                        <dd>@entrepreneur_model.Performance_BeginDate</dd>
+
+                        <dt class="profile-header">Contract end</dt>
+
+                        <dd class="profile-words">@entrepreneur_model.Performance_EndDate</dd>
+
+                        <dt class="profile-header">Contract has been accepted by you</dt>
+                        @{ string project_accepted = null;
+                            if (entrepreneur_model.Project_Accepted)
+                            {
+                                project_accepted = "Yes";
+                            }
+                            else if (!entrepreneur_model.Project_Accepted)
+                            {
+                                project_accepted = "No";
+                            }
                         }
-                    }
+                        <dd id="project-accepted" class="profile-words">@project_accepted</dd>
 
-                    <img id="profile-image" src="@imgSrc_entrepreneur" />
-                </dd>
-
-                <dt class="profile-header">Investor</dt>
-
-                <dd>
-                    <a href="@string.Format("/Investor/Details/{0}", entrepreneur_model.Investor_ID)">@entrepreneur_model.Investor_Name</a>
-                    @{ var imgSrc_investor = "/Images/emptyProfile.png";
-                        if (entrepreneur_model.Investor_Image != null)
-                        {
-                            var base64 = Convert.ToBase64String(entrepreneur_model.Investor_Image);
-                            imgSrc_investor = string.Format("data:image/gif;base64,{0}", base64);
+                        <dt class="profile-header">Contract has been accepted by the investor</dt>
+                        @{ string investor_accepted = null;
+                            if (entrepreneur_model.Investor_Accepted)
+                            {
+                                investor_accepted = "Yes";
+                            }
+                            else if (!entrepreneur_model.Investor_Accepted)
+                            {
+                                investor_accepted = "No";
+                            }
                         }
-                    }
+                        <dd id="investor-accepted" class="profile-words">@investor_accepted</dd>
 
-                    <img id="profile-image" src="@imgSrc_investor" />
-                </dd>
-
-                <dt class="profile-header">Contract begins on date</dt>
-
-                <dd>@entrepreneur_model.Performance_BeginDate</dd>
-
-                <dt class="profile-header">Contract ends on date</dt>
-
-                <dd class="profile-words">@entrepreneur_model.Performance_EndDate</dd>
-
-                <dt class="profile-header">Contract has been accepted by you</dt>
-                @{ string project_accepted = null;
-                    if (entrepreneur_model.Project_Accepted)
-                    {
-                        project_accepted = "Yes";
-                    }
-                    else if (!entrepreneur_model.Project_Accepted)
-                    {
-                        project_accepted = "No";
-                    }
-                }
-                <dd id="project-accepted" class="profile-words">@project_accepted</dd>
-
-                <dt class="profile-header">Contract has been accepted by the investor</dt>
-                @{ string investor_accepted = null;
-                    if (entrepreneur_model.Investor_Accepted)
-                    {
-                        investor_accepted = "Yes";
-                    }
-                    else if (!entrepreneur_model.Investor_Accepted)
-                    {
-                        investor_accepted = "No";
-                    }
-                }
-                <dd id="investor-accepted" class="profile-words">@investor_accepted</dd>
-
-                <dt class="profile-header">Contract has been mutually accepted</dt>
-                @{ 
-                    string mutually_accepted = null;
-                    if(entrepreneur_model.Mutually_Accepted)
-                    {
-                        mutually_accepted = "Yes";
-                    }
-                    else if(!entrepreneur_model.Mutually_Accepted)
-                    {
-                        mutually_accepted = "No";
-                    }
-                }
-                <dd id="mutually-accepted" class="profile-words">@mutually_accepted</dd>
-
-                <dt class="profile-header">Contract is currently in effect</dt>
-
-                @{ string isActive = null;
-                    string alert = null;
-                    if (entrepreneur_model.Active)
-                    {
-                        isActive = "Yes";
-                        alert = "alert-info";
-                    }
-                    else if (!entrepreneur_model.Active)
-                    {
-                        isActive = "No";
-                        alert = "alert-danger";
-                    }
-                }
-                <dd class="@alert">@isActive</dd>
-
-            </dl>
-        </div>
-
-        <div class="form-horizontal">
-            <form method="post" >
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">PROC Begin Date</label>
-                    <div class="col-md-10">
-                        <input class="form-control datepicker" type="date" name="Performance_BeginDate" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">PROC End Date</label>
-                    <div class="col-md-10">
-                        <input class="form-control datepicker" type="date" name="Performance_EndDate" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">Revenue Percentage</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="number" name="Revenue_Percentage" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">Project accepts</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="checkbox" name="Project_Accepted" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Change" class="btn btn-default" />
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    }
-}
-
-@if (Model is ProudSourceBeta.Models.PROCInvestorViewModel)
-{
-    { ProudSourceBeta.Models.PROCInvestorViewModel investor_model = (ProudSourceBeta.Models.PROCInvestorViewModel)Model;
-
-        <div class="container PROC-Details">
-            <dl class="dl-horizontal">
-
-                <dt class="profile-header">Project Name</dt>
-
-                <dd class="profile-words">@investor_model.Project_Name</dd>
-
-                <dt class="profile-header">Entrepreneur</dt>
-
-                <dd>
-                    <a href="@string.Format("/Entrepreneur/Details/{0}", investor_model.Entrepreneur_ID)">@investor_model.Entrepreneur_Name</a>
-                    @{ var imgSrc_entrepreneur = "/Images/emptyProfile.png";
-                        if (investor_model.Entrepreneur_Image != null)
-                        {
-                            var base64 = Convert.ToBase64String(investor_model.Entrepreneur_Image);
-                            imgSrc_entrepreneur = string.Format("data:image/gif;base64,{0}", base64);
+                        <dt class="profile-header">Contract has been mutually accepted</dt>
+                        @{ 
+                            string mutually_accepted = null;
+                            if(entrepreneur_model.Mutually_Accepted)
+                            {
+                                mutually_accepted = "Yes";
+                            }
+                            else if(!entrepreneur_model.Mutually_Accepted)
+                            {
+                                mutually_accepted = "No";
+                            }
                         }
-                    }
+                        <dd id="mutually-accepted" class="profile-words">@mutually_accepted</dd>
 
-                    <img id="profile-image" src="@imgSrc_entrepreneur" />
-                </dd>
+                        <dt class="profile-header">Contract is currently in effect</dt>
 
-                <dt class="profile-header">Investor</dt>
-
-                <dd>
-                    <a href="@string.Format("/Investor/Details/{0}", investor_model.Investor_ID)">@investor_model.Investor_Name</a>
-                    @{ var imgSrc_investor = "/Images/emptyProfile.png";
-                        if (investor_model.Investor_Image != null)
-                        {
-                            var base64 = Convert.ToBase64String(investor_model.Investor_Image);
-                            imgSrc_investor = string.Format("data:image/gif;base64,{0}", base64);
+                        @{ string isActive = null;
+                            string alert = null;
+                            if (entrepreneur_model.Active)
+                            {
+                                isActive = "Yes";
+                                alert = "alert-info";
+                            }
+                            else if (!entrepreneur_model.Active)
+                            {
+                                isActive = "No";
+                                alert = "alert-danger";
+                            }
                         }
-                    }
+                        <dd class="@alert">@isActive</dd>
 
-                    <img id="profile-image" src="@imgSrc_investor" />
-                </dd>
+                    </dl>
+                </div>
 
-                <dt class="profile-header">Contract begins on date</dt>
+                <div class="form-horizontal">
+                    <form method="post" >
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PROC Begin Date</label>
+                            <div class="col-md-10">
+                                <input class="form-control datepicker" type="date" name="Performance_BeginDate" />
+                            </div>
+                        </div>
 
-                <dd class="profile-words">@investor_model.Performance_BeginDate.ToShortDateString()</dd>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PROC End Date</label>
+                            <div class="col-md-10">
+                                <input class="form-control datepicker" type="date" name="Performance_EndDate" />
+                            </div>
+                        </div>
 
-                <dt class="profile-header">Contract ends on date</dt>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Revenue Percentage</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="number" name="Revenue_Percentage" />
+                            </div>
+                        </div>
 
-                <dd class="profile-words">@investor_model.Performance_EndDate</dd>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Project accepts</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="checkbox" name="Project_Accepted" />
+                            </div>
+                        </div>
 
-                <dt class="profile-header">Contract terms have been accepted by you</dt>
-                @{ string investor_accepted = null;
-                    if(investor_model.Investor_Accepted)
-                    {
-                        investor_accepted = "Yes";
-                    }
-                    else if(!investor_model.Investor_Accepted)
-                    {
-                        investor_accepted = "No";
-                    }
-                }
-                <dd id="investor-accepted" class="profile-words">@investor_accepted</dd>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Change" class="btn btn-default" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            }
+        }
+
+        @if (Model is ProudSourceBeta.Models.PROCInvestorViewModel)
+        {
+            { ProudSourceBeta.Models.PROCInvestorViewModel investor_model = (ProudSourceBeta.Models.PROCInvestorViewModel)Model;
+
+                <div class="container PROC-Details">
+                    <dl class="dl-horizontal">
+
+                        <dt class="profile-header">Project Name</dt>
+
+                        <dd class="profile-words">@investor_model.Project_Name</dd>
+
+                        <dt class="profile-header">Entrepreneur</dt>
+
+                        <dd>
+                            <a href="@string.Format("/Entrepreneur/Details/{0}", investor_model.Entrepreneur_ID)">@investor_model.Entrepreneur_Name</a>
+                            @{ var imgSrc_entrepreneur = "/Images/emptyProfile.png";
+                                if (investor_model.Entrepreneur_Image != null)
+                                {
+                                    var base64 = Convert.ToBase64String(investor_model.Entrepreneur_Image);
+                                    imgSrc_entrepreneur = string.Format("data:image/gif;base64,{0}", base64);
+                                }
+                            }
+
+                            <img id="profile-image" class="profile-image" src="@imgSrc_entrepreneur" />
+                        </dd>
+
+                        <dt class="profile-header">Investor</dt>
+
+                        <dd>
+                            <a href="@string.Format("/Investor/Details/{0}", investor_model.Investor_ID)">@investor_model.Investor_Name</a>
+                            @{ var imgSrc_investor = "/Images/emptyProfile.png";
+                                if (investor_model.Investor_Image != null)
+                                {
+                                    var base64 = Convert.ToBase64String(investor_model.Investor_Image);
+                                    imgSrc_investor = string.Format("data:image/gif;base64,{0}", base64);
+                                }
+                            }
+
+                            <img id="profile-image" class="profile-image" src="@imgSrc_investor" />
+                        </dd>
+
+                        <dt class="profile-header">Contract begins on date</dt>
+
+                        <dd class="profile-words">@investor_model.Performance_BeginDate.ToShortDateString()</dd>
+
+                        <dt class="profile-header">Contract end</dt>
+
+                        <dd class="profile-words">@investor_model.Performance_EndDate</dd>
+
+                        <dt class="profile-header">Contract terms have been accepted by you</dt>
+                        @{ string investor_accepted = null;
+                            if(investor_model.Investor_Accepted)
+                            {
+                                investor_accepted = "Yes";
+                            }
+                            else if(!investor_model.Investor_Accepted)
+                            {
+                                investor_accepted = "No";
+                            }
+                        }
+                        <dd id="investor-accepted" class="profile-words">@investor_accepted</dd>
                
-                <dt class="profile-header">Entrepreneur accepts contract</dt>
-                @{
-                    string entrepreneur_accepted = null;
-                    if (investor_model.Project_Accepted)
-                    {
-                        entrepreneur_accepted = "Yes";
-                    }
-                    else if (!investor_model.Project_Accepted)
-                    {
-                        entrepreneur_accepted = "No";
-                    }
-                }
-                <dd id="entrepreneur-accepted" class="profile-words">@entrepreneur_accepted</dd>
+                        <dt class="profile-header">Entrepreneur accepts contract</dt>
+                        @{
+                            string entrepreneur_accepted = null;
+                            if (investor_model.Project_Accepted)
+                            {
+                                entrepreneur_accepted = "Yes";
+                            }
+                            else if (!investor_model.Project_Accepted)
+                            {
+                                entrepreneur_accepted = "No";
+                            }
+                        }
+                        <dd id="entrepreneur-accepted" class="profile-words">@entrepreneur_accepted</dd>
 
-                <dt class="profile-header">Contract has been mutually accepted</dt>
-                @{ 
-                    string mutually_accepted = null;
-                    if(investor_model.Mutually_Accepted)
-                    {
-                        mutually_accepted = "Yes";
-                    }
-                    else if(!investor_model.Mutually_Accepted)
-                    {
-                        mutually_accepted = "No";
-                    }
-                }
-                <dd id="mutually-accepted">@mutually_accepted</dd>
+                        <dt class="profile-header">Contract has been mutually accepted</dt>
+                        @{ 
+                            string mutually_accepted = null;
+                            if(investor_model.Mutually_Accepted)
+                            {
+                                mutually_accepted = "Yes";
+                            }
+                            else if(!investor_model.Mutually_Accepted)
+                            {
+                                mutually_accepted = "No";
+                            }
+                        }
+                        <dd id="mutually-accepted">@mutually_accepted</dd>
 
-                <dt class="profile-header">Contract is active</dt>
-                @{ 
-                    string isActive = null;
-                    string alert = null;
-                    if(investor_model.Active)
-                    {
-                        isActive = "Yes";
-                        alert = "alert-info";
-                    }
-                    else if(!investor_model.Active)
-                    {
-                        isActive = "No";
-                        alert = "alert-danger";
-                    }
-                }
-                <dd class="@alert">@isActive</dd>
+                        <dt class="profile-header">Contract is active</dt>
+                        @{ 
+                            string isActive = null;
+                            string alert = null;
+                            if(investor_model.Active)
+                            {
+                                isActive = "Yes";
+                                alert = "alert-info";
+                            }
+                            else if(!investor_model.Active)
+                            {
+                                isActive = "No";
+                                alert = "alert-danger";
+                            }
+                        }
+                        <dd class="@alert">@isActive</dd>
 
-            </dl>
+                    </dl>
+                </div>
+
+                <div class="form-horizontal">
+                    <form method="post">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PROC Begin Date</label>
+                            <div class="col-md-10">
+                                <input id="PROC-begindate" class="form-control datepicker" type="text" name="Performance_BeginDate" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">PROC End Date</label>
+                            <div class="col-md-10">
+                                <input id="PROC-enddate" class="form-control datepicker" type="text" name="Performance_EndDate" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Investment amount</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="number" name="Investment_Amount" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Revenue Percentage</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="number" name="Revenue_Percentage" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Investor accepts</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="checkbox" name="Investor_Accepted" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Change" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+        }
+    </div>
+
+    <div id="right-bar">
+        <div class='chat-toolbar'>
         </div>
 
-        <div class="form-horizontal">
-            <form method="post">
-                <div class="form-group">
-                    <label class="control-label col-md-2">PROC Begin Date</label>
-                    <div class="col-md-10">
-                        <input id="PROC-begindate" class="form-control datepicker" type="text" name="Performance_BeginDate" />
-                    </div>
-                </div>
+        <ul id='messages' class="chat-messages"></ul>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2">PROC End Date</label>
-                    <div class="col-md-10">
-                        <input id="PROC-enddate" class="form-control datepicker" type="text" name="Performance_EndDate" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">Investment amount</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="number" name="Investment_Amount" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">Revenue Percentage</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="number" name="Revenue_Percentage" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2">Investor accepts</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="checkbox" name="Investor_Accepted" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Change" class="btn btn-default" />
-                    </div>
+        <div class="chat-box right-bar-footer">
+            <form id="chat-form" class="pure-form">
+                <div id="chat-input-container">
+                    <input type='text' id='messageInput' placeholder='Type a message...'>
                 </div>
             </form>
         </div>
+    </div>
+
+
+
+</div>
+
+
+    @section Scripts {
+        <script>
+            var model = @Html.Raw(Json.Encode(Model));
+
+            $(document).ready(function () {
+                $('.datepicker').datepicker();
+            });
+
+            var link = "https://proudsource.firebaseio.com/messages/PROC-"+model.PROC_ID
+            var ref = new Firebase(link);
+            var messageField = $('#messageInput');
+            var messageList = $('#messages');
+
+            // LISTEN FOR KEYPRESS EVENT
+            messageField.keypress(function (e) {
+                if (e.keyCode == 13) {
+                    //FIELD VALUES
+                    var username = {}
+
+                    if (model.Investor_Name == model.User_ID) 
+                        username = model.Investor_Name;
+                    else if (model.Entrepreneur_ID == model.User_ID)
+                        username = model.Entrepreneur_ID
+
+                    var message = messageField.val();
+
+                    var username = model.Investor_Name;
+
+                    //SAVE DATA TO FIREBASE AND EMPTY FIELD
+                    ref.push({ name: username, text: message });
+                    messageField.val('');
+                }
+            });
+
+            // Add a callback that is triggered for each chat message.
+            ref.on('child_added', function (snapshot) {
+                //GET DATA
+                var data = snapshot.val();
+                var username = data.name || "anonymous";
+                var message = data.text;
+
+                //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+                var messageElement = $("<li>");
+                var nameElement = $("<strong class='chat-username'></strong>")
+                nameElement.text(username);
+                messageElement.text(message).prepend(nameElement);
+
+                //ADD MESSAGE
+                messageList.append(messageElement)
+
+                //SCROLL TO BOTTOM OF MESSAGE LIST
+                messageList[0].scrollTop = messageList[0].scrollHeight;
+            });
+
+            $('#chat-form').submit(function () {
+                return false;
+            });
+        </script>
     }
-}
-@section Scripts {
-<script>
-    $(document).ready(function () {
-        $('.datepicker').datepicker();
-    });
-</script>
-}
+
+

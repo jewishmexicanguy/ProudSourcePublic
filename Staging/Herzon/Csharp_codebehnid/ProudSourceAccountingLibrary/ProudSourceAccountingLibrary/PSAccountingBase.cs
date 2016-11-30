@@ -12,7 +12,7 @@ namespace ProudSourceAccountingLibrary
 
         public PSAccountingBase()
         {
-            conn = new System.Data.SqlClient.SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ProudSourceStaging"].ConnectionString);
+            conn = new System.Data.SqlClient.SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ProudSourceDataBase"].ConnectionString);
         }
     }
 }

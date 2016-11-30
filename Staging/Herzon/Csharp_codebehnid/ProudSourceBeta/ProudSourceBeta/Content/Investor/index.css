@@ -1,0 +1,23 @@
+.fill-center-text {
+  color: #808184; }
+
+.no-procs {
+  padding-top: 30px;
+  padding-bottom: 20px; }
+
+.proc-explain {
+  color: #626263;
+  margin: auto;
+  padding-bottom: 30px;
+  width: 75%;
+  font-size: 30px; }
+
+.proc-explain .title {
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-top: 60px; }
+
+.proc-explain .body {
+  font-size: 25px; }
+
+/*# sourceMappingURL=index.css.map */

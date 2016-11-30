@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ProudSourceWCFService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ProudSourceWCFService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.0.1.30/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="DocumentFileComposite">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DocumentDict" nillable="true" type="q1:ArrayOfKeyValueOfstringanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentFileComposite" nillable="true" type="tns:DocumentFileComposite" />
+  <xs:complexType name="ImageFileComposite">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ImageDict" nillable="true" type="q2:ArrayOfKeyValueOfstringanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImageFileComposite" nillable="true" type="tns:ImageFileComposite" />
+  <xs:complexType name="UserRecordComposite">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccessFailedCount" type="xs:int" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailConfirmed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LockoutEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LockoutEndDateUtc" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PasswordHash" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumberConfirmed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SecurityStamp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TwoFactorEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserRecordComposite" nillable="true" type="tns:UserRecordComposite" />
+  <xs:complexType name="UserIndexComposite">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurAccounts" nillable="true" type="q3:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurDocuments" nillable="true" type="q4:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurEmbelishments" nillable="true" type="q5:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurLinks" nillable="true" type="q6:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurProfile" nillable="true" type="q7:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorAccount" nillable="true" type="q8:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorDocuments" nillable="true" type="q9:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorEmbelishments" nillable="true" type="q10:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorLinks" nillable="true" type="q11:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorProfile" nillable="true" type="q12:ArrayOfKeyValueOfstringstring" />
+      <xs:element minOccurs="0" name="Investor_Financial_Account_Id" type="xs:int" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserProfile" nillable="true" type="q13:ArrayOfKeyValueOfstringstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserIndexComposite" nillable="true" type="tns:UserIndexComposite" />
+  <xs:complexType name="InvestorIndexComposite">
+    <xs:sequence>
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorAccount" nillable="true" type="q14:ArrayOfKeyValueOfstringstring" />
+      <xs:element minOccurs="0" name="InvestorAccount_Id" type="xs:int" />
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorDocuments" nillable="true" type="q15:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorEmbelishments" nillable="true" type="q16:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorLinks" nillable="true" type="q17:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorProfile" nillable="true" type="q18:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorePROCs" nillable="true" type="q19:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvestorIndexComposite" nillable="true" type="tns:InvestorIndexComposite" />
+  <xs:complexType name="InvestorDetailsComposite">
+    <xs:sequence>
+      <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorDetails" nillable="true" type="q20:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorDocuments" nillable="true" type="q21:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorEmbelishments" nillable="true" type="q22:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorLinks" nillable="true" type="q23:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="InvestorPROCs" nillable="true" type="q24:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvestorDetailsComposite" nillable="true" type="tns:InvestorDetailsComposite" />
+  <xs:complexType name="EntrepreneurIndexComposite">
+    <xs:sequence>
+      <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurDocuments" nillable="true" type="q25:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurEmbelishments" nillable="true" type="q26:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurLinks" nillable="true" type="q27:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurProfile" nillable="true" type="q28:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurProjects" nillable="true" type="q29:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntrepreneurIndexComposite" nillable="true" type="tns:EntrepreneurIndexComposite" />
+  <xs:complexType name="EntrepreneurDetailsComposite">
+    <xs:sequence>
+      <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurDetails" nillable="true" type="q30:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurDocuments" nillable="true" type="q31:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurEmbelishments" nillable="true" type="q32:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurLinks" nillable="true" type="q33:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurPROCS" nillable="true" type="q34:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EntrepreneurProjects" nillable="true" type="q35:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntrepreneurDetailsComposite" nillable="true" type="tns:EntrepreneurDetailsComposite" />
+  <xs:complexType name="ProjectIndexComposite">
+    <xs:sequence>
+      <xs:element xmlns:q36="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectAccount" nillable="true" type="q36:ArrayOfKeyValueOfstringstring" />
+      <xs:element minOccurs="0" name="ProjectAccount_Int" type="xs:int" />
+      <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectDocuments" nillable="true" type="q37:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectEmbelishments" nillable="true" type="q38:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectImages" nillable="true" type="q39:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectLinks" nillable="true" type="q40:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectPROCs" nillable="true" type="q41:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectProfile" nillable="true" type="q42:ArrayOfKeyValueOfstringstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectIndexComposite" nillable="true" type="tns:ProjectIndexComposite" />
+  <xs:complexType name="ProjectDetailsComposite">
+    <xs:sequence>
+      <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectDetails" nillable="true" type="q43:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectDocuments" nillable="true" type="q44:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectEmbelishments" nillable="true" type="q45:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectImages" nillable="true" type="q46:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q47="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectLinks" nillable="true" type="q47:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q48="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProjectPROCs" nillable="true" type="q48:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectDetailsComposite" nillable="true" type="tns:ProjectDetailsComposite" />
+  <xs:complexType name="PROCComposite">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EntrepreneurOwner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InvestorOwner" type="xs:boolean" />
+      <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PROC" nillable="true" type="q49:ArrayOfKeyValueOfstringstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PROCComposite" nillable="true" type="tns:PROCComposite" />
+  <xs:complexType name="FinancialAccountComposite">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Client_Braintree_Token" nillable="true" type="xs:string" />
+      <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FinancialAccount" nillable="true" type="q50:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q51="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FinancialTransactions_Failed" nillable="true" type="q51:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q52="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FinancialTransactions_Pending" nillable="true" type="q52:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+      <xs:element xmlns:q53="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FinancialTransactions_Processed" nillable="true" type="q53:ArrayOfKeyValueOfintArrayOfKeyValueOfstringstringty7Ep6D1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FinancialAccountComposite" nillable="true" type="tns:FinancialAccountComposite" />
+</xs:schema>

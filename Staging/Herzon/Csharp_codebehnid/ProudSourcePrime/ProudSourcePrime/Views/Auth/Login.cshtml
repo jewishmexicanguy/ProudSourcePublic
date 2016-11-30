@@ -1,0 +1,48 @@
+﻿@using ProudSourcePrime.Models
+@model LogInModel
+@{
+    ViewBag.Title = "Log In";
+}
+
+<link rel="stylesheet" href="~/Styles/Auth/Login.css" />
+<h2 class="text-center">Log In</h2>
+<div id="Login-Holder" class="center-block container">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(m => m.Email, new { @class = "form-control text-box single-line" })*@
+                    <input class="form-control text-box single-line"
+                           data-val="true"
+                           data-val-required="The Email field is required."
+                           id="Email"
+                           name="Email"
+                           type="email"
+                           value="">
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.ValidationMessage("Invalid_Login", new { @class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(m => m.Password , new { @class = "form-control text-box single-line" })*@
+                    <input class="form-control text-box single-line password"
+                           data-val="true"
+                           data-val-required="The Password field is required."
+                           id="Password"
+                           name="Password"
+                           type="password" value="">
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Log in" class="btn btn-default" />
+                </div>
+            </div>
+        }
+</div>
+

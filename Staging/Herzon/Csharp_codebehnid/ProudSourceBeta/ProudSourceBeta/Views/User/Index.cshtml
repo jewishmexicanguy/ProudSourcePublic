@@ -8,23 +8,11 @@
 
 @*@Html.Partial("_TestPartial")*@
 
-<div class="row" style="text-align: center">
-    <div class="col-md-4">
-        @*<div id="profileBtn" href="#" class="menu">Profile</div>*@
-        <button id="profileBtn" type="button" class="btn btn-default btn-circle btn-xl green"><i class="glyphicon glyphicon-user"></i></button>
+<link href="~/Content/User/index.css" rel="stylesheet" type="text/css" />
 
-        @*<h2 class="template-header">Profile</h2>*@
-        @*<button class="profile-btns" id="profileBtn">select</button>*@
-    </div>
-    <div class="col-md-4">
-        <button id="entBtn" type="button" class="btn btn-default btn-circle btn-xl yellow"><i class="glyphicon glyphicon-leaf"></i></button>
-        @*<h2 class="template-header">Entrepreneur</h2>
-        <button class="profile-btns" id="entBtn">select</button>*@
-    </div>
-    <div class="col-md-4">
-        <button id="investBtn" type="button" class="btn btn-default btn-circle btn-xl orange"><i class="glyphicon glyphicon-briefcase"></i></button>
-        @*<h2 class="template-header">Investor</h2>
-        <button class="profile-btns" id="investBtn">select</button>*@
+<div class="title-container">
+    <div class="title">
+        Profile
     </div>
 </div>
 
@@ -34,36 +22,8 @@
 
 @* ---- ENTREPRENEUR ----- *@
 
-@Html.Partial("_EntPage", new ProudSourceBeta.Models.EntrepreneurIndexViewModel(Model.Entrepreneur_ID, User.Identity.GetUserId()))
+@*@Html.Partial("_EntPage", new ProudSourceBeta.Models.EntrepreneurIndexViewModel(Model.Entrepreneur_ID, User.Identity.GetUserId()))*@
 
 @* ---- INVESTOR ---- *@
 
 @Html.Partial("_InvestPage", new ProudSourceBeta.Models.InvestorIndexViewModel(User.Identity.GetUserId().ToString(), Model.Investor_ID))
-
-@*<div class="container">
-    <a href="/Search/Index/">Search trending projects</a>
-</div>*@
-
-<script>
-    $("#profileBtn").click(function () {
-        $("#profileContainer").show();
-        $("#entContainer").hide();
-        $("#investContainer").hide();
-    });
-
-    $("#entBtn").click(function () {
-        $("#entContainer").show();
-        $("#profileContainer").hide();
-        $("#investContainer").hide();
-    });
-
-    $("#investBtn").click(function () {
-        $("#investContainer").show();
-        $("#entContainer").hide();
-        $("#profileContainer").hide();
-    });
-
-    $("#profileContainer").show();
-    $("#entContainer").hide();
-    $("#investContainer").hide();
-</script>

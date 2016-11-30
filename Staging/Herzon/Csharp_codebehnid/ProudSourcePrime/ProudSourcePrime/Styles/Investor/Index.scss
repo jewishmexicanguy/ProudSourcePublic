@@ -1,0 +1,17 @@
+﻿@import "../Base/_Variables.scss";
+
+#no-procs {
+    height: $flat-row-height;
+    line-height: $flat-row-height;
+}
+
+.under-rows-info {
+    background-color: $light-blue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+h2 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}

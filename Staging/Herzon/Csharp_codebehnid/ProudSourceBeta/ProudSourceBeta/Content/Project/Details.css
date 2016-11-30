@@ -33,6 +33,11 @@
     border-width: 10px !important;
 }
 
+.profile-image {
+    width: 10px;
+    height: 10px;
+}
+
 /*SLIDE SHOW*/
 .slideshow-next-btn {
     width: 55px;
@@ -52,6 +57,7 @@
 
 .project-image {
     height: 600px;
+    width: 800px;
 }
 
 .project-description {

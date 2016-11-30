@@ -1,0 +1,22 @@
+﻿body {
+    margin-top: $navbar-height;
+}
+
+.logo-color {
+    color: $logo-color !important;
+
+    &:hover {
+        color: $logo-color !important;
+    }
+    &:selected {
+        color: $logo-color !important;
+    }
+}
+
+.center-text {
+    text-align: center;
+}
+
+.margin-auto {
+    margin: auto;
+}

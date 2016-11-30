@@ -1,0 +1,69 @@
+﻿@import "../Base/_Variables.scss";
+
+.flat-row {
+  float: left;
+  width: 100%;
+  height: $flat-row-height;
+  border-bottom-style: solid;
+  border-bottom-color: #E5E5E9;
+  border-bottom-width: 2px; 
+
+  @media (max-width: 1220px) {
+      .extra-info-col {
+          display: none;
+      }
+  }
+
+  #name-col {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 0px;
+      min-width: 150px;
+      line-height: $flat-row-height;
+  }
+
+  .col-xs-2 {
+      margin-top:$flat-row-height/4;
+    //line-height: $row-height;
+  }
+}
+
+.flat-row:hover {
+  background-color: #f3f3f3; 
+
+}
+
+.flat-row:hover .ent-project-btn {
+  display: block; 
+
+}
+
+.flat-row .ent-project-btn {
+  width: 100px; 
+
+}
+
+.flat-row .title {
+  color: #808184;
+  float: left;
+  height: $flat-row-height;
+  font-size: 40px;
+  font-weight: bold;
+  align-items: center;
+  line-height: $flat-row-height;
+  margin-left: 20px; 
+
+}
+
+.flat-row .icon {
+  font-size: 40px;
+  line-height: $flat-row-height;
+  margin-left: 50px; 
+
+}
+
+.flatRow-btn {
+  width: 100px;
+  height: $flat-row-height;
+  display: none; 
+}

@@ -1,0 +1,121 @@
+﻿@model ProudSourceBeta.Models.EntrepreneurIndexViewModel
+
+<h2>Entrepreneur Account</h2>
+
+<div class= "title-container"> </div>
+
+<div class="container">
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Profile_Picture )
+        </dt>
+
+        <dd>
+
+            <div class="profile-image">
+                
+                @{ var imgSrc = "/Images/emptyProfile.png";
+                    if (Model.Profile_Picture != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Profile_Picture);
+                        imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                    }
+                }
+
+                <img id="profile-image" src="@imgSrc" />
+
+            </div>
+
+        </dd>
+
+        <dt class="profile-header">
+            @Html.DisplayNameFor(model => model.Profile_Public)
+        </dt>
+
+        <dd class="profile-header">
+            @Html.DisplayFor(model => model.Profile_Public)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Verified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verified)
+        </dd>
+
+    </dl>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Entrepreneur_ID }) 
+        |
+        <a href="/User/Index/">Back to List</a>
+    </p>
+
+    <hr />
+
+    <h2>Project Accounts</h2>
+
+    <p>
+        @Html.ActionLink("Create New Project", "createProject", new { id = Model.Entrepreneur_ID })
+    </p>
+
+    @if (Model.Projects.Count > 0)
+    {
+
+    <table id="project-results" class="table-hover table-responsive">
+
+        <tr>
+
+            <th class="col-sm-4">Project Name</th>
+
+            <th class="col-sm-4">Project Public</th>
+
+        </tr>
+        @foreach (System.Data.DataRow item in Model.Projects)
+        {
+            <tr>
+
+                <td class="col-sm-4"><a href="@string.Format("/Project/Index/{0}", item["Project_ID"])">
+                        @item["Name"].ToString()
+                    </a>
+                </td>
+
+                <td class="col-sm-4">
+                    @{ string isPublic = "";
+                        if (item["Profile_Public"].ToString() == "True")
+                        {
+                            isPublic = "Yes";
+                        }
+                        else
+                        {
+                            isPublic = "No";
+                        }
+                    }
+                    @isPublic
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+    }
+
+    @if(Model.Projects.Count < 1)
+    {
+        <p class="template-words">You have no projects associated with this account, perhaps you should make one.</p>
+    }
+
+</div>

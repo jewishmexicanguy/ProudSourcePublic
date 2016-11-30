@@ -1,0 +1,26 @@
+﻿[
+  {
+    "outputFile": "Styles/Pages/Welcome/Index.css",
+    "inputFile": "Styles/Pages/Welcome/Index.scss"
+  },
+  {
+    "outputFile": "Styles/Entrepreneur/Index.css",
+    "inputFile": "Styles/Entrepreneur/Index.scss"
+  },
+  {
+    "outputFile": "Styles/global.css",
+    "inputFile": "Styles/global.scss"
+  },
+  {
+    "outputFile": "Styles/Investor/Index.css",
+    "inputFile": "Styles/Investor/Index.scss"
+  },
+  {
+    "outputFile": "Styles/Project/Details.css",
+    "inputFile": "Styles/Project/Details.scss"
+  },
+  {
+    "outputFile": "Styles/PROC/Details.css",
+    "inputFile": "Styles/PROC/Details.scss"
+  }
+]

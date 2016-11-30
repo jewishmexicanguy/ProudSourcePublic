@@ -1,0 +1,185 @@
+﻿@model ProudSourcePrime.Models.InvestorDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Styles/Investor/Details.css" />
+
+<div id="investor-details-title">
+    <canvas id="canvas" width="800" height="600" style="background-color: #80bfff;"></canvas>
+    <div id="investor-name" class="title">
+        @Model.investor.InvestorDetails["Name"]
+    </div>
+</div>
+
+<div class="container">
+    <h3>Investor Details</h3>
+    <br />
+    <div class="investor-details">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p>@Model.investor.InvestorDetails["Name"]</p>
+            </li>
+            <li class="list-group-item">
+                @{ 
+                    string a = "Invetor has not been verified by ProudSource...";
+                    if(Model.investor.InvestorDetails["Verified"] == "True")
+                    {
+                        a = "Investor has been verifed by ProudSource...";
+                    }
+                }
+                <p>@a</p>
+            </li>
+            <li class="list-group-item">
+                @if(Model.investor.InvestorDetails.ContainsKey("Base64Image"))
+                {
+                    <img class="profile-thumbnail" src="@Model.investor.InvestorDetails["Base64Image"]" />
+                }
+                else
+                {
+                    <img class="profile-thumbnail" src="~/Content/Images/emptyProfile.png" />
+                }
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+
+    <div class="investor-documents">
+        @if (Model.investor.InvestorDocuments.Count > 0)
+        {
+            <h3>Investor Documents</h3>
+            <br />
+            for (int i = 0; i < Model.investor.InvestorDocuments.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-md-3"><a href="@string.Format("/IO/Download/{0}", Model.investor.InvestorDocuments[i]["Document_Id"])">@Model.investor.InvestorDocuments[i]["File_Name"].ToString()</a></div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>This investor has no documents...</p>
+        }
+    </div>
+
+    <hr />
+
+    <div class="investor-links">
+        @if (Model.investor.InvestorLinks.Count > 0)
+        {
+            <h3>Investor Links</h3>
+            <br />
+            for (int i = 0; i < Model.investor.InvestorLinks.Count; i++)
+            {
+                if (Model.investor.InvestorLinks[i]["Link_Type"] == "YouTube")
+                {
+                    <iframe src="@Model.investor.InvestorLinks[i]["Link"]" allowfullscreen></iframe>
+                }
+                else
+                {
+                    <a href="@Model.investor.InvestorLinks[i]["Link"]">@Model.investor.InvestorLinks[i]["FriendlyName"]</a>
+                }
+            }
+        }
+        else
+        {
+            <p>This investor has no links...</p>
+        }
+    </div>
+
+    <hr />
+
+    @*<div class="investor-embelishments">
+
+    </div>*@
+
+    <div class="investor-procs">
+        @if (Model.investor.InvestorPROCs.Count > 0)
+        {
+            <h3>PROC contracts</h3>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Project Name</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Capital investment / investment Goal</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Revenue % defered</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Contract Time span</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Contract is active</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Entrepreneur</label>
+                </div>
+            </div>
+            for(int i = 0; i < Model.investor.InvestorPROCs.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="@string.Format("/Project/Details/{0}", Model.investor.InvestorPROCs[i]["Project_Id"])">@Model.investor.InvestorPROCs[i]["Name"]</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@string.Format("/PROC/Details/{0}", Model.investor.InvestorPROCs[i]["PROC_Id"])">
+                            <b>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.investor.InvestorPROCs[i]["Investment_Amount"]), 2)) / @string.Format("$ {0}", decimal.Round(decimal.Parse(Model.investor.InvestorPROCs[i]["Investment_Goal"]), 2))</b>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <b>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.investor.InvestorPROCs[i]["Revenue_Percentage"]), 3))</b>
+                    </div>
+                    <div class="col-md-2">
+                        <p>@string.Format("{0} - {1}", Model.investor.InvestorPROCs[i]["DateTime_Enforcement_Begin"], Model.investor.InvestorPROCs[i]["DateTime_Enforcement_End"])</p>
+                    </div>
+                    <div class="col-md-2">
+                        @{
+                            string active = "No";
+                            if (Model.investor.InvestorPROCs[i]["Active"] == "True")
+                            {
+                                active = "Yes";
+                            }
+                        }
+                        <b>@active</b>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@string.Format("/Entrepreneur/Details/{0}", Model.investor.InvestorPROCs[i]["Entrepreneur_Id"])">@Model.investor.InvestorPROCs[i]["Entrepreneur_Name"]</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <b>This Entrepreneur has no PROCs, they should try being more entrepreneurial...</b>
+        }
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/serendipia")
+
+@section Scripts {
+    <script type="text/javascript">
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var circles = [];
+
+        window.onload = function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight / 3;
+            document.getElementById('investor-name').style.top = canvas.height * .6 + 'px';
+            document.getElementById('investor-name').style.left = canvas.width * .41 + 'px';
+            for (var i = 0; i < (canvas.width / 10 + canvas.height / 10) ; i++) {
+                var c = new Circle(getRandomInteger(1, canvas.width), getRandomInteger(1, canvas.height), 2, getRandomDecimal(-.5, .5), getRandomDecimal(-.5, .5));
+                circles.push(c);
+            }
+
+            loop();
+        }
+
+    </script>
+}

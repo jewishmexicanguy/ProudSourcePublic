@@ -1,0 +1,16 @@
+﻿@model ProudSourcePrime.Models.LinkTypesModel
+
+<table class="table">
+    <tr>
+        <th>Link Type</th>
+    </tr>
+
+@foreach (var item in Model.LinkTypes) {
+    <tr>
+        <td>
+            <label>@string.Format("{0}", item.Value )</label>
+        </td>
+    </tr>
+}
+
+</table>

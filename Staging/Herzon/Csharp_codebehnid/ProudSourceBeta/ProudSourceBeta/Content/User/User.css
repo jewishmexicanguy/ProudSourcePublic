@@ -1,106 +1,85 @@
-﻿body {
-    background-color: white;
-}
+body {
+  background-color: white; }
 
 /* Profile pictures need to have a maximum height and width set */
 .profile-image {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+  margin-top: 20px;
+  margin-bottom: 20px; }
 
 .project-image {
-    height : 110px;
-    width: 146px;
-}
+  height: 110px;
+  width: 146px; }
 
-.data{
-    font-size: 150%;
-    padding-left: 10px;
-    margin-top: 5px;
-    margin-left: 5%;
-}
+.data {
+  font-size: 150%;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-left: 5%; }
 
-.data-title{
-    font-size: 150%;
-
-    margin-left: 5%;
-}
+.data-title {
+  font-size: 150%;
+  margin-left: 5%; }
 
 .data-container {
-    width: 100%;
-   
-    border: 4px solid #F7F7F7;
-    border-radius: 10px;
-
-    padding: 20px;
-}
+  width: 100%;
+  padding: 20px; }
 
 .name {
-    font-size: 125%;
-    margin-left: 50px;
-}
-
+  font-size: 125%;
+  margin-left: 50px; }
 
 .account-title {
-    font-size: 400%;
-    text-align: center;
-    width: 100%;
-
-    /*background-color: black;*/
-
-    margin-top: 85px;
-    margin-left: -200px;
-}
+  font-size: 400%;
+  text-align: center;
+  width: 100%;
+  /*background-color: black;*/
+  margin-top: 85px;
+  margin-left: -200px; }
 
 .fill-center-text {
-    text-align: center;
-    width: 100%;
-    font-size: 300%;
-}
-
+  text-align: center;
+  width: 100%;
+  font-size: 300%; }
 
 /* Round Buttons */
 .green {
-    background-color: #2ecc71;
-}
+  background-color: #2ecc71; }
+
 .green:hover {
-    background-color: #2abb67;
-}
+  background-color: #2abb67; }
+
 .green:focus {
-    background-color: #2abb67;
-}
+  background-color: #2abb67; }
+
 .green:active {
-    background-color: #2abb67;
-}
+  background-color: #2abb67; }
 
 .yellow {
-    background-color: #f1c40f;
-}
+  background-color: #f1c40f; }
+
 .yellow:hover {
-    background-color: #d9b00d;
-}
+  background-color: #d9b00d; }
+
 .yellow:focus {
-    background-color: #d9b00d;
-}
+  background-color: #d9b00d; }
+
 .yellow:active {
-    background-color: #d9b00d;
-}
+  background-color: #d9b00d; }
 
 .orange {
-    background-color: #e67e22;
-}
+  background-color: #e67e22; }
+
 .orange:hover {
-    background-color:  #e67919;
-}
+  background-color: #e67919; }
+
 .orange:focus {
-    background-color: #e67919;
-}
+  background-color: #e67919; }
+
 .orange:active {
-    background-color: #e67919;
-}
+  background-color: #e67919; }
 
 .btn-circle {
-  outline:none;
+  outline: none;
   margin-top: 20px;
   margin-bottom: 20px;
   width: 30px;
@@ -109,43 +88,42 @@
   padding: 6px 0;
   font-size: 12px;
   line-height: 1.428571429;
-  border-radius: 15px;
-}
+  border-radius: 15px; }
+
 .btn-circle.btn-lg {
-  outline:none;
+  outline: none;
   width: 50px;
   height: 50px;
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
-  border-radius: 25px;
-}
+  border-radius: 25px; }
+
 .btn-circle.btn-xl {
-  outline:none;
+  outline: none;
   width: 150px;
   height: 150px;
   padding: 10px 16px;
   font-size: 24px;
   line-height: 1.33;
-  border-radius: 75px;
-}
+  border-radius: 75px; }
 
-.menu{
-    margin: auto;
-    display:block;
-    width:100px;
-    height:100px;
-    border-radius:50px;
-    font-size:20px;
-    color:#fff;
-    line-height:100px;
-    text-align:center;
-    text-decoration:none;
-    background:#000
-}
+.menu {
+  margin: auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  font-size: 20px;
+  color: #fff;
+  line-height: 100px;
+  text-align: center;
+  text-decoration: none;
+  background: #000; }
 
-.menu:hover{
-    color:#ccc;
-    text-decoration:none;
-    background:#333
-}
+.menu:hover {
+  color: #ccc;
+  text-decoration: none;
+  background: #333; }
+
+/*# sourceMappingURL=User.css.map */

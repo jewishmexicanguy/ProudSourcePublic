@@ -1,0 +1,198 @@
+﻿@model ProudSourcePrime.Models.InvestorIndexModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Styles/Investor/Index.css" />
+
+<div class="title-container">
+    <div class="title">
+        My PROCs
+    </div>
+</div>
+
+<div class="container container-full">
+
+    @if (Model.investorIndexData.InvestorProfile["Profile_Public"] == "True")
+    {
+        <div class="col-sm-12 center">
+            <a href="@string.Format("/Investor/Details/{0}", Model.investorIndexData.InvestorProfile["Investor_Id"])">See your public profile</a>
+        </div>
+
+        <br />
+    }
+
+    @if (Model.investorIndexData.InvestorePROCs.Count == 0)
+    {
+        <div class="row">
+            <div id="no-procs" class="col-sm-12 center">
+                <div class="fill-center-text" style="margin: auto">
+                    <b>You have no PROCs!</b>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-12 col-full center">
+            @* Insert data into table from projects array *@
+            @for (int i = 0; i < Model.investorIndexData.InvestorePROCs.Count; i++)
+                {
+                    string[] proc = Model.investorIndexData.InvestorePROCs[i].Values.ToArray();
+                    // [0] PROC_Id
+                    // [1] Revenue_Percentage
+                    // [2] DateTime_Enforcement_Begin
+                    // [3] DateTime_Enforcement_End
+                    // [4] Investment_Amount
+                    // [5] Active
+                    // [6] Project_Id
+                    // [7] Name
+                    // [8] Entrepreneur_Id
+                    //Dictionary<string,string> proc = Model.investorIndexData.InvestorePROCs[i];
+                <div class="flat-row">
+                    <div id="name-col" class="col-xs-2">
+                        @*<a href="@string.Format("/PROC/Details/{0}", proc["Id"])"><p>@proc["Name"]</p></a>*@
+                        <a href="@string.Format("/PROC/Details/{0}", proc[0])"><p>@proc[7]</p></a>
+                    </div>
+
+                    <div class="col-xs-2 extra-info-col">
+                        <label>Capital Investment</label>
+                        @*<p>@string.Format("$ {0}", decimal.Round(decimal.Parse(proc["Investment_Amount"]), 2))</p>*@
+                        <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(proc[4]), 2))</p>
+                    </div>
+
+                    <div class="col-xs-2 extra-info-col">
+                        <label>Revenue return %</label>
+                        @*<p>@string.Format("% {0}", decimal.Round(decimal.Parse(proc["Revenue_Percentage"]), 3))</p>*@
+                        <p>@string.Format("% {0}", decimal.Round(decimal.Parse(proc[1]), 3))</p>
+                    </div>
+
+                    <div class="col-xs-2 extra-info-col">
+                        <label>Date Time Begin</label>
+                        @*<p>@proc["DateTime_Enforcement_Begin"]</p>*@
+                        <p>@proc[2]</p>
+                    </div>
+
+                    <div class="col-xs-2 extra-info-col">
+                        <label>Date Time End</label>
+                        @*<p>@proc["DateTime_Enforcement_End"]</p>*@
+                        <p>@proc[3]</p>
+                    </div>
+
+                    @*<button onclick="(function go() { window.location = '@string.Format("/PROC/Details/{0}", proc["PROC_Id"])' })()" class="flat-button indigo flatRow-btn" style="float: right;">
+                        Observe
+                    </button>*@
+
+                    <button onclick="(function go() { window.location = '@string.Format("/PROC/Details/{0}", proc[0])' })()" class="flat-button green flatRow-btn" style="float: right;">
+                        View*
+                    </button>
+
+                    @*<button onclick="(function go() { window.location = '@string.Format("/Project/Index/{0}", proc["Project_Id"])' })()" class="flat-button blue flatRow-btn" style="float: right;">
+                        Edit
+                    </button>*@
+                </div>
+            }
+
+        </div>
+
+    }
+
+    @*
+    <h2 class="text-center">Investor Profile Details</h2>
+    <div id="investor-stauts" class="container">
+        <div id="investor-detials">
+            <ul class="list-group">
+                @if(Model.investorIndexData.InvestorProfile["Profile_Public"] == "True")
+                {
+                    <li class="list-group-item"><p>Investor profile is public</p></li>
+                }
+                else
+                {
+                    <li class="list-group-item"><p>Investor profile is not public</p></li>
+                }
+                @if(Model.investorIndexData.InvestorProfile["Verified"] == "True")
+                {
+                    <li class="list-group-item"><p>Investor has been verified by ProudSource</p></li>
+                }
+                else
+                {
+                    <li class="list-group-item"><p>Investor has not been verified by ProudSource</p></li>
+                }
+                @if(Model.investorIndexData.InvestorProfile.ContainsKey("Base64Image"))
+                {
+                    <li class="list-group-item">
+                        <a href="#">
+                            <img class="profile-thumbnail" src="@Model.investorIndexData.InvestorProfile["Base64Image"]" />
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="list-group-item">
+                        <a href="#">
+                            <img class="profile-thumbnail" src="~/Content/Images/emptyProfile.png" />
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <hr />
+
+        <div id="investor-documents">
+
+            </div>
+
+        <div id="investor-links">
+
+            </div>
+
+            <div id="investor-embelishments">
+
+            </div>
+    </div>
+    *@
+
+
+    <div class="row">
+        <div class="col-xs-12 under-rows-info">
+            <h2 class="text-center">Investor Financial Account</h2>
+            <div id="investor-account" class="container">
+                @if(Model.investorIndexData.InvestorAccount != null)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="@string.Format("/Financial/Dashboard/{0}", @Model.investorIndexData.InvestorAccount_Id)">Financial Account</a>
+                        </div>
+                        <div class="col-md-4">
+                            <b>
+                                @{ 
+                                    string frozen = "Active";
+                                    if(Model.investorIndexData.InvestorAccount["Frozen"] == "True")
+                                    {
+                                        frozen = "Frozen";
+                                    }
+                                }
+                                @frozen
+                            </b>
+                        </div>
+                        <div class="col-md-4"><b>@string.Format("$ {0}", decimal.Round(decimal.Parse(Model.investorIndexData.InvestorAccount["Balance"]), 2))</b></div>
+                    </div>
+                }
+                else
+                { 
+                    <div class="row">
+                        <b class="col-md-6">Your account has no finalized transactions, please visit the fincial account page for this profile...</b>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="@string.Format("/Financial/Dashboard/{0}", @Model.investorIndexData.InvestorAccount_Id)">Financial Account</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

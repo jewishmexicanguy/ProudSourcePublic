@@ -313,6 +313,11 @@ namespace ProudSourceBeta.Models
 
         public int proc_project_id { get; private set; }
 
+        /// <summary>
+        /// This accessor will house the account balance that the investor has in our proudsource accounts.
+        /// </summary>
+        public decimal Financial_Account_Balance { get; private set; }
+
         // we already know what the investor id is in this object
          
         /// <summary>
@@ -402,9 +407,10 @@ namespace ProudSourceBeta.Models
             }
             // now get all of the data returned from this set and place it into the accessors of this object.
             // there will be three tables
-            //      [] : Proc details
-            //      [] : Investor image
-            //      [] : Entrepreneur image
+            //      [0] : Proc details
+            //      [1] : Investor image
+            //      [2] : Entrepreneur image
+            //      [3] : Investor's financial balance available for PROCs
 
             DataRow PROC_row = set.Tables[0].Rows[0];
             if (set.Tables[1].Rows.Count > 0)
@@ -450,6 +456,14 @@ namespace ProudSourceBeta.Models
             // the only difference in setting accessors for this class from our query, what makes it different from it's brother class.
             proc_project_id = (int)PROC_row["Project_ID"];
             Entrepreneur_ID = (int)PROC_row["Entrepreneur_ID"];
+            if (!set.Tables[3].Rows[0]["Balance"].Equals(DBNull.Value))
+            {
+                Financial_Account_Balance = (decimal)set.Tables[3].Rows[0]["Balance"];
+            }
+            else
+            {
+                Financial_Account_Balance = 0.0m;
+            }
         }
         /// <summary>
         /// Method that allows the investor to update this PROC with 
@@ -538,11 +552,11 @@ namespace ProudSourceBeta.Models
             }
             // now fill the accessors of this object with the data we have just gathered.
             DataRow PROC_row = set.Tables[0].Rows[0];
-            if (set.Tables[1].Rows[0]["Binary_Image"] != null)
+            if (set.Tables[1].Rows.Count > 0)
                 Investor_Image = (byte[])set.Tables[1].Rows[0]["Binary_Image"];
             else
                 Investor_Image = null;
-            if (set.Tables[2].Rows[0]["Binary_Image"] != null)
+            if (set.Tables[2].Rows.Count > 0)
                 Entrepreneur_Image = (byte[])set.Tables[2].Rows[0]["Binary_Image"];
             else
                 Entrepreneur_Image = null;

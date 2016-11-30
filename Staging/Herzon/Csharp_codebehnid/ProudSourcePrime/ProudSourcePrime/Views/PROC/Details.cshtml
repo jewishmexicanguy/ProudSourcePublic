@@ -1,0 +1,578 @@
+﻿@using Microsoft.AspNet.Identity
+@model ProudSourcePrime.Models.PROCDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" href="~/Styles/PROC/Details.css" />
+
+<div class="title-content-push"></div>
+
+<div class="animated-title-container">
+    <canvas id="canvas" width="800" height="600" style="background-color: #80bfff;"></canvas>
+    <div id="PROC-title" class="title">Proud Source</div>
+</div>
+
+<div class="container">
+    <ul class="list-group">
+        @{ 
+            string[] proc_details = Model.proc.PROC.Values.ToArray();
+            // [0] : Id
+            // [1] : Investor_Id
+            // [2] : Project_Id
+            // [3] : Entrepreneur_Id
+            // [4] : Entrepreneur_Name
+            // [5] : Investor_Name
+            // [6] : Entrepreneur_Base64Image
+            // [7] : Investor_Base64Image
+            // [8] : Revenue_Percentage
+            // [9] : DateTime_Enforcement_Begin
+            // [10] : DateTime_Enforcement_End
+            // [11] : Investment_Amount
+            // [12] : Active
+            // [13] : Accepted_Investor
+            // [14] : Accepted_Project
+            // [15] : Accepted_Mutualy
+        }
+    </ul>
+
+    <div id="PROC-details">
+
+        <br />
+
+            <div class="row">
+                <div class="col-xs-6">
+                    @if (proc_details[6] != null)
+                    {
+                        <img class="profile-thumbnail" src="@proc_details[6]" />
+                    }
+                    else
+                    {
+                        <img class="profile-thumbnail" src="~/Content/Images/emptyProfile.png" />
+                    }
+
+                    <a href="@string.Format("/Entrepreneur/Details/{0}", proc_details[3])">
+                        <p>@string.Format("Entrepreneur : {0}", proc_details[4])</p>
+                    </a>
+
+                </div>
+
+                <div class="col-xs-6" style="text-align: right">
+                    @if (proc_details[7] != null)
+                    {
+                        <img class="profile-thumbnail" src="@proc_details[7]" />
+                    }
+                    else
+                    {
+                        <img class="profile-thumbnail" src="~/Content/Images/emptyProfile.png" />
+                    }
+                    <a href="@string.Format("/Investor/Details/{0}", proc_details[1])">
+                        <p>@string.Format("Investor : {0}", proc_details[5])</p>
+                    </a>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12 text-center title">
+                    <b>Current PROC Agreement</b>
+                </div>
+            </div>
+
+            <br />
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <b>Project link</b>
+                    <br />
+                    <a href="@string.Format("/Project/Details/{0}", proc_details[2])"><span class="glyphicon glyphicon-briefcase"></span></a>
+                </li>
+                <li class="list-group-item">
+                    <b>Revenue % purchased </b><p>@string.Format("% {0}", decimal.Round(decimal.Parse(proc_details[8]), 3))</p>
+                    
+                </li>
+                <li class="list-group-item">
+                    <b>Capital Investment in USD</b><p>@string.Format("$ {0}", decimal.Round(decimal.Parse(proc_details[11]), 2))</p>
+                </li>
+                <li class="list-group-item">
+                    @if (proc_details[13] == "True")
+                    {
+                        <b>Investor has accepted the agreement.</b>
+                    }
+                    else
+                    {
+                        <b>Investor has not accepted the agreement.</b>
+                    }
+                </li>
+                <li class="list-group-item">
+                    @if (proc_details[14] == "True")
+                    {
+                        <b>Project owner has accepted the agreement.</b>
+                    }
+                    else
+                    {
+                        <b>Project owner has not accepted the agreement.</b>
+                    }
+                </li>
+                <li class="list-group-item">
+                    @if (proc_details[15] == "True")
+                    {
+                        <b>Both parties have agreed on contract terms.</b>
+                    }
+                    else
+                    {
+                        <b>Both parties have yet to agree on terms.</b>
+                    }
+                </li>
+                <li class="list-group-item">
+                    <b>@string.Format("Revenue share shall be paid to the investor from {0} until {1}.", proc_details[9], proc_details[9])</b>
+                </li>
+            </ul>
+    </div>
+
+    @if (Request.IsAuthenticated && Model.proc.EntrepreneurOwner && Model.proc.PROC["Accepted_Mutualy"] != "True" && Model.proc.PROC["Accepted_Project"] == "False")
+    { 
+        <div id="entrepreneur-accept-PROC-div">
+            <h2>Accept Contract</h2>
+            <br />
+            <button class="btn btn-default" onclick="client_Accepts_PROC(@Model.proc.PROC["Id"], true)">Project Accepts contract</button>
+            <div id="user-accept-PROC-message">
+
+            </div>
+        </div>
+    }
+    else if (Request.IsAuthenticated && Model.proc.InvestorOwner && Model.proc.PROC["Accepted_Mutualy"] != "True" && Model.proc.PROC["Accepted_Investor"] == "False")
+    {
+        <div id="investor-accept-PROC-div">
+            <h2>Accept Contract</h2>
+            <br />
+            <button class="btn btn-default" onclick="client_Accepts_PROC(@Model.proc.PROC["Id"], true)">Investor Accepts contract</button>
+            <div id="user-accept-PROC-message">
+
+            </div>
+        </div>
+    }
+    else if (Request.IsAuthenticated && Model.proc.EntrepreneurOwner && Model.proc.PROC["Accepted_Mutualy"] != "True" && Model.proc.PROC["Accepted_Project"] == "True")
+    {
+        <div id="entrepreneur-accept-PROC-div">
+            <h2>Unaccept Contract</h2>
+            <br />
+            <button class="btn btn-default" onclick="client_Accepts_PROC(@Model.proc.PROC["Id"], false)">Project Recants acceptance</button>
+            <div id="user-accept-PROC-message">
+
+            </div>
+        </div>
+    }
+    else if (Request.IsAuthenticated && Model.proc.InvestorOwner && Model.proc.PROC["Accepted_Mutualy"] != "True" && Model.proc.PROC["Accepted_Investor"] == "True")
+    {
+        <div id="investor-accept-PROC-div">
+            <h2>Unaccept Contract</h2>
+            <br />
+            <button class="btn btn-default" onclick="client_Accepts_PROC(@Model.proc.PROC["Id"], false)">Investor Recants acceptance</button>
+            <div id="user-accept-PROC-message">
+
+            </div>
+        </div>
+    }
+    @*This conditional is special as it gives the investor ultimate say when both parties agree to terms, thismis because it is the investors money. Both sides can recant *@
+    @if (Request.IsAuthenticated && (Model.proc.InvestorOwner && (!Model.proc.EntrepreneurOwner)) && Model.proc.PROC["Accepted_Investor"] == "True" && Model.proc.PROC["Accepted_Project"] == "True")
+    {
+        <br />
+        <div id="div-mutualy-accept">
+            <h2>Contract mutualy accepted</h2>
+            @if (Model.proc.PROC["Accepted_Mutualy"] == "True")
+            {
+                <input id="mutualy-acccept-checkbox" type="checkbox" checked onchange="(function() { $('#div-mutualy-accept-message').slideToggle('slow'); })();" />
+                <div id="div-mutualy-accept-message" style="display: none; background-color: #80bfff; padding: 25px; border: solid; border-color: lightgray; border-radius: 25px; border-width: 1px;">
+                    <p> This contract has been mutualy accepted, rejecting mutual acceptance will make the contract terms editable again.</p>
+                </div>
+                <br />
+                <button class="btn btn-default" onclick="activate_MutualAcceptance(@Model.proc.PROC["Id"], $('#mutualy-acccept-checkbox:checked').val())">Recant Mutual Acceptance</button>
+            }
+            else if (Model.proc.PROC["Accepted_Mutualy"] == "False")
+            {
+                <input id="mutualy-acccept-checkbox" type="checkbox" onchange="(function(){ $('#div-mutualy-accept-message').slideToggle('slow'); })();" />
+                <div id="div-mutualy-accept-message" style="display: none; background-color: #80bfff; padding: 25px; border: solid; border-color: lightgray; border-radius: 25px; border-width: 1px;">
+                    <p> Once you approve that you (the investor) and the entrepreneur have mutually agreed on this contract, this contracts stipulations will not become editable unless the mutual agrement field is updated to false.</p>
+                </div>
+                <br />
+                <button class="btn btn-default" onclick="activate_MutualAcceptance(@Model.proc.PROC["Id"], $('#mutualy-acccept-checkbox:checked').val())">Activate Mutual Acceptance</button>
+            }
+        </div>
+    }
+    else if (Request.IsAuthenticated && Model.proc.EntrepreneurOwner && Model.proc.PROC["Accepted_Mutualy"] == "True")
+    {
+        <h2>Contract mutualy accepted</h2>
+        <div id="div-mutualy-accept">
+            <input id="mutualy-acccept-checkbox" type="checkbox" checked onchange="(function() { $('#div-mutualy-accept-message').slideToggle('slow'); })();" />
+            <div id="div-mutualy-accept-message" style="display: none; background-color: #80bfff; padding: 25px; border: solid; border-color: lightgray; border-radius: 25px; border-width: 1px;">
+                <p> This contract has been mutualy accepted, rejecting mutual acceptance will make the contract terms editable again.</p>
+            </div>
+            <br />
+            <button class="btn btn-default" onclick="activate_MutualAcceptance(@Model.proc.PROC["Id"], $('#mutualy-acccept-checkbox:checked').val())">Recant Mutual Acceptance</button>
+        </div>
+    }
+
+    <br />
+
+    @if(Request.IsAuthenticated)
+    {
+        <div id="PROC-editor" class="col-sm-6">
+            @if(Model.proc.EntrepreneurOwner && (!Model.proc.InvestorOwner) && Model.proc.PROC["Accepted_Mutualy"] != "True")
+            {
+                <div id="form-div">
+                    <form id="proc-editor" action="/PROC/Details/@Model.proc.PROC["Id"]" method="post" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Revenue Percentage</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Revenue_Percentage"
+                                       name="Revenue_Percentage"
+                                       type="number"
+                                       step="any" 
+                                       value="@decimal.Round(decimal.Parse(Model.proc.PROC["Revenue_Percentage"]), 3) "/>
+                            </div> 
+                        </div> 
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date Begin</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_begin"
+                                       name="date_begin"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_Begin"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date End</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_end"
+                                       name="date_end"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_End"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update PROC" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <br />
+            }
+            @if (Model.proc.InvestorOwner && (!Model.proc.EntrepreneurOwner) && Model.proc.PROC["Accepted_Mutualy"] != "True")
+            {
+                <div id="form-div">
+                    <form id="proc-editor" action="/PROC/Details/@Model.proc.PROC["Id"]" method="post" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Investment Amount</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Investment_Amount"
+                                       name="Investment_Amount"
+                                       type="number"
+                                       step="any"
+                                       value="@decimal.Round(decimal.Parse(Model.proc.PROC["Investment_Amount"]), 2)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Revenue Percentage</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Revenue_Percentage"
+                                       name="Revenue_Percentage"
+                                       type="number"
+                                       step="any"
+                                       value="@decimal.Round(decimal.Parse(Model.proc.PROC["Revenue_Percentage"]), 3)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date Begin</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_begin"
+                                       name="date_begin"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_Begin"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date End</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_end"
+                                       name="date_end"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_End"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update PROC" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <br />
+            }
+            @if(Model.proc.EntrepreneurOwner && Model.proc.InvestorOwner && Model.proc.PROC["Accepted_Mutualy"] != "True")
+            {
+                <br />
+
+                <div id="form-div">
+                    <form id="proc-editor" action="/PROC/Details/@Model.proc.PROC["Id"]" method="post" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Investment Amount</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Investment_Amount"
+                                       name="Investment_Amount"
+                                       type="number"
+                                       step="any"
+                                       value="@decimal.Round(decimal.Parse(Model.proc.PROC["Investment_Amount"]), 2)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Revenue Percentage</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Revenue_Percentage"
+                                       name="Revenue_Percentage"
+                                       type="number"
+                                       step="any"
+                                       value="@decimal.Round(decimal.Parse(Model.proc.PROC["Revenue_Percentage"]), 2)" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date Begin</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_begin"
+                                       name="date_begin"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_Begin"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date End</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_end"
+                                       name="date_end"
+                                       type="datetime"
+                                       value="@Model.proc.PROC["DateTime_Enforcement_End"]" />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4 text-danger">You are not allowed to accept your own PROCs!</label>
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update PROC" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+    }
+
+    <br />
+
+    @if (Request.IsAuthenticated && Model.proc.EntrepreneurOwner || Model.proc.InvestorOwner)
+    {
+        <div class="row">
+            <div id="right-bar" class="col-sm-6">
+                <div class='chat-toolbar'>
+                </div>
+
+                <ul id='messages' class="chat-messages"></ul>
+
+                <div class="chat-box right-bar-footer">
+                    <form id="chat-form" class="pure-form">
+                        <div id="chat-input-container">
+                            <input type='text' id='messageInput' placeholder='Type a message...'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datepicker", "~/bundles/serendipia")
+    <script type="text/javascript">
+        function client_Accepts_PROC(proc_id, accepted_bool)
+        {
+            $.ajax(
+                {
+                    url: '/PROC/accepted_by_User',
+                    type: 'POST',
+                    data:
+                    {
+                        PROC_Id: proc_id,
+                        User_Accepts_PROC: accepted_bool
+                    },
+                    dataType: 'json',
+                    success: function(data)
+                    {
+                        if(data.success)
+                        {
+                            window.location.reload(false);
+                        }
+                        else
+                        {
+                            document.getElementById('user-accept-PROC-message').innerHTML = '<b class="text-danger">' + data.code + '</b>' + '<p class="text-danger">' + data.message + '</p>';
+                        }
+                    }
+                })
+        }
+
+        function activate_MutualAcceptance(proc_id, accepted_bool)
+        {
+            if(accepted_bool == null)
+            {
+                accepted_bool = 'off';
+            }
+            $.ajax(
+                {
+                    url: '/PROC/mutualyAcceptPROC',
+                    type: 'POST',
+                    data:
+                    {
+                        PROC_Id: proc_id,
+                        Investor_Mutually_Accepts: accepted_bool
+                    },
+                    dataType: 'json',
+                    success: function(data)
+                    {
+                        if(data.success)
+                        {
+                            window.location.reload(false);
+                        }
+                        else
+                        {
+                            document.getElementById('div-mutualy-accept-message').innerHTML = '<b class="text-danger">' + data.code + '</b>' + '<p class="text-danger">' + data.message + '</p>';
+                        }
+                    }
+                });
+        }
+
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var circles = [];
+
+        window.onload = function () {
+            ReloadCanvasAndProjectName("PROC-title")
+            for (var i = 0; i < (canvas.width / 10 + canvas.height / 10) ; i++) {
+                var c = new Circle(getRandomInteger(1, canvas.width), getRandomInteger(1, canvas.height), 2, getRandomDecimal(-.5, .5), getRandomDecimal(-.5, .5));
+                circles.push(c);
+            }
+
+            loop();
+        }
+
+        window.onresize = function () {
+            ReloadCanvasAndProjectName("PROC-title")
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.datepicker').datepicker();
+        });
+
+        var proc_id = @Html.Raw(Json.Encode(Model.proc.PROC["Id"]));
+        var user = @Html.Raw(Json.Encode(User.Identity.Name));
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker();
+        });
+
+        var link = "https://proudsource.firebaseio.com/messages/PROC-"+proc_id;
+        var ref = new Firebase(link);
+        var messageField = $('#messageInput');
+        var messageList = $('#messages');
+
+        // LISTEN FOR KEYPRESS EVENT
+        messageField.keypress(function (e) {
+            if (e.keyCode == 13) {
+                //FIELD VALUES
+                var username = {}
+
+                //if (model.proc.Investor_Name == model.User_ID)
+                //    username = model.Investor_Name;
+                //else if (model.Entrepreneur_ID == model.User_ID)
+                //    username = model.Entrepreneur_ID
+
+                var message = messageField.val();
+
+                var username = user;
+
+                //SAVE DATA TO FIREBASE AND EMPTY FIELD
+                ref.push({ name: username, text: message });
+                messageField.val('');
+            }
+        });
+
+        // Add a callback that is triggered for each chat message.
+        ref.on('child_added', function (snapshot) {
+            //GET DATA
+            var data = snapshot.val();
+            var username = data.name || "anonymous";
+            var message = data.text;
+
+            //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
+            var messageElement = $("<li>");
+            var nameElement = $("<strong class='chat-username'></strong>")
+            nameElement.text(username);
+            messageElement.text(message).prepend(nameElement);
+
+            //ADD MESSAGE
+            messageList.append(messageElement)
+
+            //SCROLL TO BOTTOM OF MESSAGE LIST
+            messageList[0].scrollTop = messageList[0].scrollHeight;
+        });
+
+        $('#chat-form').submit(function () {
+            return false;
+        });
+    </script>
+}
+

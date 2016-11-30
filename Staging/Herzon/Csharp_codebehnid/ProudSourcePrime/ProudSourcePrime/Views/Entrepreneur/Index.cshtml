@@ -1,0 +1,96 @@
+﻿@model ProudSourcePrime.Models.EntrepreneurIndexModel
+
+<link rel="stylesheet" href="~/Styles/Entrepreneur/Index.css" />
+
+<div class="title-container">
+    <div class="title">
+        My Projects
+    </div>
+</div>
+
+<div class="container container-full">
+
+
+    @if (Model.entrepreneurIndexData.EntrepreneurProfile["Profile_Public"] == "True")
+    {
+        <div class="col-sm-12 center">
+            <a href="@string.Format("/Entrepreneur/Details/{0}", Model.entrepreneurIndexData.EntrepreneurProfile["Entrepreneur_Id"])">See your public profile</a>
+        </div>
+
+        <br />
+    }
+    @if (Model.entrepreneurIndexData.EntrepreneurProjects.Count == 0)
+    {
+        <div class="col-sm-12 center">
+
+            <div class="fill-center-text" style="margin: auto">
+                <b>You have no projects!</b>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-12 col-full center">
+
+        @* Insert data into table from projects array *@
+        @for (int i = 0; i < Model.entrepreneurIndexData.EntrepreneurProjects.Count; i++)
+        {
+            Dictionary<string, string> project = Model.entrepreneurIndexData.EntrepreneurProjects[i];
+
+            <div class="flat-row">
+                <div id="name-col" class="col-xs-2">
+                    @project["Name"]
+                </div>
+
+                <div class="extra-info-col col-xs-2">
+                    <label>Balance</label>
+                    @if (!string.IsNullOrEmpty(project["Balance"]))
+                    {
+                        <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(project["Balance"]), 2))</p>
+                    }
+                    else
+                    {
+                        <p>$ 0.00</p>
+                    }
+                </div>
+
+                <div class="extra-info-col col-xs-2">
+                    <label>Investment goal</label>
+                    <p>@string.Format("$ {0}", decimal.Round(decimal.Parse(project["Investment_Goal"]), 2))</p>
+                </div>
+
+                <div class="extra-info-col col-xs-2">
+                    <label>Summary</label>
+                    @if (project["Summary"].Length > 100)
+                    {
+                        <p>@(project["Summary"].Remove(100) + "...")</p>
+                    }
+                    else
+                    {
+                        <p>@project["Summary"]</p>
+                    }
+                </div>
+
+                <div class="extra-info-col col-xs-2">
+                    <label># PROCs</label>
+                    <p>@project["PROC Count"]</p>
+                </div>
+
+                <button onclick="(function go() { window.location = '@string.Format("/Project/Details/{0}", project["Project_Id"])' })()" class="flat-button green flatRow-btn" style="float: right;">
+                    View
+                </button>
+
+                <button onclick="(function go() { window.location = '@string.Format("/Project/Index/{0}", project["Project_Id"])' })()" class="flat-button blue flatRow-btn" style="float: right;">
+                    Edit
+                </button>
+            </div>
+        }
+
+        </div>
+
+    }
+
+</div>
+
+@{Html.RenderPartial("_CreateNewProject"); }

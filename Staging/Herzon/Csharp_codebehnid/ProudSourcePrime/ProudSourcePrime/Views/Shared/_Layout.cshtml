@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+        <title>@Page.Title</title>
+        @RenderSection("head", required: false)
+        @Styles.Render("~/Content/css")
+
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-default navbar-fixed-top" >
+                <div class="row">
+                    
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        
+                        <div class="navbar-brand" href="http://google.com">
+                            <img id="logo" src="~/Images/Logo-blue.png" />
+                            <div id="navbar-brand-text"><a href="/" style="text-decoration: none">ProudSource</a></div>
+                        </div>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            @*<li class="logo"><img id="logo" src="~/Images/Logo-blue.png" /></li>*@
+                            @*<li class="logo"><a class="logo-color" href="#">ProudSource</a></li>*@
+                            <li class="navbar-hover"><a href="/Search/Results/">Search</a></li>
+                            @*<li class="navbar-hover"><a href="/Welcome/About/">About</a></li>
+                            <li class="navbar-hover"><a href="/Welcome/Contacts/">Contact</a></li>*@
+                            @if(Request.IsAuthenticated)
+                            {
+                                <li class="navbar-hover"><a href="/Entrepreneur/Index">My Projects</a></li>
+                                <li class="navbar-hover"><a href="/Investor/Index">My PROCs</a></li>
+                            }
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+        @RenderBody()
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @* Added this so that making the script section required for the Project/Details/{int} page submit form *@
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>

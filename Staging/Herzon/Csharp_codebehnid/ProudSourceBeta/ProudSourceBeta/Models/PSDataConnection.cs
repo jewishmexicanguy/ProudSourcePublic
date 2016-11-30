@@ -20,7 +20,7 @@ namespace ProudSourceBeta.Models
         /// <param name="UserIdentiy_id"></param>
         public PSDataConnection(string UserIdentiy_id)
         {
-               conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ProudSourceStaging"].ConnectionString);
+            conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ProudSourceStaging"].ConnectionString);
             User_Id = get_userID_from_userIdentity(UserIdentiy_id);
         }
         /// <summary>

@@ -1,0 +1,408 @@
+﻿@using Microsoft.AspNet.Identity
+@model ProudSourcePrime.Models.ProjectDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<link rel="stylesheet" href="~/Styles/Project/Details.css" />
+
+<div class="title-content-push"></div>
+
+<div class="animated-title-container">
+    <canvas id="canvas" width="800" height="600" style="background-color: #80bfff;"></canvas>
+    <div id="project-name" class="title">
+        @Model.project.ProjectDetails["Name"]
+    </div>
+</div>
+
+<div class="container">
+
+    @if (Model.project.ProjectDetails == null)
+    {
+        <p>Project is private!</p>
+    }
+    else
+    {
+
+        <div class="project-details">
+            @if (Model.project.ProjectDetails.Values.Count > 0)
+            {@*
+                // [0] : Project_Id
+                // [1] : Name
+                // [2] : Summary
+                // [3] : Investment_Goal
+                // [4] : Funding
+                // [5] : Entrepreneur_Id
+                // [6] : Entrepreneur_Name
+            *@
+            string[] a = Model.project.ProjectDetails.Values.ToArray();
+
+            @*<ul class="list-group">
+                    <li class="list-group-item"><p>@string.Format("Project Name: {0}", a[1])</p></li>
+                    @if (a[2].Length < 1)
+                    {
+                        ;
+                    }
+                    else if (a[2].Length > 100)
+                    {
+                        <li class="list-group-item"><p>@(a[2].Substring(0, 100) + "...")</p></li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item">@a[2]</li>
+                    }
+                    <li class="list-group-item"><p>@string.Format("Investment goal: $ {0}", a[3])</p></li>
+                    @if (string.IsNullOrEmpty(a[4]))
+                    {
+                        <li class="list-group-item"><p>@string.Format("Funding pledged in PROCs $ {0}", 0.00)</p></li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item"><p>@string.Format("Funding pledged in PROCs $ {0}", decimal.Round(decimal.Parse(a[4]), 2))</p></li>
+                    }
+                    <li class="list-group-item"><p>Entrepreneur: <a href="@string.Format("/Entrepreneur/Details/{0}", a[5])">@a[6]</a></p></li>
+                </ul>*@
+
+                <div class="row">
+
+                    <div class="col-sm-2 left-side-bar">
+
+                        <div class="">
+
+                            <div>
+                                <img src="~/Images/twitter.png" alt="View Twitter Page" class="social-media-btn">
+                            </div>
+
+                            <div>
+                                <img src="~/Images/facebook.png" alt="View Facebook Page" class="social-media-btn">
+                            </div>
+                            
+                            <div>
+                                <img src="~/Images/youtube.png" alt="View Youtube Page" class="social-media-btn">
+                            </div>
+
+                            <div>
+                                <img src="~/Images/googleplus.png" alt="View Google+ Page" class="social-media-btn">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-8">
+                        
+
+                        <div class="row">
+
+                            @* Project Images *@
+                            <div class="project-image">
+                                <img src="~/Images/noImageFound.png" alt="Image">
+                            </div>
+
+                        </div>
+                        
+
+                        <div class="row">
+
+                            @* Project Quote/Slogan *@
+                            <div class="project-slogan">
+                                <img src="~/Images/missing.png" alt="Profile" class="profile-thumbnail-small">
+
+
+                                <div class="entrepreneur-text">
+                                    @a[6]
+                                </div>
+
+                                <div class="project-slogan-text">
+                                    "This is the slogan for our company!"
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="project-summary">
+                                @a[2]
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button class="flat-button green">Invest</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <hr />
+
+        <div class="project-procs">
+            @if (Model.project.ProjectPROCs.Count > 0)
+            {
+                <h2>PROC contracts with this project</h2>
+                <br />
+                <label>@string.Format("total defered revenue % is {0} for this project", decimal.Round(Model.project.ProjectPROCs.Sum(x => decimal.Parse(x.Value["Revenue_Percentage"])), 3))</label>
+                <br />
+                <div id="PROC-rows">
+                    @for (int i = 0; i < Model.project.ProjectPROCs.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>@string.Format("Investor : {0}", Model.project.ProjectPROCs[i]["Investor_Name"])</label>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="@string.Format("/PROC/Details/{0}", Model.project.ProjectPROCs[i]["PROC_Id"])">
+                                    <label>@string.Format("Capital Investment : {0}", decimal.Round(decimal.Parse(Model.project.ProjectPROCs[i]["Investment_Amount"]), 2))</label>
+                                </a>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="@string.Format("/PROC/Details/{0}", Model.project.ProjectPROCs[i]["PROC_Id"])">
+                                    <label>@string.Format("Revenue % purchased {0}", decimal.Round(decimal.Parse(Model.project.ProjectPROCs[i]["Revenue_Percentage"]), 3))</label>
+                                </a>
+                            </div>
+                            <div class="col-md-2">
+                                <label>@string.Format("Contract begins on {0}", Model.project.ProjectPROCs[i]["DateTime_Enforcement_Begin"])</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>@string.Format("Contract ends on {0}", Model.project.ProjectPROCs[i]["DateTime_Enforcement_End"])</label>
+                            </div>
+                            @if (Model.project.ProjectPROCs[i]["Active"] == "True")
+                            {
+                                <div class="col-md-2"><label class="text-info">Contract is active</label></div>
+                            }
+                            else
+                            {
+                                <div class="col-md-2"><label class="text-info">Contract is not active</label></div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No PROCs for this project, perhaps some more links and more project documents would help...</p>
+            }
+        </div>
+
+        <hr />
+
+        <div class="project-documents">
+            <div class="documents-div">
+                @if (Model.project.ProjectDocuments.Count > 0)
+                {
+                    int row_count = Model.project.ProjectDocuments.Count / 4;
+                    if (Model.project.ProjectDocuments.Count % 4 != 0)
+                    {
+                        row_count++;
+                    }
+                    for (int i = 0; i < row_count; i++)
+                    {
+                        if (i % 4 == 0)
+                        {
+                            <div class="row">
+                                @for (int j = 0; j < 4; j++)
+                                {
+                                    if (j >= Model.project.ProjectDocuments.Count)
+                                    {
+                                        break;
+                                    }
+                                    <div class="col-md-3">
+                                        <a href="@string.Format("/IO/Download/{0}", Model.project.ProjectDocuments[((i * 4) + j)]["Document_Id"])">
+                                            <b>@Model.project.ProjectDocuments[((i * 4) + j)]["File_Name"]</b>
+                                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                        </a>
+                                        <p>@Model.project.ProjectDocuments[((i * 4) + j)]["Description"]</p>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No documents found associated with this project, they must not want to share what they do...</p>
+                }
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="project-images">
+            <div class="images-div">
+                @if (Model.project.ProjectImages.Count > 0)
+                {
+                    int row_count = Model.project.ProjectImages.Count / 4;
+                    if (Model.project.ProjectImages.Count % 4 != 0)
+                    {
+                        row_count++;
+                    }
+                    for (int i = 0; i < row_count; i++)
+                    {
+                        <div class="row">
+                            @for (int j = 0; j < 4; j++)
+                            {
+                                if (j >= Model.project.ProjectImages.Count)
+                                {
+                                    break;
+                                }
+                                <div class="col-md-3">
+                                    <img class="profile-thumbnail" src="@Model.project.ProjectImages[((i * 4) + j)]["Base64Image"]" />
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>There appear to be no images associated with this project, perhaps they don't want you to see it...</p>
+                }
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="project-links">
+            <div class="current-links">
+                @if (Model.project.ProjectLinks.Count > 0)
+                {
+                    <b>Entrepreneur Links</b>
+                    <br />
+                    for (int i = 0; i < Model.project.ProjectLinks.Count; i++)
+                    {
+                        if (Model.project.ProjectLinks[i]["Link_Type"] == "YouTube" || Model.project.ProjectLinks[i]["Link_Type"] == "Vimeo")
+                        {
+                            <iframe src="@Model.project.ProjectLinks[i]["Link"]" allowfullscreen></iframe>
+                        }
+                        else
+                        {
+                            <a href="@Model.project.ProjectLinks[i]["Link"]">@Model.project.ProjectLinks[i]["FriendlyName"]</a>
+                        }
+                    }
+                    <hr />
+                }
+                else
+                {
+                    <p>No links, they must not be very well connected...</p>
+                }
+            </div>
+        </div>
+
+        @*<div class="project-embelishments">
+
+            </div>*@
+
+    if (Request.IsAuthenticated && false)
+    {
+        <hr />
+            <div id="proc-creator">
+                <div id="form-div">
+                    <form action="/Project/Details/@Model.project.ProjectDetails["Project_Id"]" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="hidden" name="Project_Id" value="@Model.project.ProjectDetails["Project_Id"]" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="Investor_Id" value="@Session["Investor_Id"]" />
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Investment Amount</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Investment_Amount"
+                                       name="Investment_Amount"
+                                       type="number"
+                                       step="any" />
+                            </div>
+                            @Html.ValidationMessage("Negative_Investment", new { @class = "text-danger" })
+                            @Html.ValidationMessage("Investment_Amount_NULL", new { @class = "text-danger" })
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Revenue Percentage</label>
+                            <div class="col-md-4">
+                                <input class="form-control text-box single-line"
+                                       id="Revenue_Percentage"
+                                       name="Revenue_Percentage"
+                                       type="number"
+                                       step="any" />
+                            </div>
+                            @Html.ValidationMessage("Negative_Revenue_Return", new { @class = "text-danger" })
+                            @Html.ValidationMessage("Revenue_Return_NULL", new { @class = "text-danger" })
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date Begin</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_begin"
+                                       name="date_begin"
+                                       type="datetime" />
+                            </div>
+                            @Html.ValidationMessage("begin_date_NULL", new { @class = "text-danger" })
+                            @Html.ValidationMessage("invalid_dates", new { @class = "text-danger" })
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <label class="control-label col-md-4">Date End</label>
+                            <div class="col-md-4">
+                                <input class="form-control datepicker"
+                                       id="date_end"
+                                       name="date_end"
+                                       type="datetime" />
+                            </div>
+                            @Html.ValidationMessage("end_date_NULL", new { @class = "text-danger" })
+                            @Html.ValidationMessage("invalid_dates", new { @class = "text-danger" })
+
+                        </div>
+
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create PROC" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datepicker", "~/bundles/serendipia")
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker();
+        });
+
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var circles = [];
+
+        window.onload = function () {
+            ReloadCanvasAndProjectName("project-name")
+            for (var i = 0; i < (canvas.width / 10 + canvas.height / 10) ; i++) {
+                var c = new Circle(getRandomInteger(1, canvas.width), getRandomInteger(1, canvas.height), 2, getRandomDecimal(-.5, .5), getRandomDecimal(-.5, .5));
+                circles.push(c);
+            }
+
+            loop();
+        }
+
+        $(window).resize(function () {
+            ReloadCanvasAndProjectName("project-name")
+        });
+    </script>
+}

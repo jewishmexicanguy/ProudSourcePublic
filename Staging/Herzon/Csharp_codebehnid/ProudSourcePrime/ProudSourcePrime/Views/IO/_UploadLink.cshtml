@@ -1,0 +1,63 @@
+﻿@model ProudSourcePrime.Models.LinkModel
+
+@using (Html.BeginForm("UploadLink", "IO", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <dic class="col-sm-offset-1">
+        @*@Html.AntiForgeryToken()*@
+        <h4>Upload Link</h4>
+        <div id="beta-test-info" style="background-color : #80bfff; color : white; border-color : lightgray; border-width : 1px; border-radius : 25px; text-align : center;">
+            <p>Too get the imbed to render properly please use the "src" imbbed link generetaed by YouTube and Vimeo when sharing a video.</p>
+            <br />
+            <p>Do not use the raw URL in your browser, if you want the video to render for people viewing your profile.</p>
+            <br />
+            <p>You can do this by clicking on share or embed and copy and pasting the link.</p>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <input type="hidden" name="Profile_Id" value="@Model.Profile_Id" />
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="Is_Project" value="@Model.Is_Project.ToString()" />
+            </div>
+
+            @Html.ValidationMessage("Profile_Id_NULL", new { @class = "text-danger" })
+            @Html.ValidationMessage("Is_Project_NULL", new { @class = "text-danger" })
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Select Link Type</label>
+                <div class="col-md-8 dropdown">
+                    @Html.DropDownListFor(x => x.SelectedOption, Model.SelectOptions)
+                </div>
+                @Html.ValidationMessage("Link_Type_Null", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Link</label>
+                <div class="col-md-8">
+                    <input class="form-control text-box single-line"
+                           id="Link"
+                           name="Link"
+                           type="text" />
+                </div> 
+                @Html.ValidationMessage("Link_NULL", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Friendly Descriptor</label>
+                <div class="col-md-8">
+                    <input class="form-control text-box single-line"
+                           id="FriendlyName" 
+                           name="FriendlyName"
+                           type="text" />
+                </div> 
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </dic>
+}

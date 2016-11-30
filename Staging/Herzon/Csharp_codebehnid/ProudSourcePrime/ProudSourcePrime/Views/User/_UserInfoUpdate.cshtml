@@ -1,0 +1,79 @@
+﻿@model ProudSourcePrime.Models.UserIndexModel
+
+<div id="profile-editor">
+    <div id="form-div">
+        <form action="/User/Index" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.userIndexData.UserProfile["Id"])
+            </div>
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.userIndexData.InvestorProfile["Investor_Id"])
+            </div>
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.userIndexData.EntrepreneurProfile["Entrepreneur_Id"])
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Edit your name as it appears to others...</label>
+                <div class="col-md-4">
+                    @*@Html.EditorFor(m => m.userIndexData.UserProfile["Name"], new { @class = "form-control text-box single-line" })*@
+                    <input class="form-control text-box single-line"
+                           id="userIndexData_UserProfile_Name_"
+                           name="userIndexData.UserProfile[Name]"
+                           type="text"
+                           value="@Model.userIndexData.UserProfile["Name"]">
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Edit your phone number...</label>
+                <div class="col-md-4">
+                    @*@Html.EditorFor(m => m.userIndexData.UserProfile["PhoneNumber"], new { @class = "form-control text-box single-line" })*@
+                    <input class="form-control text-box single-line"
+                           id="userIndexData_UserProfile_PhoneNumber_"
+                           name="userIndexData.UserProfile[PhoneNumber]"
+                           type="text"
+                           value="@Model.userIndexData.UserProfile["PhoneNumber"]">
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Edit whether your Entrepreneur profile is public...</label>
+                <div class="col-md-4">
+                    <input class="form-control checkbox"
+                           id="userIndexData_EntrepreneurProfile_Profile_Public_"
+                           name="userIndexData.EntrepreneurProfile[Profile_Public]"
+                           type="checkbox">
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <label class="control-label col-md-4">Edit whether your Investor profile is public...</label>
+                <div class="col-md-4">
+                    <input class="form-control checkbox"
+                           id="userIndexData_InvestorProfile_Profile_Public_"
+                           name="userIndexData.InvestorProfile[Profile_Public]"
+                           type="checkbox">
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Update" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

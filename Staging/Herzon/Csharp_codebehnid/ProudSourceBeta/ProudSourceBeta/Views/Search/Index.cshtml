@@ -62,15 +62,28 @@
                     string overlayStuffStrId = "OS" + overlayId.ToString();
                     string imageStrId = "I" + overlayId.ToString();
 
-                    //Image
-                        <div onclick="location.href='/Project/Details/@row["Project_ID"]';" id="@imageStrId" class="col-sm-4 tile fill">
-                            <img src="@imgSrc"/>
+
+                    <div onclick="location.href='/Project/Details/@row["Project_ID"]';" id="@imageStrId" class="col-sm-4 tile fill" style="background-image: url(@imgSrc)">
+                        <div id="@overlayStrId" class="overlay fill" style="z-index:99999; width:100%;">
+
+
                         </div>
+                    </div>
+                    //Image
+                        @*<div onclick="location.href='/Project/Details/@row["Project_ID"]';" id="@imageStrId" class="col-sm-4 tile fill">
+                            <img src="@imgSrc"/>
+
+                            <div id="@overlayStrId" class="overlay col-sm-4 tile fill" style="width:100%">
+
+                                
+                            </div>
+
+                        </div>*@
 
                         //Overaly
-                        <div id="@overlayStrId" class="overlay col-sm-4 tile fill" style="left: @offset%;">
+                        //<div id="@overlayStrId" class="overlay col-sm-4 tile fill" style="left: @offset%;">
 
-                        </div>
+                        //</div>
 
                         <div id="@overlayStuffStrId" class="overlay-stuff col-sm-4 tile" style="left: @offset%; text-align: left;">
                             <div style="clear: left; margin-top: 10px"></div> 

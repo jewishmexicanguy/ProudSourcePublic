@@ -1,0 +1,11 @@
+﻿body {
+}
+
+div ul li a {
+    color : aquamarine;
+}
+
+.form-control {
+    height: 40px;
+    border-radius: 7px;
+}

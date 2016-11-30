@@ -1,0 +1,21 @@
+﻿$paddingY: 10px;
+$form-group-margin-Y: 30px;
+#profile-editor {
+    border-style : solid; 
+    border-color : lightgray; 
+    border-width : 1px;
+    background-color: #cde9ff;
+    padding-top: $paddingY;
+    padding-bottom: $paddingY;
+
+    font-size: 150%;
+}
+
+#form-div {
+    padding : 25px;
+}
+
+.form-group {
+    margin-top: $form-group-margin-Y;
+    margin-bottom: $form-group-margin-Y;
+}

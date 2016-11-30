@@ -1,0 +1,144 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProudSource</title> 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <button class="btn-primary btn center-block" onclick="window.location.replace('http://proudsource.us/welcome');">Go To Beta Site</button>
+    <div>
+        <canvas id="canvas" width="0" height="0" style="background-color: black;"></canvas>
+    </div>
+    <script type="text/javascript">
+        // Random number generator between two numbers
+        function getRandomDecimal(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Random integer generator between two numbers
+        function getRandomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        // Circle object
+        //  parameters for linear motion circle
+        //      x and y are the initial positions
+        //      rad is the radius
+        //      vx and vy are the component speeds
+        //
+        // 	parameters for radial motion circle
+        //		x and y are the initial positions
+        //		rad is the radius of the circle drawn 
+        //		rad_motion is the radius to which a circle will move in
+        //		vx and vy are the initial velocities irrespective of radial motion
+        //	 	spin is whther the radial motion is CW or CCW
+        //		angle is the initial angle where circular motion will start
+        //		vangle is the angular velocity
+        //
+        function Circle(a) {
+            var _this = this;
+            if (a.length == 5) {
+                var x = a[0];
+                var y = a[1];
+                var rad = a[2];
+                var vx = a[3];
+                var vy = a[4];
+            } else if (a.length == 8) {
+                var x = a[0];
+                var y = a[1];
+                var rad = a[2];
+                var vx = a[3];
+                var vy = a[4];
+                var rad_motion = a[5];
+                var angle = a[6];
+                var vangle = a[7];
+            }
+
+            // constructor
+            (function () {
+                _this.x = x || null;
+                _this.y = y || null;
+                _this.radius = rad || null;
+                _this.vx = vx || null;
+                _this.vy = vy || null;
+                _this.rad_motion = rad_motion || null;
+                _this.angle = angle || null;
+                _this.vangle = vangle || null;
+            })();
+
+            this.arcmove_x = function () {
+                _this.x += _this.vx;
+                _this.angle = _this.angle + _this.vangle;
+                return _this.x + _this.rad_motion * Math.cos(_this.angle * (Math.PI / 180));
+            }
+
+            this.arcmove_y = function () {
+                _this.y += _this.vy;
+                _this.angle = _this.angle + _this.vangle;
+                return _this.y + _this.rad_motion * Math.sin(_this.angle * (Math.PI / 180));
+            }
+
+            // update function, this will make the circles appear like they are moving.
+            this.update = function () {
+                // we want to control how positions are updated based on knowing what kind of motion the object will be doing
+                if (_this.rad_motion == null) {
+                    _this.x += _this.vx;
+                    _this.y += _this.vy;
+                } else if (_this.rad_motion != null) {
+                    _this.x = this.arcmove_x();
+                    _this.y = this.arcmove_y();
+                }
+            }
+
+            // this method will allow each circle to request the browser to draw it on the screen.
+            this.draw = function (ctx, color) {
+                if (!_this.x || !_this.y || !_this.radius || !_this.vx || !_this.vy) {
+                    console.error('Circle requires an x, y, radius, vx and vy');
+                    return;
+                }
+                ctx.beginPath();
+                ctx.arc(_this.x, _this.y, _this.radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = color;
+                ctx.fill();
+            };
+        }
+
+        // animation loop
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < circles.length; i++) {
+                circles[i].update();
+                circles[i].draw(ctx, "#d9d9d9");
+            }
+            requestAnimationFrame(loop);
+        }
+    </script>
+    <script type="text/javascript">
+
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var circles = [];
+
+        window.onload = function () {
+            document.getElementById('canvas').width = window.innerWidth;
+            document.getElementById('canvas').height = window.innerHeight;
+            for (var i = 0; i < 720; i++) {
+                circles.push(new Circle([window.innerWidth / 2, window.innerHeight / 2, 1, .001, .001, 2, i, 1 - (.0005 * i)]))
+            }
+            for (var i = 0; i < 720; i++) {
+                circles.push(new Circle([window.innerWidth / 2, window.innerHeight / 2, 1, .001, .001, -2, i, 1 - (.0005 * i)]))
+            }
+            // start the loop
+            loop();
+        }
+    </script> 
+</body>
+</html>

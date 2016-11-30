@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    @*@Html.AntiForgeryToken()*@
+    <ul class="nav navbar-nav navbar-right" style="margin-right: 15px;">
+        <li>@Html.ActionLink("Hello " + User.Identity.GetUserName(), "Index", "User", routeValues: null, htmlAttributes: new { title = "User Index" })</li>
+        <li class="navbar-hover"><a href="@Url.Action("LogOff", "Auth")">Log Off</a></li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right" style="margin-right: 15px;">
+        <li class="navbar-hover"><a href="/Auth/Login">Log In</a></li>
+        <li class="navbar-hover"><a href="/Auth/Register">Register</a></li>
+    </ul>
+}

@@ -146,7 +146,7 @@ namespace ProudSourceBeta.Models
             adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             adapter.SelectCommand.Parameters.AddWithValue("@Investor_ID", investor_id);
             DataSet set = new DataSet();
-            if (investor_id <= 1)
+            if (investor_id < 1)
             {
                 throw new Exception("Investor id passed in is zero or less and is therefore an invalid id.");
             }

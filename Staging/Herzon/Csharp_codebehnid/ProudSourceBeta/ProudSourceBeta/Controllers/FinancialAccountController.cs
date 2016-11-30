@@ -29,7 +29,7 @@ namespace ProudSourceBeta.Controllers
                 {
                     if (collection.AllKeys.Contains("payment_method_nonce"))
                     {
-                        BTInboundPayment payment = new BTInboundPayment(collection.Get("payment_method_nonce"), decimal.Parse(collection.Get("Amount")), id);
+                        BTInboundPayment payment = new BTInboundPayment(collection.Get("payment_method_nonce"), decimal.Parse(collection.Get("Amount")), id, "BrainTree");
                     }
                     else
                     {

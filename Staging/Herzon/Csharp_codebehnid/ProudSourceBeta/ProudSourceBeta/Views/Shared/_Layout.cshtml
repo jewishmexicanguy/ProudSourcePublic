@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,10 +11,12 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <link href="~/Content/Shared/Shared.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container" style="width: 100%;">
             <div class="navbar-header">
                 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,7 +25,7 @@
                     <span class="icon-bar"></span>*@
                     <span class="icon-bar"></span>
                 </button>
-                <div style="float: left"> <img id="logo" src="~/Images/Logo-white.png" /> </div>
+                <div class="logo"> <img id="logo" src="~/Images/Logo-blue.png" /> </div>
                 @Html.ActionLink("ProudSource", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
@@ -30,7 +34,11 @@
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     <li class="top-bar-btn"><a href="/Search/">Explore</a></li>
-                    @*@Html.Partial("_SearchKeyArg")*@
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="seperator-left">@Html.ActionLink("My Projects", "Index/" + ProudSourceBeta.Controllers.UserController.getEntID(User.Identity.GetUserId()), "Entrepreneur", routeValues: null, htmlAttributes: new { })</li>
+                        <li>@Html.ActionLink("My PROCs", "Index/" + ProudSourceBeta.Controllers.UserController.getInvestorID(User.Identity.GetUserId()), "Investor", routeValues: null, htmlAttributes: new { })</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,14 +46,16 @@
     </div>
     <div id="overall-container" class="container body-content">
         @RenderBody()
-        <br/>
-        <footer>
-            @*<p>&copy; @DateTime.Now.Year - ProudSource All rights reserved</p>*@
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+<footer>
+    @Html.Partial("_Footer")
+    @*<p>&copy; @DateTime.Now.Year - ProudSource All rights reserved</p>*@
+</footer>
+
 </html>
+

@@ -6,7 +6,7 @@
 <div id="profileContainer">
     <div class="container">
 
-        <div class="data-container">
+        <div class="data-container bordered-grey">
 
             <div style="float: left;">
                 @{ var imgSrc = "/Images/emptyProfile2.jpg";
@@ -17,10 +17,6 @@
                     }
                 }
                 <img class="circular profile-image" src="@imgSrc" />
-            </div>
-
-            <div class="account-title" style=""> 
-                <b>User Profile</b>
             </div>
 
             <div style="clear: left"> </div>
@@ -44,10 +40,9 @@
                 </div>
                 <br />
                 <div class="data-title">
-                    <b>Edit Profile</b>
-                </div>
-                <div class="data">
-                    <a class="btn btn-default" href="/User/Edit/">Go >></a>
+                    <button class="flat-button green" onclick="(function go() { window.location = '/User/Edit/' })()">
+                        Edit Profile
+                    </button>
                 </div>
             </div>
         </div>

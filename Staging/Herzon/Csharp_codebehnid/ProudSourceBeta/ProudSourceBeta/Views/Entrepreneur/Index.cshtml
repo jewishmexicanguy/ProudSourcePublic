@@ -1,119 +1,110 @@
 ﻿@model ProudSourceBeta.Models.EntrepreneurIndexViewModel
 
-<h2>Entrepreneur Account</h2>
+<link href="~/Content/Shared/Shared.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Entrepreneur/index.css" rel="stylesheet" type="text/css" />
 
-<div class="container">
-    
-    <hr />
-    <dl class="dl-horizontal">
+<script>
+    function createNewProject() {
+        location.href = '@string.Format("/Entrepreneur/createProject/{0}", Model.Entrepreneur_ID)'
+    }
+</script>
 
-        <dt class="profile-header">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<div class="title-container">
+    <div class="title">
+        Projects
+    </div>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+<div id="container">
 
-        <dt class="profile-header">
-            @Html.DisplayNameFor(model => model.Profile_Picture )
-        </dt>
+        @*<div class="data-container bordered-grey">
 
-        <dd>
-
-            <div class="profile-image">
-                
-                @{ var imgSrc = "/Images/emptyProfile.png";
+            <div style="float: left;">
+                @{ var imgSrc = "/Images/emptyProfile2.jpg";
                     if (Model.Profile_Picture != null)
                     {
                         var base64 = Convert.ToBase64String(Model.Profile_Picture);
                         imgSrc = string.Format("data:image/gif;base64,{0}", base64);
                     }
                 }
-
-                <img id="profile-image" src="@imgSrc" />
-
+                <img class="circular profile-image" src="@imgSrc" />
             </div>
 
-        </dd>
+            <div class="account-title" style="">
+                <b>Entrepreneur Profile</b>
+            </div>
 
-        <dt class="profile-header">
-            @Html.DisplayNameFor(model => model.Profile_Public)
-        </dt>
+            <div style="clear: left"> </div>
 
-        <dd class="profile-header">
-            @Html.DisplayFor(model => model.Profile_Public)
-        </dd>
+            <div class="data-title">
+                <b>Name:</b>
+            </div>
+            <div class="data">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <br />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Verified)
-        </dt>
+            <button class="data flat-button flat-button-small green" onclick="location.href='@string.Format("/Entrepreneur/Edit/{0}", Model.Entrepreneur_ID)'">
+                Edit Profile
+            </button>
 
-        <dd>
-            @Html.DisplayFor(model => model.Verified)
-        </dd>
+        </div>*@
 
-    </dl>
 
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Entrepreneur_ID }) 
-        |
-        <a href="/User/Index/">Back to List</a>
-    </p>
 
-    <hr />
-
-    <h2>Project Accounts</h2>
-
-    <p>
-        @Html.ActionLink("Create New Project", "createProject", new { id = Model.Entrepreneur_ID })
-    </p>
-
-    @if (Model.Projects.Count > 0)
-    {
-
-    <table id="project-results" class="table-hover table-responsive">
-
-        <tr>
-
-            <th class="col-sm-4">Project Name</th>
-
-            <th class="col-sm-4">Project Public</th>
-
-        </tr>
-        @foreach (System.Data.DataRow item in Model.Projects)
+        @if (Model.Projects.Count == 0)
         {
-            <tr>
+            <div class="data-container bordered-grey center" style="">
+                <div class="fill-center-text" style="margin: auto">
+                    <b>You have no projects!</b>
+                </div>
 
-                <td class="col-sm-4"><a href="@string.Format("/Project/Index/{0}", item["Project_ID"])">
-                        @item["Name"].ToString()
-                    </a>
-                </td>
+                <button onclick="createNewProject()" class="flat-button blue"> Create New Project!</button>
+            </div>
+        }
+        else
+        {
+                <table class="table table-hover" style="text-align: left; font-size: 200%; width: 100%">
 
-                <td class="col-sm-4">
-                    @{ string isPublic = "";
-                        if (item["Profile_Public"].ToString() == "True")
+                    <tbody>
+                        @* Insert data into table from projects array *@
+                        @foreach (System.Data.DataRow project in Model.Projects)
                         {
-                            isPublic = "Yes";
-                        }
-                        else
-                        {
-                            isPublic = "No";
-                        }
-                    }
-                    @isPublic
-                </td>
+                            <div class="project-row">
+                                <div class="title">
+                                    @project["Name"]
+                                </div>
 
-            </tr>
+                                <div class="title">
+                                    Account Balance : @project["Project_Balance"]
+                                </div>
+
+                                <button onclick="(function go() { window.location = '@string.Format("/Project/Details/{0}", project["Project_ID"])' })()" class="flat-button flat-button-small green ent-project-btn" style="float: right;">
+                                    View
+                                </button>
+
+                                <button onclick="(function go() { window.location = '@string.Format("/Project/Index/{0}", project["Project_ID"])' })()" class="flat-button flat-button-small blue ent-project-btn" style="float: right;">
+                                    Edit
+                                </button>
+                            </div>
+                        }
+
+                    </tbody>
+                </table>
+
+                <br />
+
+                <div class="container" style="text-align: center">
+                    <button onclick="createNewProject()" class="flat-button large-btn blue"> Create New Project!</button>
+                </div>
+
+                
+
+
+
+
         }
 
-    </table>
-
-    }
-
-    @if(Model.Projects.Count < 1)
-    {
-        <p class="template-words">You have no projects associated with this account, perhaps you should make one.</p>
-    }
-
 </div>
+
+

@@ -7,15 +7,26 @@ using ProudSourceAccountingLibrary.BrainTree;
 
 namespace ProudSourceBeta.Models
 {
-    public class FinancialAccountDetails : PSDataConnection
+    public class FinancialAccountDetails : PSFinancialDataConnection
     {
         [Display(Name = "Financial Account Number")]
         public int Account_ID { get; private set; }
 
         [Display(Name = "Pending transactions balance")]
-        public decimal Account_Balance { get; private set; }
+        public decimal Pending_Account_Balance_USD { get; private set; }
 
-        public DataRowCollection Transactions { get; private set; }
+        [Display(Name = "Pending bitcoin transaction balance")]
+        public decimal Pending_Account_Balance_BTC { get; private set; }
+
+        [Display(Name = "Account balance")]
+        public decimal Processed_Account_Balance_USD { get; private set; }
+
+        [Display(Name = "Account bitcoin balance")]
+        public decimal Processed_Account_Balance_BTC { get; private set; }
+
+        public DataRowCollection Pending_Transactions { get; private set; }
+
+        public DataRowCollection Processed_Transactions { get; private set; }
 
         public string Client_BrainTree_Token { get; private set; }
 
@@ -28,14 +39,10 @@ namespace ProudSourceBeta.Models
 
         private void get_AccountData()
         {
-            string query = @"SELECT T.[Transaction_ID], T.[Amount], T.[Date_of_Transaction], T.[Description], CT.[Currency]
-	                         FROM ProudSourceAccounting.dbo.Accounts A 
-                             JOIN ProudSourceAccounting.dbo.Transactions T ON A.[Account_ID] = T.[Account_ID]
-                             JOIN ProudSourceAccounting.dbo.Currency_Types CT ON T.[Currency_Type_ID] = CT.[Currency_Type_ID]
-                             WHERE A.[Account_ID] = @Account_ID";
+            string query = "sp_get_FinancialAccountDetails";
 
             SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-            adapter.SelectCommand.CommandType = CommandType.Text;
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             adapter.SelectCommand.Parameters.AddWithValue("@Account_ID", Account_ID);
             DataSet set = new DataSet();
             try
@@ -52,27 +59,47 @@ namespace ProudSourceBeta.Models
                 conn.Close();
             }
             // Tables Returned
-            //      [0] : All of the transactions for this account.
+            //      [0] : All the transactions for this account that are PENDING.
+            //      [1] : All the transactions for this account that are not PENDING.
 
-            Transactions = set.Tables[0].Rows;
+            Pending_Account_Balance_BTC = 0.0m;
+            Pending_Account_Balance_USD = 0.0m;
+            Processed_Account_Balance_BTC = 0.0m;
+            Processed_Account_Balance_USD = 0.0m;
 
-            if(Transactions.Count > 0)
+            Pending_Transactions = set.Tables[0].Rows;
+
+            if(Pending_Transactions.Count > 0)
             {
-                decimal i = 0.0m;
-                foreach(DataRow k in Transactions)
+                foreach(DataRow k in Pending_Transactions)
                 {
                     if (k["Currency"].ToString() == "USD")
                     {
-                        i += (decimal)k["Amount"];
+                        Pending_Account_Balance_USD += (decimal)k["Amount"];
+                    }
+                    else if (k["Currecny"].ToString() == "BTC")
+                    {
+                        Pending_Account_Balance_BTC += (decimal)k["Amount"];
                     }
                 }
-                Account_Balance = i;
             }
-            else
+
+            Processed_Transactions = set.Tables[1].Rows;
+
+            if(Processed_Transactions.Count > 0)
             {
-                Account_Balance = 0.0m;
+                foreach(DataRow k in Processed_Transactions)
+                {
+                    if (k["Transaction_State"].ToString() == "PROCESSED" && k["Currency"].ToString() == "USD")
+                    {
+                        Processed_Account_Balance_USD += (decimal)k["Amount"];
+                    }
+                    else if (k["Transaction_State"].ToString() == "PROCESSED" && k["Currency"].ToString() == "BTC")
+                    {
+                        Processed_Account_Balance_BTC += (decimal)k["Amount"];
+                    }
+                }
             }
         }
-
     }
 }

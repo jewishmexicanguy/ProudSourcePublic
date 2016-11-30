@@ -1,0 +1,78 @@
+﻿body {
+}
+
+$border-color: #E5E5E9;
+$row-height: 90px;
+$row-font-color: #808184;
+
+//Project Rows
+
+.project-row {
+    float: left;
+    width: 100%;
+    height: $row-height;
+
+    border-bottom-style: solid;
+    border-bottom-color: $border-color;
+    border-bottom-width: 2px;
+}
+
+.project-row:hover {
+    background-color: #f3f3f3;
+}
+
+.project-row:hover .ent-project-btn {
+    display: block;
+}
+
+.project-row .ent-project-btn {
+    width: 100px;
+}
+
+.ent-project-btn {
+    height: $row-height;
+    display: none;
+}
+
+.project-row .title {
+    color: $row-font-color;
+    float: left;
+    height: $row-height;
+    font-size: 40px;
+    font-weight: bold;
+    align-items: center;
+    line-height: $row-height;
+    margin-left: 20px;
+}
+
+.project-row .icon {
+    font-size: 40px;
+    line-height: $row-height;
+    margin-left: 50px;
+}
+
+//container
+
+.container {
+    width: 100%;
+    padding-bottom: 22px;
+}
+
+.container .large-btn {
+    font-size: 30px;
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+//other
+
+.clickable-tr {
+    cursor: pointer;
+    height: 50px;
+}
+
+.clickable-tr:hover {
+    /*background-color: #EFEEEE;*/
+    background-color: #EFEEEE !important;
+}

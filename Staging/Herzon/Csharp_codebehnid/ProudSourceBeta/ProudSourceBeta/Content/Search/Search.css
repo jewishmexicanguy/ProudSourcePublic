@@ -4,10 +4,12 @@
 
 #overall-container {
     width: 100%;
+    max-width: 1600px;
 }
 
 #tile-container {
     width: 100%;
+    max-width: 1600px;
 }
 
 #search-bar-holder {
@@ -35,14 +37,13 @@
 .tile {
     height: 300px;
     cursor: pointer;
+    background-size: cover;
 }
 
 .overlay {
-    position: absolute;
     background-color: black;
     opacity: 0.8;
     height: 0px;
-    margin-top: 300px;
     pointer-events:none;
 }
 

@@ -34,6 +34,19 @@ namespace ProudSourceBeta.Controllers
             return View(entrepreneurAccount);
         }
 
+        [HttpGet]
+        public ActionResult Projects()
+        {
+            EntrepreneurAuth cred = check_clientRelation();
+            if (!cred.Valid)
+            {
+                return Redirect(@"/User/Index");
+            }
+            manageClient_Sessions(cred);
+            Models.EntrepreneurIndexViewModel entrepreneurAccount = new Models.EntrepreneurIndexViewModel(cred.Entrepreneur_ID, User.Identity.GetUserId());
+            return View(entrepreneurAccount);
+        }
+
         // GET: Entrepreneur/Edit/{entrepreneur_id}
         [HttpGet]
         public ActionResult Edit()

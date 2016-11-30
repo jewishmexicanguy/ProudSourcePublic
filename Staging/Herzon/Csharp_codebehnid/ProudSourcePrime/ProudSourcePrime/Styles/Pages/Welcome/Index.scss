@@ -1,0 +1,106 @@
+﻿// ../../Base/_Variables.scss
+
+body {
+    padding: 0px;
+}
+
+.container {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+.green {
+    background-color: #2ecc71;
+}
+
+.title-container {
+    //TODO height set in javascript
+    background-image: url("../../../Images/skyline-blurred.jpg");
+    //background-color: #91CCFC;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    height: 70vh;
+    width: 100%;
+    position: fixed;
+    z-index: -5;
+    color: white;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.title-box {
+    //TODO set top in javascript
+    width: 600px;
+    margin: auto;
+    font-size: 4em;
+    margin-top: 18vh;
+    text-align: center;
+    border-radius: 10px;
+    border-width: 4px;
+    border-color: white;
+    border-style: solid;
+    height: 220px;
+    line-height: 220px;
+}
+
+.title-text {
+    font-size: 2.5em;
+    margin-top: 40px;
+}
+
+@media (max-width: 850px) {
+  .title-box {
+    margin-top: 170px;
+    width: 400px;
+    height: 150px;
+    line-height: 150px;
+    font-size: 3em;
+  }
+}
+
+.below {
+    margin-top: 70vh;
+    height: 1000px;
+    perspective: 1px;
+    width: 100%;
+    background-color: white;
+
+    .below-title {
+        padding-top: 50px;
+        font-size: 190%;
+        color: #7B7B7B;
+    }
+
+    .paralax-image {
+        height: 400px;
+        background-image: url("../../../Images/skyline-blurred.jpg");
+        background-size: cover;
+    }
+
+    .detail-box {
+        font-size: 140%;
+        padding-top: 50px;
+        padding-bottom: 60px;
+        background-color: white;
+
+        .detail-box-title {
+            margin-bottom: 15px;
+            font-size: 130%;
+            color: #91CCFC;
+        }
+    }
+
+    .under-detail-boxes {
+        background-color: #91CCFC;
+        height: 515px;
+        padding: 0px;
+    }
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}

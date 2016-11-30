@@ -13,10 +13,17 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            //Console.WriteLine("Begining contact with braintree press the [Enter] key to continue \r\n");
+            //Console.WriteLine("********************************\r\n");
+            //ProudSourceAccountingLibrary.BrainTree.BrainTreeBase a = new ProudSourceAccountingLibrary.BrainTree.BrainTreeBase();
+            //Console.WriteLine(string.Format("\t client token : {0}", a.get_ClientToken()));
+            //Console.WriteLine("********************************\r\n");
+            //Console.WriteLine("Press the [Enter] key to End connection");
+            //Console.ReadLine();
+
             Console.WriteLine("Begining contact with braintree press the [Enter] key to continue \r\n");
             Console.WriteLine("********************************\r\n");
-            ProudSourceAccountingLibrary.BrainTree.BrainTreeBase a = new ProudSourceAccountingLibrary.BrainTree.BrainTreeBase();
-            Console.WriteLine(string.Format("\t client token : {0}", a.get_ClientToken()));
+            //ProudSourceAccountingLibrary.BrainTree.BTTransactionsUpdate a = new ProudSourceAccountingLibrary.BrainTree.BTTransactionsUpdate();
             Console.WriteLine("********************************\r\n");
             Console.WriteLine("Press the [Enter] key to End connection");
             Console.ReadLine();
